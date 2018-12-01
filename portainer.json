@@ -1,9 +1,247 @@
 [
   {
     "type": 1,
-    "title": "sickrage",
+    "name": "couchpotato",
+    "title": "Couchpotato",
+    "description": "CouchPotato (CP) is an automatic NZB and torrent downloader. You can keep a \"movies I want\"-list and it will search for NZBs/torrents of these movies every X hours. Once a movie is found, it will send it to SABnzbd or download the torrent to a specified directory.",
+    "logo": "https://mediadepot.github.io/templates/img/couchpotato-icon.png",
+    "image": "linuxserver/couchpotato:latest",
+    "categories": [
+      "Downloaders:",
+      "MediaApp:Video"
+    ],
+    "ports": [
+      "5050/tcp"
+    ],
+    "volumes": [
+      {
+        "container": "/config",
+        "bind": "/opt/mediadepot/apps/couchpotato"
+      },
+      {
+        "container": "/downloads",
+        "bind": "/media/storage/downloads/movies"
+      },
+      {
+        "container": "/movies",
+        "bind": "/media/storage/movies"
+      },
+      {
+        "container": "/blackhole",
+        "bind": "/media/temp/blackhole/movies"
+      }
+    ],
+    "env": [
+      {
+        "name": "PGID",
+        "label": "PGID",
+        "default": "15000",
+        "preset": true
+      },
+      {
+        "name": "PUID",
+        "label": "PUID",
+        "default": "15000",
+        "preset": true
+      },
+      {
+        "name": "TZ",
+        "label": "TZ",
+        "default": "America/Los_Angeles"
+      }
+    ],
+    "labels": [
+      { "name": "traefik.enable", "value": "true" },
+      { "name": "traefik.port", "value": "5050" }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "duckdns",
+    "title": "DuckDNS",
+    "description": "Duckdns is a free service which will point a DNS (sub domains of duckdns.org) to an IP of your choice.",
+    "logo": "https://mediadepot.github.io/templates/img/duckdns.png",
+    "image": "linuxserver/duckdns:latest",
+    "categories": [
+      "Network:DNS",
+      "Tools:"
+    ],
+    "volumes": [],
+    "env": [
+      {
+        "name": "SUBDOMAINS",
+        "label": "SUBDOMAINS"
+      },
+      {
+        "name": "TOKEN",
+        "label": "TOKEN"
+      },
+      {
+        "name": "TZ",
+        "label": "TZ",
+        "default": "America/Los_Angeles"
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "heimdall",
+    "title": "Heimdall",
+    "description": "Heimdall is a way to organise all those links to your most used web sites and web applications in a simple way.",
+    "logo": "https://mediadepot.github.io/templates/img/heimdall-icon.png",
+    "image": "linuxserver/heimdall:latest",
+    "categories": [
+      "Tools:",
+      "Network:Web",
+      "Network:Other",
+      "Status:Stable"
+    ],
+    "ports": [
+      "80/tcp",
+      "443/tcp"
+    ],
+    "volumes": [
+      {
+        "container": "/config",
+        "bind": "/opt/mediadepot/apps/heimdall"
+      }
+    ],
+    "env": [
+      {
+        "name": "PGID",
+        "label": "PGID",
+        "default": "15000",
+        "preset": true
+      },
+      {
+        "name": "PUID",
+        "label": "PUID",
+        "default": "15000",
+        "preset": true
+      },
+      {
+        "name": "TZ",
+        "label": "TZ",
+        "default": "America/Los_Angeles"
+      }
+    ],
+    "labels": [
+      { "name": "traefik.enable", "value": "true" },
+      { "name": "traefik.port", "value": "80" }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "plexrequests",
+    "title": "Plex Requests",
+    "description": "Simple automated way for users to request new content for Plex.",
+    "logo": "https://mediadepot.github.io/templates/img/plexrequests-icon.png",
+    "image": "linuxserver/plexrequests:latest",
+    "categories": [
+      "Downloaders:",
+      "Network:Other",
+      "MediaApp:Video",
+      "Tools:"
+    ],
+    "ports": [
+      "3000/tcp"
+    ],
+    "volumes": [
+      {
+        "container": "/config",
+        "bind": "/opt/mediadepot/apps/plexrequests"
+      },
+      {
+        "container": "/etc/localtime",
+        "bind": "/etc/localtime",
+        "readonly": true
+      }
+    ],
+    "env": [
+      {
+        "name": "PGID",
+        "label": "PGID",
+        "default": "15000",
+        "preset": true
+      },
+      {
+        "name": "PUID",
+        "label": "PUID",
+        "default": "15000",
+        "preset": true
+      }
+    ],
+    "labels": [
+      { "name": "traefik.enable", "value": "true" },
+      { "name": "traefik.port", "value": "3000" }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "rtorrent",
+    "title": "rTorrent",
+    "description": "rTorrent is a quick and efficient BitTorrent client",
+    "logo": "https://mediadepot.github.io/templates/img/rtorrent-icon.png",
+    "image": "mediadepot/rtorrent:master",
+    "categories": [
+      "Downloaders:",
+      "Network:Other",
+      "Tools:"
+    ],
+    "ports": [
+      "8081/tcp",
+      "6880/tcp",
+      "6881/tcp",
+      "6882/tcp",
+      "6883/tcp",
+      "6884/tcp",
+      "6885/tcp",
+      "6886/tcp",
+      "6887/tcp",
+      "6888/tcp",
+      "6889/tcp"
+    ],
+    "volumes": [
+      {
+        "container": "/srv/rtorrent/config",
+        "bind": "/opt/mediadepot/apps/rtorrent"
+      },
+      {
+        "container": "/mnt/processing",
+        "bind": "/media/temp/processing"
+      },
+      {
+        "container": "/mnt/blackhole",
+        "bind": "/media/temp/blackhole"
+      },
+      {
+        "container": "/mnt/downloads",
+        "bind": "/media/storage/downloads"
+      }
+    ],
+    "env": [
+      {
+        "name": "DEPOT_USER",
+        "label": "DEPOT_USER",
+        "default": "depot",
+        "preset": true
+      },
+      {
+        "name": "DEPOT_PASSWORD",
+        "label": "DEPOT_PASSWORD"
+      }
+    ],
+    "labels": [
+      { "name": "traefik.enable", "value": "true" },
+      { "name": "traefik.port", "value": "8081" }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "sickrage",
+    "title": "SickRage",
     "description": "Automatic Video Library Manager for TV Shows. It watches for new episodes of your favorite shows, and when they are posted it does its magic.",
-    "logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/sickrage-icon.png",
+    "logo": "https://mediadepot.github.io/templates/img/sickrage-icon.png",
     "image": "linuxserver/sickrage:latest",
     "categories": [
       "Downloaders:",
@@ -42,11 +280,60 @@
         "label": "PUID",
         "default": "15000",
         "preset": true
+      },
+      {
+        "name": "TZ",
+        "label": "TZ",
+        "default": "America/Los_Angeles"
       }
     ],
     "labels": [
       { "name": "traefik.enable", "value": "true" },
       { "name": "traefik.port", "value": "8081" }
+    ]
+  },
+  {
+    "type": 1,
+    "name": "tautulli",
+    "title": "Tautulli",
+    "description": "A Python based monitoring and tracking tool for Plex Media Server.",
+    "logo": "https://mediadepot.github.io/templates/img/tautulli-icon.png",
+    "image": "linuxserver/tautulli:latest",
+    "categories": [
+      "MediaServer:Other",
+      "Tools:"
+    ],
+    "ports": [
+      "8181/tcp"
+    ],
+    "volumes": [
+      {
+        "container": "/config",
+        "bind": "/opt/mediadepot/apps/tautulli"
+      }
+    ],
+    "env": [
+      {
+        "name": "PGID",
+        "label": "PGID",
+        "default": "15000",
+        "preset": true
+      },
+      {
+        "name": "PUID",
+        "label": "PUID",
+        "default": "15000",
+        "preset": true
+      },
+      {
+        "name": "TZ",
+        "label": "TZ",
+        "default": "America/Los_Angeles"
+      }
+    ],
+    "labels": [
+      { "name": "traefik.enable", "value": "true" },
+      { "name": "traefik.port", "value": "8181" }
     ]
   }
 ]
