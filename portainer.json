@@ -538,5 +538,23 @@
       { "name": "traefik.enable", "value": "true" },
       { "name": "traefik.port", "value": "8081" }
     ]
+  },
+  {
+    "type": 1,
+    "name": "watchtower",
+    "title": "Watchtower",
+    "description": "Automatically update running Docker containers",
+    "logo": "https://mediadepot.github.io/templates/img/watchtower.png",
+    "image": "v2tec/watchtower:latest",
+    "categories": [
+      "Tools:"
+    ],
+    "volumes": [
+      {
+        "container": "/var/run/docker.sock",
+        "bind": "/var/run/docker.sock"
+      }
+    ],
+    "env": [],
   }
 ]
