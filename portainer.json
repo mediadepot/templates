@@ -243,6 +243,63 @@
       { "name": "traefik.port", "value": "3000" }
     ]
   },
+
+  {
+    "type": 1,
+    "name": "resilio",
+    "title": "Resilio Sync",
+    "description": "Resilio Sync (formerly BitTorrent Sync) uses the BitTorrent protocol to sync files and folders between all of your devices. There are both free and paid versions, this container supports both.",
+    "logo": "https://mediadepot.github.io/templates/img/resilio.png",
+    "image": "linuxserver/resilio-sync:latest",
+    "categories": [
+      "Backup:",
+      "Cloud:",
+      "Network:Other",
+      "Tools:"
+    ],
+    "ports": [
+      "8888/tcp",
+      "55555/tcp"
+    ],
+    "volumes": [
+      {
+        "container": "/config",
+        "bind": "/opt/mediadepot/apps/resilio"
+      },
+      {
+        "container": "/sync",
+        "bind": "/media/storage"
+      },
+      {
+        "container": "/downloads",
+        "bind": "/media/storage/downloads"
+      }
+    ],
+    "env": [
+      {
+        "name": "PGID",
+        "label": "PGID",
+        "default": "15000",
+        "preset": true
+      },
+      {
+        "name": "PUID",
+        "label": "PUID",
+        "default": "15000",
+        "preset": true
+      },
+      {
+        "name": "TZ",
+        "label": "TZ",
+        "default": "America/Los_Angeles"
+      }
+    ],
+    "labels": [
+      { "name": "traefik.enable", "value": "true" },
+      { "name": "traefik.port", "value": "8888" }
+    ]
+  },
+
   {
     "type": 1,
     "name": "rtorrent",
