@@ -130,6 +130,73 @@
       { "name": "traefik.port", "value": "80" }
     ]
   },
+
+  {
+    "type": 1,
+    "name": "plex",
+    "title": "Plex Media Server",
+    "description": "Plex organizes your video, music, and photo collections and streams them to all of your screens.",
+    "logo": "https://mediadepot.github.io/templates/img/plex-icon.png",
+    "image": "linuxserver/plex:public",
+    "network": "host",
+    "categories": [
+      "MediaServer:Video",
+      "MediaServer:Music",
+      "MediaServer:Photos"
+    ],
+    "ports": [],
+    "volumes": [
+      {
+        "container": "/config",
+        "bind": "/opt/mediadepot/apps/plex"
+      },
+      {
+        "container": "/data/tvshows",
+        "bind": "/media/storage/tvshows"
+      },
+      {
+        "container": "/data/movies",
+        "bind": "/media/storage/movies"
+      },
+      {
+        "container": "/data/music",
+        "bind": "/media/storage/music"
+      },
+      {
+        "container": "/transcode"
+      }
+    ],
+    "env": [
+      {
+        "name": "PGID",
+        "label": "PGID",
+        "default": "15000",
+        "preset": true
+      },
+      {
+        "name": "PUID",
+        "label": "PUID",
+        "default": "15000",
+        "preset": true
+      },
+      {
+        "name": "TZ",
+        "label": "TZ",
+        "default": "America/Los_Angeles"
+      },
+      {
+        "name": "VERSION",
+        "label": "VERSION",
+        "default": "latest"
+      }
+    ],
+    "labels": [
+      { "name": "traefik.enable", "value": "true" },
+      { "name": "traefik.port", "value": "32400" }
+    ]
+  },
+
+
   {
     "type": 1,
     "name": "plexrequests",
