@@ -459,5 +459,35 @@
       { "name": "traefik.enable", "value": "true" },
       { "name": "traefik.port", "value": "8181" }
     ]
+  },
+  {
+    "type": 1,
+    "name": "urlwatch",
+    "title": "UrlWatch",
+    "description": "A tool for monitoring webpages for updates",
+    "logo": "https://mediadepot.github.io/templates/img/urlwatch.png",
+    "image": "mediadepot/urlwatch:master",
+    "categories": [
+      "Tools:"
+    ],
+    "ports": [
+      "8081/tcp"
+    ],
+    "volumes": [
+      {
+        "container": "/srv/urlwatch/config",
+        "bind": "/opt/mediadepot/apps/urlwatch"
+      },
+      {
+        "container": "/etc/localtime",
+        "bind": "/etc/localtime",
+        "readonly": true
+      }
+    ],
+    "env": [],
+    "labels": [
+      { "name": "traefik.enable", "value": "true" },
+      { "name": "traefik.port", "value": "8081" }
+    ]
   }
 ]
