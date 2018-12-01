@@ -246,6 +246,55 @@
 
   {
     "type": 1,
+    "name": "rclone",
+    "title": "Rclone Config Backup",
+    "description": "Rclone is a command line program to sync files and directories to and from cloud providers (Dropbox, GDrive, Box, etc)",
+    "logo": "https://mediadepot.github.io/templates/img/rclone.png",
+    "image": "tynor88/rclone:latest",
+    "categories": [
+      "Backup:",
+      "Cloud:",
+      "Network:Other",
+      "Tools:"
+    ],
+    "ports": [],
+    "volumes": [
+      {
+        "container": "/config",
+        "bind": "/opt/mediadepot/apps/rclone"
+      },
+      {
+        "container": "/data",
+        "bind": "/opt/mediadepot/apps"
+      }
+    ],
+    "env": [
+      {
+        "name": "SYNC_DESTINATION",
+        "label": "SYNC_DESTINATION"
+      },
+      {
+        "name": "RCLONE_CONFIG_PASS",
+        "label": "RCLONE_CONFIG_PASS"
+      },
+      {
+        "name": "SYNC_DESTINATION_SUBPATH",
+        "label": "SYNC_DESTINATION_SUBPATH"
+      },
+      {
+        "name": "CRON_SCHEDULE",
+        "label": "CRON_SCHEDULE"
+      },
+      {
+        "name": "SYNC_COMMAND",
+        "label": "SYNC_COMMAND"
+      }
+    ]
+  },
+
+
+  {
+    "type": 1,
     "name": "resilio",
     "title": "Resilio Sync",
     "description": "Resilio Sync (formerly BitTorrent Sync) uses the BitTorrent protocol to sync files and folders between all of your devices. There are both free and paid versions, this container supports both.",

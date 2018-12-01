@@ -3,3 +3,7 @@ These templates are mostly based off of the templates available on https://tools
 customization to work correctly with MediaDepot
 
 
+
+
+- TODO:
+- change restart_policy to "unless-stopped" so that containers can be stopped and will not be automatically started when server restarts.
