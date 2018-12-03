@@ -555,6 +555,6 @@
         "bind": "/var/run/docker.sock"
       }
     ],
-    "env": [],
+    "env": []
   }
 ]
