@@ -171,6 +171,56 @@
 
   {
     "type": 1,
+    "name": "jackett",
+    "title": "Jackett",
+    "description": "Jackett works as a proxy server it translates queries from apps like Sonarr etc into tracker-site-specific http queries and parses the html response sending results back to the requesting software.",
+    "logo": "https://mediadepot.github.io/templates/img/jacket-icon.png",
+    "image": "linuxserver/jackett:latest",
+    "categories": [
+      "Downloaders:",
+      "Tools:"
+    ],
+    "ports": [
+      "9117/tcp"
+    ],
+    "volumes": [
+      {
+        "container": "/config",
+        "bind": "/opt/mediadepot/apps/jackett"
+      },
+      {
+        "container": "/downloads",
+        "bind": "/media/storage/downloads"
+      },
+      {
+        "container": "/etc/localtime",
+        "bind": "/etc/localtime",
+        "readonly": true
+      },
+    ],
+    "env": [
+      {
+        "name": "PGID",
+        "label": "PGID",
+        "default": "15000",
+        "preset": true
+      },
+      {
+        "name": "PUID",
+        "label": "PUID",
+        "default": "15000",
+        "preset": true
+      }
+    ],
+    "labels": [
+      { "name": "traefik.enable", "value": "true" },
+      { "name": "traefik.port", "value": "9117" }
+    ]
+  },
+
+
+  {
+    "type": 1,
     "name": "plex",
     "title": "Plex Media Server",
     "description": "Plex organizes your video, music, and photo collections and streams them to all of your screens.",
