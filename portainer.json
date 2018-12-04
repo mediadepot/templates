@@ -225,7 +225,7 @@
     "title": "Plex Media Server",
     "description": "Plex organizes your video, music, and photo collections and streams them to all of your screens.",
     "logo": "https://mediadepot.github.io/templates/img/plex-icon.png",
-    "image": "linuxserver/plex:public",
+    "image": "linuxserver/plex:latest",
     "network": "host",
     "categories": [
       "MediaServer:Video",
