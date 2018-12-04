@@ -196,7 +196,7 @@
         "container": "/etc/localtime",
         "bind": "/etc/localtime",
         "readonly": true
-      },
+      }
     ],
     "env": [
       {
