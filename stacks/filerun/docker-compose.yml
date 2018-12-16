@@ -1,0 +1,44 @@
+version: '2'
+services:
+  db:
+    image: mariadb:10.1
+    environment:
+      MYSQL_ROOT_PASSWORD: filerunroot
+      MYSQL_USER: filerun
+      MYSQL_PASSWORD: filerun
+      MYSQL_DATABASE: filerun
+    volumes:
+      - /opt/mediadepot/apps/filerun/db:/var/lib/mysql
+  app:
+    restart: always
+    image: mediadepot/filerun:master
+    ports:
+     - "80"
+    volumes:
+    - /media/storage/tvshows:/user-files/depot/tvshows
+    - /media/storage/movies:/user-files/depot/movies
+    - /media/storage/music:/user-files/depot/music
+    - /media/storage/photos:/user-files/depot/photos
+    - /media/storage/ebooks:/user-files/depot/ebooks
+    - /media/storage/documents:/user-files/depot/documents
+    - /media/storage/downloads:/user-files/depot/downloads
+    - /media/storage/software:/user-files/depot/software
+    - /media/temp/blackhole:/user-files/depot/blackhole
+    - /media/temp/processing:/user-files/depot/processing
+    - /opt/mediadepot/apps/filerun/web:/var/www/html
+    labels:
+      - "traefik.enable=true"
+      - "traefik.port=80"
+      - "traefik.frontend.rule=Host:filerun.depot.lan"
+    environment:
+      - FR_DB_HOST=db
+      - FR_DB_PORT=3306
+      - FR_DB_NAME=filerun
+      - FR_DB_USER=filerun
+      - FR_DB_PASS=filerun
+      - DEPOT_USER=depot
+      - DEPOT_PASSWORD
+    depends_on:
+      - db
+    links:
+      - db:db

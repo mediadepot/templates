@@ -1,0 +1,62 @@
+version: '2.1'
+
+services:
+  broker:
+    container_name: mayan-edms-broker
+    image: healthcheck/rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: mayan
+      RABBITMQ_DEFAULT_PASS: mayan
+      RABBITMQ_DEFAULT_VHOST: mayan
+    volumes:
+      - /opt/mediadepot/apps/mayan/rabbitmq:/var/lib/rabbitmq
+  results:
+    container_name: mayan-edms-results
+    image: healthcheck/redis
+    volumes:
+      - /opt/mediadepot/apps/mayan/results:/data
+  db:
+    container_name: mayan-edms-db
+    image: healthcheck/postgres
+    environment:
+      POSTGRES_DB: mayan
+      POSTGRES_PASSWORD: mayan-password
+      POSTGRES_USER: mayan
+    volumes:
+      - /opt/mediadepot/apps/mayan/db:/var/lib/postgresql/data
+  mayan-edms:
+    container_name: mayan-edms-app
+    image: mayanedms/mayanedms:2.7.3
+    depends_on:
+      broker:
+        condition: service_healthy
+      db:
+        condition: service_healthy
+      results:
+        condition: service_healthy
+    environment:
+      MAYAN_BROKER_URL: amqp://mayan:mayan@broker:5672/mayan
+      MAYAN_CELERY_RESULT_BACKEND: redis://results:6379/0
+      MAYAN_DATABASE_ENGINE: django.db.backends.postgresql
+      MAYAN_DATABASE_HOST: db
+      MAYAN_DATABASE_NAME: mayan
+      MAYAN_DATABASE_PASSWORD: mayan-password
+      MAYAN_DATABASE_USER: mayan
+      MAYAN_DATABASE_CONN_MAX_AGE: 60
+    ports:
+      - 80
+    volumes:
+      - /opt/mediadepot/apps/mayan/webapp:/var/lib/mayan
+      - /media/temp/blackhole/documents:/blackhole
+      - /media/storage/documents:/documents
+    labels:
+      - "traefik.enable=true"
+      - "traefik.port=80"
+      - "traefik.frontend.rule=Host:mayan.depot.lan"
+
+# todo:
+# - FUSE index/volume mount - https://docs.mayan-edms.com/chapters/indexes.html?highlight=fuse
+# - Set Admin password - https://github.com/mayan-edms/mayan-edms/issues/259
+# - Set Watch Folder -
+# - Startup /var/lib/mayan/settings folder needs to exist for local.py settings to be created
+# - Documents created by www-data user, not 15000 like all other containers.
