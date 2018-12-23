@@ -3,8 +3,9 @@ version: '2.2'
 services:
 
   database:
-    image: "postgres:9.6"
-
+    image: "healthcheck/postgres"
+    volumes:
+      - /opt/mediadepot/apps/klaxon/db:/var/lib/postgresql/data
   app:
     image: "mediadepot/klaxon"
     depends_on:
