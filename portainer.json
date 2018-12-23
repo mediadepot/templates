@@ -218,45 +218,7 @@
     ]
   },
 
-  {
-    "type": 3,
-    "name": "klaxon",
-    "title": "Klaxon",
-    "description": "Klaxon is a free, quick to set up and easy to use robot that checks websites regularly so you don't have to.",
-    "logo": "https://mediadepot.github.io/templates/img/klaxon-logo.png",
-    "image": "mediadepot/klaxon:latest",
-    "categories": [
-      "Documents:",
-      "Network:Other",
-      "Tools:"
-    ],
-    "env": [
-      {
-        "name": "SMTP_PROVIDER",
-        "label": "SMTP_PROVIDER",
-        "default": "SENDGRID"
-      },
-      {
-        "name": "SENDGRID_USERNAME",
-        "label": "SENDGRID_USERNAME",
-        "default": ""
-      },
-      {
-        "name": "SENDGRID_PASSWORD",
-        "label": "SENDGRID_PASSWORD",
-        "default": ""
-      },
-      {
-        "name": "ADMIN_EMAILS",
-        "label": "ADMIN_EMAILS",
-        "default": ""
-      }
-    ],
-    "repository": {
-      "url": "https://github.com/mediadepot/klaxon",
-      "stackfile": "stacks/klaxon/docker-compose.yml"
-    }
-  },
+  
 
   {
     "type": 3,
