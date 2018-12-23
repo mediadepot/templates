@@ -1,0 +1,23 @@
+version: '2.2'
+
+services:
+
+  database:
+    image: "postgres:9.6"
+
+  app:
+    image: "mediadepot/klaxon"
+    depends_on:
+      database:
+        condition: service_healthy
+    environment:
+      RACK_ENV: "development"
+      RAILS_ENV: "development"
+      DATABASE_URL: "postgres://postgres@database/klaxon"
+      SECRET_KEY_BASE: "secret_key_base"
+
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.port=3000"
+      - "traefik.frontend.rule=Host:klaxon.depot.lan"
