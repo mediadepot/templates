@@ -6,9 +6,12 @@ services:
     image: "healthcheck/postgres"
     volumes:
       - /opt/mediadepot/apps/klaxon/db:/var/lib/postgresql/data
+    network_mode: bridge
 
   app:
     image: "mediadepot/klaxon"
+    links:
+      - database
     depends_on:
       database:
         condition: service_healthy
@@ -24,8 +27,9 @@ services:
           bundle exec rake db:create db:migrate || true
           bundle exec rake users:create_admin || true
           bundle exec puma -C "config/puma.rb"
-
+    network_mode: bridge
     labels:
       - "traefik.enable=true"
       - "traefik.port=3000"
       - "traefik.frontend.rule=Host:klaxon.depot.lan"
+      - "traefik.docker.network=bridge"
