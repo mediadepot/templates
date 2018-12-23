@@ -15,7 +15,13 @@ services:
       RAILS_ENV: "development"
       DATABASE_URL: "postgres://postgres@database/klaxon"
       SECRET_KEY_BASE: "secret_key_base"
-
+    command:
+      - /bin/sh
+      - -c
+      - |
+          bundle exec rake db:create db:migrate
+          bundle exec rake users:create_admin
+          bundle exec puma -C "config/puma.rb"
 
     labels:
       - "traefik.enable=true"
