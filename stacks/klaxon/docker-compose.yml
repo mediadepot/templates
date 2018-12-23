@@ -1,4 +1,4 @@
-version: '2.2'
+version: "2.1"
 
 services:
 
@@ -6,6 +6,7 @@ services:
     image: "healthcheck/postgres"
     volumes:
       - /opt/mediadepot/apps/klaxon/db:/var/lib/postgresql/data
+
   app:
     image: "mediadepot/klaxon"
     depends_on:
