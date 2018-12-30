@@ -533,64 +533,65 @@
 
   {
     "type": 1,
-    "name": "rtorrent",
-    "title": "rTorrent",
-    "description": "rTorrent is a quick and efficient BitTorrent client",
+    "name": "rutorrent",
+    "title": "ruTorrent",
+    "description": "ruTorrent is a quick and efficient BitTorrent client",
     "logo": "https://mediadepot.github.io/templates/img/rtorrent-icon.png",
-    "image": "mediadepot/rtorrent:master",
+    "image": "mediadepot/rutorrent",
     "categories": [
       "Downloaders:",
       "Network:Other",
       "Tools:"
     ],
     "ports": [
-      "8081/tcp",
-      "6880/tcp",
-      "6881/tcp",
-      "6882/tcp",
-      "6883/tcp",
-      "6884/tcp",
-      "6885/tcp",
-      "6886/tcp",
-      "6887/tcp",
-      "6888/tcp",
-      "6889/tcp"
+      "80/tcp",
+      "51413/tcp",
+      "6881/tcp"
     ],
     "volumes": [
       {
-        "container": "/srv/rtorrent/config",
-        "bind": "/opt/mediadepot/apps/rtorrent"
+        "container": "/config",
+        "bind": "/opt/mediadepot/apps/rutorrent"
       },
       {
-        "container": "/mnt/processing",
+        "container": "/processing",
         "bind": "/media/temp/processing"
       },
       {
-        "container": "/mnt/blackhole",
+        "container": "/blackhole",
         "bind": "/media/temp/blackhole"
       },
       {
-        "container": "/mnt/downloads",
+        "container": "/downloads",
         "bind": "/media/storage/downloads"
       }
     ],
     "env": [
       {
-        "name": "DEPOT_USER",
-        "label": "DEPOT_USER",
-        "default": "depot",
+        "name": "PGID",
+        "label": "PGID",
+        "default": "15000",
         "preset": true
       },
       {
-        "name": "DEPOT_PASSWORD",
-        "label": "DEPOT_PASSWORD"
+        "name": "PUID",
+        "label": "PUID",
+        "default": "15000",
+        "preset": true
+      },
+      {
+        "name": "TZ",
+        "label": "TZ",
+        "default": "America/Los_Angeles"
       }
     ],
     "labels": [
       { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.port", "value": "8081" }
+      { "name": "traefik.port", "value": "80" }
     ]
   },
+
+
   {
     "type": 1,
     "name": "sickrage",
