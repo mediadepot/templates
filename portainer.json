@@ -158,7 +158,44 @@
     ]
   },
 
-
+  {
+    "type": 3,
+    "name": "filerun",
+    "title": "Filerun",
+    "description": "access your files anywhere through self-hosted secure cloud storage, file backup and sharing for your photos, videos, files and more.",
+    "logo": "https://mediadepot.github.io/templates/img/filerun-logo.png",
+    "categories": [
+      "Documents:",
+      "Network:Other",
+      "Tools:"
+    ],
+    "env": [
+      {
+        "name": "SMTP_PROVIDER",
+        "label": "SMTP_PROVIDER",
+        "default": "SENDGRID"
+      },
+      {
+        "name": "SENDGRID_USERNAME",
+        "label": "SENDGRID_USERNAME",
+        "default": ""
+      },
+      {
+        "name": "SENDGRID_PASSWORD",
+        "label": "SENDGRID_PASSWORD",
+        "default": ""
+      },
+      {
+        "name": "ADMIN_EMAILS",
+        "label": "ADMIN_EMAILS",
+        "default": ""
+      }
+    ],
+    "repository": {
+      "url": "https://github.com/mediadepot/filerun",
+      "stackfile": "stacks/filerun/docker-compose.yml"
+    }
+  },
 
   {
     "type": 1,

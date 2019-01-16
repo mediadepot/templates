@@ -36,8 +36,6 @@ services:
       - FR_DB_NAME=filerun
       - FR_DB_USER=filerun
       - FR_DB_PASS=filerun
-      - DEPOT_USER=depot
-      - DEPOT_PASSWORD
     depends_on:
       - db
     links:
