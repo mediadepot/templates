@@ -387,7 +387,7 @@
     "name": "plexrequests",
     "title": "Plex Requests",
     "description": "Simple automated way for users to request new content for Plex.",
-    "logo": "https://mediadepot.github.io/templates/img/plexrequests-icon.png",
+    "logo": "https://mediadepot.github.io/templates/img/plex-requests-logo.jpeg",
     "image": "linuxserver/plexrequests:latest",
     "categories": [
       "Downloaders:",
@@ -822,7 +822,7 @@
     "name": "watchtower",
     "title": "Watchtower",
     "description": "Automatically update running Docker containers",
-    "logo": "https://mediadepot.github.io/templates/img/watchtower.png",
+    "logo": "https://mediadepot.github.io/templates/img/watchtower-logo.png",
     "image": "v2tec/watchtower:latest",
     "categories": [
       "Tools:"
