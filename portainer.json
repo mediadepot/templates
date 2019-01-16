@@ -303,7 +303,6 @@
     "title": "Mayan EDMS",
     "description": "Mayan EDMS is an electronic vault for your documents.",
     "logo": "https://mediadepot.github.io/templates/img/mayan-logo.png",
-    "image": "linuxserver/jackett:latest",
     "categories": [
       "Documents:",
       "Tools:"
