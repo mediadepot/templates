@@ -169,28 +169,7 @@
       "Network:Other",
       "Tools:"
     ],
-    "env": [
-      {
-        "name": "SMTP_PROVIDER",
-        "label": "SMTP_PROVIDER",
-        "default": "SENDGRID"
-      },
-      {
-        "name": "SENDGRID_USERNAME",
-        "label": "SENDGRID_USERNAME",
-        "default": ""
-      },
-      {
-        "name": "SENDGRID_PASSWORD",
-        "label": "SENDGRID_PASSWORD",
-        "default": ""
-      },
-      {
-        "name": "ADMIN_EMAILS",
-        "label": "ADMIN_EMAILS",
-        "default": ""
-      }
-    ],
+    "env": [],
     "repository": {
       "url": "https://github.com/mediadepot/filerun",
       "stackfile": "stacks/filerun/docker-compose.yml"
