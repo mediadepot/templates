@@ -171,7 +171,7 @@
     ],
     "env": [],
     "repository": {
-      "url": "https://github.com/mediadepot/filerun",
+      "url": "https://github.com/mediadepot/templates",
       "stackfile": "stacks/filerun/docker-compose.yml"
     }
   },
@@ -279,7 +279,6 @@
     "title": "Klaxon",
     "description": "Klaxon is a free, quick to set up and easy to use robot that checks websites regularly so you don't have to.",
     "logo": "https://mediadepot.github.io/templates/img/klaxon-logo.png",
-    "image": "mediadepot/klaxon:latest",
     "categories": [
       "Documents:",
       "Network:Other",
@@ -308,7 +307,7 @@
       }
     ],
     "repository": {
-      "url": "https://github.com/mediadepot/klaxon",
+      "url": "https://github.com/mediadepot/templates",
       "stackfile": "stacks/klaxon/docker-compose.yml"
     }
   },
