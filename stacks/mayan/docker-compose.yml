@@ -10,11 +10,15 @@ services:
       RABBITMQ_DEFAULT_VHOST: mayan
     volumes:
       - /opt/mediadepot/apps/mayan/rabbitmq:/var/lib/rabbitmq
+    network_mode: bridge
+
   results:
     container_name: mayan-edms-results
     image: healthcheck/redis
     volumes:
       - /opt/mediadepot/apps/mayan/results:/data
+    network_mode: bridge
+
   db:
     container_name: mayan-edms-db
     image: healthcheck/postgres
@@ -24,6 +28,8 @@ services:
       POSTGRES_USER: mayan
     volumes:
       - /opt/mediadepot/apps/mayan/db:/var/lib/postgresql/data
+    network_mode: bridge
+
   mayan-edms:
     container_name: mayan-edms-app
     image: mayanedms/mayanedms:2.7.3
@@ -53,6 +59,7 @@ services:
       - "traefik.enable=true"
       - "traefik.port=80"
       - "traefik.frontend.rule=Host:mayan.depot.lan"
+      - "traefik.docker.network=bridge"
 
 # todo:
 # - FUSE index/volume mount - https://docs.mayan-edms.com/chapters/indexes.html?highlight=fuse
