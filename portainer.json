@@ -121,6 +121,45 @@
       }
     ]
   },
+
+  {
+    "type": 1,
+    "name": "duplicati",
+    "title": "Duplicati",
+    "description": "Duplicati works with standard protocols like FTP, SSH, WebDAV as well as popular services like Microsoft OneDrive, Amazon Cloud Drive & S3, Google Drive, box.com, Mega, hubiC and many others.",
+    "logo": "https://mediadepot.github.io/templates/img/duplicati-icon.png",
+    "image": "linuxserver/duplicati:latest",
+    "categories": [
+      "Utility:Backup"
+    ],
+    "ports": [
+      "8200/tcp"
+    ],
+    "volumes": [
+      {
+        "container": "/config",
+        "bind": "/opt/mediadepot/apps/duplicati"
+      },
+      {
+        "container": "/source",
+        "bind": "/opt/mediadepot/apps/"
+      }
+    ],
+    "env": [
+      {
+        "name": "TZ",
+        "label": "TZ",
+        "default": "America/Los_Angeles"
+      }
+    ],
+    "labels": [
+      { "name": "traefik.enable", "value": "true" },
+      { "name": "traefik.port", "value": "8200" }
+    ]
+  },
+
+
+
   {
     "type": 1,
     "name": "heimdall",
