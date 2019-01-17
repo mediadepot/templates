@@ -59,7 +59,7 @@ services:
       - "traefik.enable=true"
       - "traefik.port=80"
       - "traefik.frontend.rule=Host:mayan.depot.lan"
-      - "traefik.docker.network=bridge"
+    network_mode: bridge
 
 # todo:
 # - FUSE index/volume mount - https://docs.mayan-edms.com/chapters/indexes.html?highlight=fuse
