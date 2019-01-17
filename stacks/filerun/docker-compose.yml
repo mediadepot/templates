@@ -34,7 +34,7 @@ services:
       - "traefik.enable=true"
       - "traefik.port=80"
       - "traefik.frontend.rule=Host:filerun.depot.lan"
-      - "traefik.docker.network=default"
+      - "traefik.docker.network=traefik"
     environment:
       - FR_DB_HOST=db
       - FR_DB_PORT=3306
