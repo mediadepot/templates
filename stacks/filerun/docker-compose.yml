@@ -1,4 +1,5 @@
 version: '2'
+# https://docs.filerun.com/docker
 services:
   db:
     image: mariadb:10.1
@@ -14,7 +15,7 @@ services:
 
   app:
     restart: always
-    image: mediadepot/filerun:master
+    image: afian/filerun
     ports:
      - "80"
     volumes:
@@ -40,6 +41,10 @@ services:
       - FR_DB_NAME=filerun
       - FR_DB_USER=filerun
       - FR_DB_PASS=filerun
+      - APACHE_RUN_USER=www-data
+      - APACHE_RUN_USER_ID=1500
+      - APACHE_RUN_GROUP=www-data
+      - APACHE_RUN_GROUP_ID=15000
     depends_on:
       - db
     links:
