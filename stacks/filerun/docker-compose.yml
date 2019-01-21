@@ -41,7 +41,7 @@ services:
       - FR_DB_USER=filerun
       - FR_DB_PASS=filerun
       - APACHE_RUN_USER=www-data
-      - APACHE_RUN_USER_ID=1500
+      - APACHE_RUN_USER_ID=15000
       - APACHE_RUN_GROUP=www-data
       - APACHE_RUN_GROUP_ID=15000
     depends_on:
