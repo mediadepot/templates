@@ -456,8 +456,19 @@
       "Network:Other",
       "Utilities:"
     ],
-    "privileged": true,
-    "ports": [],
+    "ports": [
+      "21/tcp",
+      "30000/tcp",
+      "30001/tcp",
+      "30002/tcp",
+      "30003/tcp",
+      "30004/tcp",
+      "30005/tcp",
+      "30006/tcp",
+      "30007/tcp",
+      "30008/tcp",
+      "30009/tcp"
+    ],
     "volumes": [
       {
         "container": "/etc/pure-ftpd/passwd",
