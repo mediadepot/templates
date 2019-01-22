@@ -540,6 +540,11 @@
         "name": "TZ",
         "label": "TZ",
         "default": "America/Los_Angeles"
+      },
+      {
+        "name": "PUBLICHOST",
+        "label": "PUBLICHOST",
+        "default": "10.0.1.82"
       }
     ],
     "labels": []
