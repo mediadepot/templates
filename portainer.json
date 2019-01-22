@@ -443,6 +443,108 @@
     ]
   },
 
+
+  {
+    "type": 1,
+    "name": "pureftp",
+    "title": "Pure-FTP Server",
+    "description": "Pure-FTPd is a free (BSD), secure, production-quality and standard-conformant FTP server. ",
+    "logo": "https://mediadepot.github.io/templates/img/pureftpd-icon.jpg",
+    "image": "stilliard/pure-ftpd:hardened",
+    "network": "host",
+    "categories": [
+      "Network:Other",
+      "Utilities:"
+    ],
+    "privileged": true,
+    "ports": [],
+    "volumes": [
+      {
+        "container": "/etc/pure-ftpd/passwd",
+        "bind": "/opt/mediadepot/apps/pureftp"
+      },
+      {
+        "container": "/data/tvshows",
+        "bind": "/media/storage/tvshows"
+      },
+      {
+        "container": "/data/movies",
+        "bind": "/media/storage/movies"
+      },
+      {
+        "container": "/data/music",
+        "bind": "/media/storage/music"
+      },
+      {
+        "container": "/data/ebooks",
+        "bind": "/media/storage/ebooks"
+      },
+      {
+        "container": "/data/photos",
+        "bind": "/media/storage/photos"
+      },
+      {
+        "container": "/data/documents",
+        "bind": "/media/storage/documents"
+      },
+      {
+        "container": "/data/downloads",
+        "bind": "/media/storage/downloads"
+      },
+      {
+        "container": "/data/software",
+        "bind": "/media/storage/software"
+      },
+      {
+        "container": "/data/blackhole",
+        "bind": "/media/temp/blackhole"
+      },
+      {
+        "container": "/data/processing",
+        "bind": "/media/temp/processing"
+      }
+    ],
+    "env": [
+      {
+        "name": "FTP_USER_NAME",
+        "label": "FTP_USER_NAME",
+        "default": "depot",
+        "preset": true
+      },
+
+      {
+        "name": "FTP_USER_PASS",
+        "label": "FTP_USER_PASS",
+        "default": "badpass"
+      },
+      {
+        "name": "FTP_USER_HOME",
+        "label": "FTP_USER_HOME",
+        "default": "/data",
+        "preset": true
+      },
+
+      {
+        "name": "FTP_USER_GID",
+        "label": "FTP_USER_GID",
+        "default": "15000",
+        "preset": true
+      },
+      {
+        "name": "FTP_USER_UID",
+        "label": "FTP_USER_UID",
+        "default": "15000",
+        "preset": true
+      },
+      {
+        "name": "TZ",
+        "label": "TZ",
+        "default": "America/Los_Angeles"
+      }
+    ],
+    "labels": []
+  },
+
   {
     "type": 1,
     "name": "radarr",
