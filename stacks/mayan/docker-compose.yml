@@ -1,5 +1,4 @@
 version: '2.1'
-
 services:
   broker:
     container_name: mayan-edms-broker
@@ -32,7 +31,12 @@ services:
 
   mayan-edms:
     container_name: mayan-edms-app
-    image: mayanedms/mayanedms:2.7.3
+    image: mediadepot/mayan:latest
+#    image: mayanedms/mayanedms:latest
+    links:
+    - db
+    - results
+    - broker
     depends_on:
       broker:
         condition: service_healthy
@@ -43,16 +47,25 @@ services:
     environment:
       MAYAN_BROKER_URL: amqp://mayan:mayan@broker:5672/mayan
       MAYAN_CELERY_RESULT_BACKEND: redis://results:6379/0
-      MAYAN_DATABASE_ENGINE: django.db.backends.postgresql
       MAYAN_DATABASE_HOST: db
       MAYAN_DATABASE_NAME: mayan
       MAYAN_DATABASE_PASSWORD: mayan-password
       MAYAN_DATABASE_USER: mayan
-      MAYAN_DATABASE_CONN_MAX_AGE: 60
+      MAYAN_PIP_INSTALLS: "requests"
+#      MAYAN_DATABASE_CONN_MAX_AGE: 60
+
+      # Mayan 2
+      # MAYAN_DATABASE_DRIVER: django.db.backends.postgres  # for mayan 2.x
+
+      # Mayan 3
+      MAYAN_DATABASE_ENGINE: django.db.backends.postgresql # for mayan 3.x
+
     ports:
-      - 80
+#      - 80 # 80 is default port for Mayan 2.7
+      - "80:8000" # 8000 is default port for Mayan v3.x and above
     volumes:
-      - /opt/mediadepot/apps/mayan/webapp:/var/lib/mayan
+      - /opt/mediadepot/apps/mayan/config:/var/lib/mayan/system
+#      - app:/var/lib/mayan # NOTE: doing this will result in missing config files, causing mayan to fail to start.
       - /media/temp/blackhole/documents:/blackhole
       - /media/storage/documents:/documents
     labels:

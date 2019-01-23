@@ -121,7 +121,6 @@
       }
     ]
   },
-
   {
     "type": 1,
     "name": "duplicati",
@@ -157,7 +156,6 @@
       { "name": "traefik.port", "value": "8200" }
     ]
   },
-
   {
     "type": 3,
     "name": "filerun",
@@ -175,7 +173,6 @@
       "stackfile": "stacks/filerun/docker-compose.yml"
     }
   },
-
   {
     "type": 1,
     "name": "heimdall",
@@ -223,7 +220,6 @@
       { "name": "traefik.port", "value": "80" }
     ]
   },
-
   {
     "type": 1,
     "name": "jackett",
@@ -272,7 +268,6 @@
       { "name": "traefik.port", "value": "9117" }
     ]
   },
-
   {
     "type": 3,
     "name": "klaxon",
@@ -311,7 +306,6 @@
       "stackfile": "stacks/klaxon/docker-compose.yml"
     }
   },
-
   {
     "type": 3,
     "name": "mayan",
@@ -327,8 +321,6 @@
       "stackfile": "stacks/mayan/docker-compose.yml"
     }
   },
-
-
   {
     "type": 1,
     "name": "plex",
@@ -394,8 +386,6 @@
       { "name": "traefik.port", "value": "32400" }
     ]
   },
-
-
   {
     "type": 1,
     "name": "plexrequests",
@@ -442,8 +432,6 @@
       { "name": "traefik.port", "value": "3000" }
     ]
   },
-
-
   {
     "type": 1,
     "name": "pureftp",
@@ -560,7 +548,6 @@
     ],
     "labels": []
   },
-
   {
     "type": 1,
     "name": "radarr",
@@ -617,8 +604,6 @@
       { "name": "traefik.port", "value": "7878" }
     ]
   },
-
-
   {
     "type": 1,
     "name": "rclone",
@@ -644,8 +629,6 @@
       }
     ]
   },
-
-
   {
     "type": 1,
     "name": "resilio",
@@ -701,7 +684,6 @@
       { "name": "traefik.port", "value": "8888" }
     ]
   },
-
   {
     "type": 1,
     "name": "rutorrent",
@@ -761,8 +743,6 @@
       { "name": "traefik.port", "value": "80" }
     ]
   },
-
-
   {
     "type": 1,
     "name": "sickrage",
