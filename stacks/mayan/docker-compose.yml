@@ -62,7 +62,7 @@ services:
 
     ports:
 #      - 80 # 80 is default port for Mayan 2.7
-      - "80:8000" # 8000 is default port for Mayan v3.x and above
+      - 8000 # 8000 is default port for Mayan v3.x and above
     volumes:
       - /opt/mediadepot/apps/mayan/config:/var/lib/mayan/system
 #      - app:/var/lib/mayan # NOTE: doing this will result in missing config files, causing mayan to fail to start.
@@ -70,7 +70,7 @@ services:
       - /media/storage/documents:/documents
     labels:
       - "traefik.enable=true"
-      - "traefik.port=80"
+      - "traefik.port=8000"
       - "traefik.frontend.rule=Host:mayan.depot.lan"
     network_mode: bridge
 
