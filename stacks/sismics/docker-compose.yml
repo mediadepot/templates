@@ -19,7 +19,7 @@ services:
       - "traefik.frontend.rule=Host:sismics.depot.lan"
 
   blackhole:
-    image: mediadepot:sismics-importer
+    image: mediadepot/sismics-importer
     environment:
       - "SISMICS_BASE_URL=http://sismics:8080"
       - "SISMICS_USERNAME=admin"
