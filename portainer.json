@@ -156,6 +156,78 @@
       { "name": "traefik.port", "value": "8200" }
     ]
   },
+
+  {
+    "type": 1,
+    "name": "filebrowser",
+    "title": "Filebrowser",
+    "description": "filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files.",
+    "logo": "https://mediadepot.github.io/templates/img/filebrowser-icon.png",
+    "image": "filebrowser/filebrowser:latest",
+    "categories": [
+      "Tools:",
+      "Network:Web",
+      "Network:Other",
+      "Tools:"
+    ],
+    "ports": [
+      "80/tcp"
+    ],
+    "volumes": [
+      {
+        "container": "/src/tvshows",
+        "bind": "/media/storage/tvshows"
+      },
+      {
+        "container": "/src/movies",
+        "bind": "/media/storage/movies"
+      },
+      {
+        "container": "/src/music",
+        "bind": "/media/storage/music"
+      },
+      {
+        "container": "/src/photos",
+        "bind": "/media/storage/photos"
+      },
+      {
+        "container": "/src/ebooks",
+        "bind": "/media/storage/ebooks"
+      },
+      {
+        "container": "/src/documents",
+        "bind": "/media/storage/documents"
+      },
+      {
+        "container": "/src/software",
+        "bind": "/media/storage/software"
+      },
+      {
+        "container": "/src/downloads",
+        "bind": "/media/storage/downloads"
+      },
+      {
+        "container": "/src/blackhole",
+        "bind": "/media/temp/blackhole"
+      },
+      {
+        "container": "/src/processing",
+        "bind": "/media/temp/processing"
+      }
+    ],
+    "env": [
+      {
+        "name": "TZ",
+        "label": "TZ",
+        "default": "America/Los_Angeles"
+      }
+    ],
+    "labels": [
+      { "name": "traefik.enable", "value": "true" },
+      { "name": "traefik.port", "value": "80" }
+    ]
+  },
+
   {
     "type": 3,
     "name": "filerun",
