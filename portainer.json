@@ -175,44 +175,52 @@
     ],
     "volumes": [
       {
-        "container": "/src/tvshows",
+        "container": "/srv/tvshows",
         "bind": "/media/storage/tvshows"
       },
       {
-        "container": "/src/movies",
+        "container": "/srv/movies",
         "bind": "/media/storage/movies"
       },
       {
-        "container": "/src/music",
+        "container": "/srv/music",
         "bind": "/media/storage/music"
       },
       {
-        "container": "/src/photos",
+        "container": "/srv/photos",
         "bind": "/media/storage/photos"
       },
       {
-        "container": "/src/ebooks",
+        "container": "/srv/ebooks",
         "bind": "/media/storage/ebooks"
       },
       {
-        "container": "/src/documents",
+        "container": "/srv/documents",
         "bind": "/media/storage/documents"
       },
       {
-        "container": "/src/software",
+        "container": "/srv/software",
         "bind": "/media/storage/software"
       },
       {
-        "container": "/src/downloads",
+        "container": "/srv/downloads",
         "bind": "/media/storage/downloads"
       },
       {
-        "container": "/src/blackhole",
+        "container": "/srv/blackhole",
         "bind": "/media/temp/blackhole"
       },
       {
-        "container": "/src/processing",
+        "container": "/srv/processing",
         "bind": "/media/temp/processing"
+      },
+      {
+        "container": "/.filebrowser.json",
+        "bind": "/opt/mediadepot/apps/filebrowser/filebrowser.json"
+      },
+      {
+        "container": "/database.db",
+        "bind": "/opt/mediadepot/apps/filebrowser/filebrowser.db"
       }
     ],
     "env": [
