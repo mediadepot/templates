@@ -215,10 +215,6 @@
         "bind": "/media/temp/processing"
       },
       {
-        "container": "/.filebrowser.json",
-        "bind": "/opt/mediadepot/apps/filebrowser/filebrowser.json"
-      },
-      {
         "container": "/database.db",
         "bind": "/opt/mediadepot/apps/filebrowser/filebrowser.db"
       }
