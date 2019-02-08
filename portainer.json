@@ -171,9 +171,9 @@
       "Tools:"
     ],
     "ports": [
-      "80/tcp"
+      "8080/tcp"
     ],
-    "command": "-d /config/filebrowser.db",
+    "command": "-d /config/filebrowser.db -p 8080",
     "volumes": [
       {
         "container": "/srv/tvshows",
@@ -229,7 +229,7 @@
     ],
     "labels": [
       { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.port", "value": "80" }
+      { "name": "traefik.port", "value": "8080" }
     ]
   },
 
