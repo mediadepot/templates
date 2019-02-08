@@ -163,7 +163,7 @@
     "title": "Filebrowser",
     "description": "filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files.",
     "logo": "https://mediadepot.github.io/templates/img/filebrowser-icon.png",
-    "image": "filebrowser/filebrowser:latest",
+    "image": "mediadepot/filebrowser:latest",
     "categories": [
       "Tools:",
       "Network:Web",
@@ -173,6 +173,7 @@
     "ports": [
       "80/tcp"
     ],
+    "command": "-d /config/filebrowser.db",
     "volumes": [
       {
         "container": "/srv/tvshows",
@@ -215,8 +216,8 @@
         "bind": "/media/temp/processing"
       },
       {
-        "container": "/database.db",
-        "bind": "/opt/mediadepot/apps/filebrowser/filebrowser.db"
+        "container": "/config",
+        "bind": "/opt/mediadepot/apps/filebrowser"
       }
     ],
     "env": [
