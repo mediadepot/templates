@@ -156,6 +156,92 @@
       { "name": "traefik.port", "value": "8200" }
     ]
   },
+  {
+    "type": 1,
+    "name": "droppy",
+    "title": "Droppy",
+    "description": "Droppy is a self-hosted file storage server",
+    "logo": "https://mediadepot.github.io/templates/img/filebrowser-icon.png",
+    "image": "silverwind/droppy:latest",
+    "categories": [
+      "Tools:",
+      "Network:Web",
+      "Network:Other",
+      "Tools:"
+    ],
+    "ports": [
+      "8989/tcp"
+    ],
+    "volumes": [
+      {
+        "container": "/files/tvshows",
+        "bind": "/media/storage/tvshows"
+      },
+      {
+        "container": "/files/movies",
+        "bind": "/media/storage/movies"
+      },
+      {
+        "container": "/files/music",
+        "bind": "/media/storage/music"
+      },
+      {
+        "container": "/files/photos",
+        "bind": "/media/storage/photos"
+      },
+      {
+        "container": "/files/ebooks",
+        "bind": "/media/storage/ebooks"
+      },
+      {
+        "container": "/files/documents",
+        "bind": "/media/storage/documents"
+      },
+      {
+        "container": "/files/software",
+        "bind": "/media/storage/software"
+      },
+      {
+        "container": "/files/downloads",
+        "bind": "/media/storage/downloads"
+      },
+      {
+        "container": "/files/blackhole",
+        "bind": "/media/temp/blackhole"
+      },
+      {
+        "container": "/files/processing",
+        "bind": "/media/temp/processing"
+      },
+      {
+        "container": "/config",
+        "bind": "/opt/mediadepot/apps/filebrowser"
+      }
+    ],
+    "env": [
+      {
+        "name": "GID",
+        "label": "GID",
+        "default": "15000",
+        "preset": true
+      },
+      {
+        "name": "UID",
+        "label": "UID",
+        "default": "15000",
+        "preset": true
+      },
+      {
+        "name": "TZ",
+        "label": "TZ",
+        "default": "America/Los_Angeles"
+      }
+    ],
+    "labels": [
+      { "name": "traefik.enable", "value": "true" },
+      { "name": "traefik.port", "value": "8989" }
+    ]
+  },
 
   {
     "type": 1,
