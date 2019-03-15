@@ -242,7 +242,6 @@
       { "name": "traefik.port", "value": "8989" }
     ]
   },
-
   {
     "type": 1,
     "name": "filebrowser",
@@ -318,7 +317,6 @@
       { "name": "traefik.port", "value": "8080" }
     ]
   },
-
   {
     "type": 3,
     "name": "filerun",
@@ -336,6 +334,95 @@
       "stackfile": "stacks/filerun/docker-compose.yml"
     }
   },
+
+  {
+    "type": 1,
+    "name": "healthchecks",
+    "title": "Healthchecks",
+    "description": "Healthchecks is a watchdog for your cron jobs. It's a web server that listens for pings from your cron jobs, plus a web interface.",
+    "logo": "https://mediadepot.github.io/templates/img/healthchecks-logo.png",
+    "image": "linuxserver/healthchecks",
+    "categories": [
+      "Tools:",
+      "Network:Web",
+      "Network:Other",
+      "Status:Stable"
+    ],
+    "ports": [
+      "8000/tcp"
+    ],
+    "volumes": [
+      {
+        "container": "/config",
+        "bind": "/opt/mediadepot/apps/healthchecks"
+      }
+    ],
+    "env": [
+      {
+        "name": "PGID",
+        "label": "PGID",
+        "default": "15000",
+        "preset": true
+      },
+      {
+        "name": "PUID",
+        "label": "PUID",
+        "default": "15000",
+        "preset": true
+      },
+      {
+        "name": "TZ",
+        "label": "TZ",
+        "default": "America/Los_Angeles"
+      },
+      {
+        "name": "SITE_ROOT",
+        "label": "SITE_ROOT",
+        "default": "healthchecks.depot.lan"
+      },
+      {
+        "name": "SITE_NAME",
+        "label": "SITE_NAME",
+        "default": "healthchecks"
+      },
+      {
+        "name": "DEFAULT_FROM_EMAIL",
+        "label": "DEFAULT_FROM_EMAIL",
+        "default": "healthchecks@depot.lan"
+      },
+      {
+        "name": "EMAIL_HOST",
+        "label": "EMAIL_HOST",
+        "default": ""
+      },
+      {
+        "name": "EMAIL_PORT",
+        "label": "EMAIL_PORT",
+        "default": ""
+      },
+      {
+        "name": "EMAIL_HOST_USER",
+        "label": "EMAIL_HOST_USER",
+        "default": ""
+      },
+      {
+        "name": "EMAIL_HOST_PASSWORD",
+        "label": "EMAIL_HOST_PASSWORD",
+        "default": ""
+      },
+      {
+        "name": "EMAIL_USE_TLS",
+        "label": "EMAIL_USE_TLS",
+        "default": ""
+      }
+    ],
+    "labels": [
+      { "name": "traefik.enable", "value": "true" },
+      { "name": "traefik.port", "value": "8000" }
+    ]
+  },
+
+
   {
     "type": 1,
     "name": "heimdall",
