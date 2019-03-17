@@ -20,16 +20,11 @@ services:
       RAILS_ENV: "development"
       DATABASE_URL: "postgres://postgres@database/klaxon"
       SECRET_KEY_BASE: "secret_key_base"
-    command:
-      - /bin/sh
-      - -c
-      - |
-          bundle exec rake db:create db:migrate || true
-          bundle exec rake users:create_admin || true
-          bundle exec puma -C "config/puma.rb"
     network_mode: bridge
     labels:
       - "traefik.enable=true"
       - "traefik.port=3000"
       - "traefik.frontend.rule=Host:klaxon.depot.lan"
       - "traefik.docker.network=bridge"
+    volumes:
+      - /opt/mediadepot/apps/klaxon/app:/config
