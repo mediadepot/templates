@@ -1185,7 +1185,8 @@
     "title": "Watchtower",
     "description": "Automatically update running Docker containers",
     "logo": "https://mediadepot.github.io/templates/img/watchtower-logo.png",
-    "image": "v2tec/watchtower:latest",
+    "image": "containrrr/watchtower:latest",
+    "command": "--cleanup --label-enable",
     "categories": [
       "Tools:"
     ],
