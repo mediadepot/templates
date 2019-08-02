@@ -4,7 +4,7 @@ echo Script name: $0
 echo $# arguments
 
 if [ "$#" -ne 1 ]; then
-    echo "Illegal number of parameters. parameter must be name of template stack"
+    echo "Invalid number of parameters. 1 parameter required, must be name of template stack"
 fi
 
 echo "writing docker-compose service to /etc/systemd/system/docker-compose-${1}.service"
@@ -29,7 +29,7 @@ WorkingDirectory=${CURRENT_WORKING_DIR}
 ExecStartPre=-/usr/bin/docker-compose down -v
 ExecStartPre=-/usr/bin/docker-compose rm -v
 ExecStartPre=-/usr/bin/docker-compose pull
-ExecStart=/usr/bin/docker-compose -d
+ExecStart=/usr/bin/docker-compose up
 ExecStop=/usr/bin/docker-compose down -v
 
 [Install]
@@ -39,3 +39,4 @@ EOM
 
 systemctl start docker-compose-${1}.service
 systemctl enable docker-compose-${1}.service
+systemctl daemon-reload
