@@ -614,7 +614,7 @@
     ],
     "labels": [
       { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.port", "value": "3000" }
+      { "name": "traefik.port", "value": "3579" }
     ]
   },
   {
