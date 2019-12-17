@@ -573,6 +573,52 @@
   },
   {
     "type": 1,
+    "name": "ombi",
+    "title": "Ombi",
+    "description": "Ombi allows you to host your own Plex Request and user management system. If you are sharing your Plex server with other users, allow them to request new content using an easy to manage interface",
+    "logo": "https://mediadepot.github.io/templates/img/ombi.jpeg",
+    "image": "linuxserver/ombi:latest",
+    "categories": [
+      "Downloaders:",
+      "Network:Other",
+      "MediaApp:Video",
+      "Tools:"
+    ],
+    "ports": [
+      "3579/tcp"
+    ],
+    "volumes": [
+      {
+        "container": "/config",
+        "bind": "/opt/mediadepot/apps/ombi"
+      },
+      {
+        "container": "/etc/localtime",
+        "bind": "/etc/localtime",
+        "readonly": true
+      }
+    ],
+    "env": [
+      {
+        "name": "PGID",
+        "label": "PGID",
+        "default": "15000",
+        "preset": true
+      },
+      {
+        "name": "PUID",
+        "label": "PUID",
+        "default": "15000",
+        "preset": true
+      }
+    ],
+    "labels": [
+      { "name": "traefik.enable", "value": "true" },
+      { "name": "traefik.port", "value": "3000" }
+    ]
+  },
+  {
+    "type": 1,
     "name": "plex",
     "title": "Plex Media Server",
     "description": "Plex organizes your video, music, and photo collections and streams them to all of your screens.",
