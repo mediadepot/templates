@@ -576,7 +576,7 @@
     "name": "ombi",
     "title": "Ombi",
     "description": "Ombi allows you to host your own Plex Request and user management system. If you are sharing your Plex server with other users, allow them to request new content using an easy to manage interface",
-    "logo": "https://mediadepot.github.io/templates/img/ombi.jpeg",
+    "logo": "https://mediadepot.github.io/templates/img/ombi.png",
     "image": "linuxserver/ombi:latest",
     "categories": [
       "Downloaders:",
