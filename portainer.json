@@ -158,6 +158,45 @@
   },
   {
     "type": 1,
+    "name": "duplicacy",
+    "title": "Duplicacy",
+    "description": "Duplicacy backs up your files to many cloud storages with client-side encryption and the highest level of deduplication",
+    "logo": "https://mediadepot.github.io/templates/img/duplicacy-icon.png",
+    "image": "mediadepot/duplicacy:latest",
+    "categories": [
+      "Utility:Backup"
+    ],
+    "ports": [
+      "3875/tcp"
+    ],
+    "volumes": [
+      {
+        "container": "/etc/duplicacy",
+        "bind": "/opt/mediadepot/apps/duplicacy/settings"
+      },
+      {
+        "container": "/var/cache/duplicacy",
+        "bind": "/opt/mediadepot/apps/duplicacy/cache"
+      },
+      {
+        "container": "/storage",
+        "bind": "/opt/mediadepot/apps/"
+      }
+    ],
+    "env": [
+      {
+        "name": "TZ",
+        "label": "TZ",
+        "default": "America/Los_Angeles"
+      }
+    ],
+    "labels": [
+      { "name": "traefik.enable", "value": "true" },
+      { "name": "traefik.port", "value": "3875" }
+    ]
+  },
+  {
+    "type": 1,
     "name": "droppy",
     "title": "Droppy",
     "description": "Droppy is a self-hosted file storage server",
