@@ -72,14 +72,15 @@ services:
     volumes:
       - /media/storage/documents/:/data/
     environment:
-      - MINIO_USERNAME=depot
-      - MINIO_GROUPNAME=depot
+      - MINIO_USERNAME=minio
+      - MINIO_GROUPNAME=minio
+      - MINIO_PUID=15000
+      - MINIO_PGID=15000
       - MINIO_BROWSER=off
       - MINIO_ACCESS_KEY=minio
       - MINIO_SECRET_KEY=minio123
     #      - MINIO_WORM=on
     network_mode: bridge
-    user: "15000:15000"
     labels:
       - "traefik.http.services.storage.loadbalancer.server.port=9000"
       - "traefik.http.routers.storage.rule=PathPrefix(`/storage`)"
