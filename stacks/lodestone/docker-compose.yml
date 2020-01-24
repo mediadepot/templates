@@ -15,7 +15,7 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - ./data/elasticsearch:/usr/share/elasticsearch/data
+      - /opt/mediadepot/apps/lodestone/elasticsearch:/usr/share/elasticsearch/data
     ports:
       - 19200:9200
       - 19300:9300
@@ -110,7 +110,8 @@ services:
       - RABBITMQ_DEFAULT_USER=lodestone
       - RABBITMQ_DEFAULT_PASS=lodestone
     network_mode: bridge
-
+    volumes:
+      - /opt/mediadepot/apps/lodestone/rabbitmq:/var/lib/rabbitmq
   tika:
     image: analogj/lodestone:tika
     network_mode: bridge
