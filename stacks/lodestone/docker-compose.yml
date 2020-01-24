@@ -114,8 +114,3 @@ services:
   tika:
     image: analogj/lodestone:tika
     network_mode: bridge
-
-
-
-networks:
-  lodenet:
