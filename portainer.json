@@ -34,7 +34,7 @@
     ],
     "labels": [
       { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.port", "value": "5060" }
+      { "name": "traefik.http.services.cardigann.loadbalancer.server.port", "value": "5060" }
     ]
   },
   {
@@ -90,7 +90,7 @@
     ],
     "labels": [
       { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.port", "value": "5050" }
+      { "name": "traefik.http.services.couchpotato.loadbalancer.server.port", "value": "5050" }
     ]
   },
   {
@@ -153,7 +153,7 @@
     ],
     "labels": [
       { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.port", "value": "8200" }
+      { "name": "traefik.http.services.duplicati.loadbalancer.server.port", "value": "8200" }
     ]
   },
   {
@@ -192,7 +192,7 @@
     ],
     "labels": [
       { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.port", "value": "3875" }
+      { "name": "traefik.http.services.duplicacy.loadbalancer.server.port", "value": "3875" }
     ]
   },
   {
@@ -254,7 +254,7 @@
       },
       {
         "container": "/config",
-        "bind": "/opt/mediadepot/apps/filebrowser"
+        "bind": "/opt/mediadepot/apps/droppy"
       }
     ],
     "env": [
@@ -278,7 +278,7 @@
     ],
     "labels": [
       { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.port", "value": "8989" }
+      { "name": "traefik.http.services.droppy.loadbalancer.server.port", "value": "8989" }
     ]
   },
   {
@@ -353,7 +353,7 @@
     ],
     "labels": [
       { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.port", "value": "8080" }
+      { "name": "traefik.http.services.filebrowser.loadbalancer.server.port", "value": "8080" }
     ]
   },
   {
@@ -457,7 +457,7 @@
     ],
     "labels": [
       { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.port", "value": "8000" }
+      { "name": "traefik.http.services.healthchecks.loadbalancer.server.port", "value": "8000" }
     ]
   },
 
@@ -506,7 +506,7 @@
     ],
     "labels": [
       { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.port", "value": "80" }
+      { "name": "traefik.http.services.heimdall.loadbalancer.server.port", "value": "80" }
     ]
   },
   {
@@ -554,7 +554,7 @@
     ],
     "labels": [
       { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.port", "value": "9117" }
+      { "name": "traefik.http.services.jackett.loadbalancer.server.port", "value": "9117" }
     ]
   },
   {
@@ -653,7 +653,7 @@
     ],
     "labels": [
       { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.port", "value": "3579" }
+      { "name": "traefik.http.services.ombi.loadbalancer.server.port", "value": "3579" }
     ]
   },
   {
@@ -718,7 +718,7 @@
     ],
     "labels": [
       { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.port", "value": "32400" }
+      { "name": "traefik.http.services.plex.loadbalancer.server.port", "value": "32400" }
     ]
   },
   {
@@ -764,7 +764,7 @@
     ],
     "labels": [
       { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.port", "value": "3000" }
+      { "name": "traefik.http.services.cardigann.plexrequests.server.port", "value": "3000" }
     ]
   },
   {
@@ -936,7 +936,7 @@
     ],
     "labels": [
       { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.port", "value": "7878" }
+      { "name": "traefik.http.services.radarr.loadbalancer.server.port", "value": "7878" }
     ]
   },
   {
@@ -1016,7 +1016,7 @@
     ],
     "labels": [
       { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.port", "value": "8888" }
+      { "name": "traefik.http.services.resilio.loadbalancer.server.port", "value": "8888" }
     ]
   },
   {
@@ -1075,7 +1075,7 @@
     ],
     "labels": [
       { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.port", "value": "80" }
+      { "name": "traefik.http.services.rutorrent.loadbalancer.server.port", "value": "80" }
     ]
   },
   {
@@ -1131,7 +1131,7 @@
     ],
     "labels": [
       { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.port", "value": "8081" }
+      { "name": "traefik.http.services.sickrage.loadbalancer.server.port", "value": "8081" }
     ]
   },
   {
@@ -1187,7 +1187,7 @@
     ],
     "labels": [
       { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.port", "value": "8989" }
+      { "name": "traefik.http.services.sonarr.loadbalancer.server.port", "value": "8989" }
     ]
   },
   {
@@ -1231,7 +1231,7 @@
     ],
     "labels": [
       { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.port", "value": "8181" }
+      { "name": "traefik.http.services.tautulli.loadbalancer.server.port", "value": "8181" }
     ]
   },
   {
@@ -1261,7 +1261,7 @@
     "env": [],
     "labels": [
       { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.port", "value": "8081" }
+      { "name": "traefik.http.services.urlwatch.loadbalancer.server.port", "value": "8081" }
     ]
   },
   {
