@@ -6,14 +6,14 @@ services:
     image: "postgres:11"
     volumes:
       - /opt/mediadepot/apps/klaxon/db:/var/lib/postgresql/data
-    network_mode: bridge
-
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
       timeout: 5s
       retries: 5
-
+    networks:
+      - traefik
+      - klaxon
   app:
     image: "mediadepot/klaxon"
     links:
@@ -26,11 +26,16 @@ services:
       RAILS_ENV: "development"
       DATABASE_URL: "postgres://postgres@database/klaxon"
       SECRET_KEY_BASE: "secret_key_base"
-    network_mode: bridge
     labels:
       - "traefik.enable=true"
-      - "traefik.port=3000"
-      - "traefik.frontend.rule=Host:klaxon.depot.lan"
-      - "traefik.docker.network=bridge"
+      - "traefik.http.services.klaxon.loadbalancer.server.port=3000"
+      - "traefik.http.routers.klaxon.rule=Host(`klaxon.depot.lan`)"
     volumes:
       - /opt/mediadepot/apps/klaxon/app:/config
+    networks:
+      - traefik
+      - klaxon
+networks:
+  traefik:
+    external: true
+  klaxon:

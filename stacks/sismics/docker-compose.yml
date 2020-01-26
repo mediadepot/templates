@@ -17,7 +17,12 @@ services:
       - "traefik.enable=true"
       - "traefik.port=8080"
       - "traefik.frontend.rule=Host:sismics.depot.lan"
-    network_mode: bridge
+      - "traefik.enable=true"
+      - "traefik.http.services.sismics.loadbalancer.server.port=8080"
+      - "traefik.http.routers.sismics.rule=Host(`sismics.depot.lan`)"
+    networks:
+      - sismics
+      - traefik
 
   blackhole:
     image: mediadepot/sismics-importer
@@ -34,4 +39,10 @@ services:
     depends_on:
       sismics:
         condition: service_healthy
-    network_mode: bridge
+    networks:
+      - sismics
+
+networks:
+  traefik:
+    external: true
+  sismics:

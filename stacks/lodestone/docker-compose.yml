@@ -19,7 +19,8 @@ services:
     ports:
       - 19200:9200
       - 19300:9300
-    network_mode: bridge
+    networks:
+      - lodenet
 
   processor:
     image: analogj/lodestone:processor
@@ -32,12 +33,13 @@ services:
         condition: service_healthy
       tika:
         condition: service_healthy
-    network_mode: bridge
     environment:
       - MINIO_ACCESS_KEY=minio
       - MINIO_SECRET_KEY=minio123
       - RABBITMQ_USER=lodestone
       - RABBITMQ_PASS=lodestone
+    networks:
+      - lodenet
   webapp:
     image: analogj/lodestone:web
     depends_on:
@@ -45,16 +47,19 @@ services:
         condition: service_healthy
       storage:
         condition: service_healthy
-    network_mode: bridge
     labels:
-      - "traefik.http.services.webapp.loadbalancer.server.port=3000"
-      - "traefik.http.routers.api.rule=PathPrefix(`/api`)"
-      - "traefik.http.routers.web.rule=PathPrefix(`/web`)"
+      - "traefik.enable=true"
+      - "traefik.http.services.lodestone.loadbalancer.server.port=3000"      -
+      - "traefik.http.routers.lodestone-api.rule=(Host(`lodestone.depot.lan`) && PathPrefix(`/api`))"
+      - "traefik.http.routers.lodestone-web.rule=(Host(`lodestone.depot.lan`) && PathPrefix(`/web`))"
     environment:
       - MINIO_ACCESS_KEY=minio
       - MINIO_SECRET_KEY=minio123
       - RABBITMQ_USER=lodestone
       - RABBITMQ_PASS=lodestone
+    networks:
+      - lodenet
+      - traefik
 
   storage:
     image: analogj/lodestone:storage
@@ -80,12 +85,15 @@ services:
       - MINIO_ACCESS_KEY=minio
       - MINIO_SECRET_KEY=minio123
     #      - MINIO_WORM=on
-    network_mode: bridge
     labels:
-      - "traefik.http.services.storage.loadbalancer.server.port=9000"
-      - "traefik.http.routers.storage.rule=PathPrefix(`/storage`)"
-      - "traefik.http.routers.storage.middlewares=storage01"
-      - "traefik.http.middlewares.storage01.stripprefix.prefixes=/storage"
+      - "traefik.enable=true"
+      - "traefik.http.services.lodestone-storage.loadbalancer.server.port=9000"
+      - "traefik.http.routers.lodestone-storage.rule=(Host(`lodestone.depot.lan`) && PathPrefix(`/storage`))"
+      - "traefik.http.routers.lodestone-storage.middlewares=lodestonestorage01"
+      - "traefik.http.middlewares.lodestonestorage01.stripprefix.prefixes=/storage"
+    networks:
+      - lodenet
+      - traefik
 
 #  reverse-proxy:
 #    image: traefik:v2.0
@@ -110,9 +118,15 @@ services:
     environment:
       - RABBITMQ_DEFAULT_USER=lodestone
       - RABBITMQ_DEFAULT_PASS=lodestone
-    network_mode: bridge
     volumes:
       - /opt/mediadepot/apps/lodestone/rabbitmq:/var/lib/rabbitmq
+    networks:
+      - lodenet
   tika:
     image: analogj/lodestone:tika
-    network_mode: bridge
+    networks:
+      - lodenet
+networks:
+  traefik:
+    external: true
+  lodenet:

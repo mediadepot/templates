@@ -10,8 +10,8 @@ services:
       MYSQL_DATABASE: filerun
     volumes:
       - /opt/mediadepot/apps/filerun/db:/var/lib/mysql
-    network_mode: bridge
-
+    networks:
+      - filerun
 
   app:
     restart: always
@@ -32,8 +32,8 @@ services:
     - /opt/mediadepot/apps/filerun/web:/var/www/html
     labels:
       - "traefik.enable=true"
-      - "traefik.port=80"
-      - "traefik.frontend.rule=Host:filerun.depot.lan"
+      - "traefik.http.services.filerun.loadbalancer.server.port=80"
+      - "traefik.http.routers.filerun.rule=Host(`klaxon.depot.lan`)"
     environment:
       - FR_DB_HOST=db
       - FR_DB_PORT=3306
@@ -48,4 +48,10 @@ services:
       - db
     links:
       - db:db
-    network_mode: bridge
+    networks:
+      - traefik
+      - filerun
+networks:
+  traefik:
+    external: true
+  filerun:
