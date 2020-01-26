@@ -171,16 +171,24 @@
     ],
     "volumes": [
       {
-        "container": "/etc/duplicacy",
-        "bind": "/opt/mediadepot/apps/duplicacy/settings"
+        "container": "/config",
+        "bind": "/opt/mediadepot/apps/duplicacy/config"
       },
       {
-        "container": "/var/cache/duplicacy",
+        "container": "/logs",
+        "bind": "/opt/mediadepot/apps/duplicacy/logs"
+      },
+      {
+        "container": "/cache",
         "bind": "/opt/mediadepot/apps/duplicacy/cache"
       },
       {
-        "container": "/storage",
+        "container": "/source/apps",
         "bind": "/opt/mediadepot/apps/"
+      },
+      {
+        "container": "/source/storage",
+        "bind": "/media/storage/"
       }
     ],
     "env": [
