@@ -5,7 +5,7 @@ services:
     ports:
         - "8080"
     environment:
-        - DOCS_BASE_URL='http://sismics.depot.lan'
+        - DOCS_BASE_URL='http://sismics.${DEPOT_DOMAIN_NAME}'
     volumes:
         - /opt/mediadepot/apps/sismics:/data
     healthcheck:
@@ -15,11 +15,8 @@ services:
       retries: 3
     labels:
       - "traefik.enable=true"
-      - "traefik.port=8080"
-      - "traefik.frontend.rule=Host:sismics.depot.lan"
-      - "traefik.enable=true"
       - "traefik.http.services.sismics.loadbalancer.server.port=8080"
-      - "traefik.http.routers.sismics.rule=Host(`sismics.depot.lan`)"
+      - "traefik.http.routers.sismics.rule=Host(`sismics.${DEPOT_DOMAIN_NAME}`)"
     networks:
       - sismics
       - traefik

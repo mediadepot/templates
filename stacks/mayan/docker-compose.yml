@@ -74,7 +74,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.services.mayan.loadbalancer.server.port=8000"
-      - "traefik.http.routers.mayan.rule=Host(`mayan.depot.lan`)"
+      - "traefik.http.routers.mayan.rule=Host(`mayan.${DEPOT_DOMAIN_NAME}`)"
     networks:
       - mayan
       - traefik

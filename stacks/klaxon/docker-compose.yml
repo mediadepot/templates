@@ -29,7 +29,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.services.klaxon.loadbalancer.server.port=3000"
-      - "traefik.http.routers.klaxon.rule=Host(`klaxon.depot.lan`)"
+      - "traefik.http.routers.klaxon.rule=Host(`klaxon.${DEPOT_DOMAIN_NAME}`)"
     volumes:
       - /opt/mediadepot/apps/klaxon/app:/config
     networks:

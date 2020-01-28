@@ -50,8 +50,8 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.services.lodestone.loadbalancer.server.port=3000"
-      - "traefik.http.routers.lodestone-api.rule=(Host(`lodestone.depot.lan`) && PathPrefix(`/api`))"
-      - "traefik.http.routers.lodestone-web.rule=(Host(`lodestone.depot.lan`) && PathPrefix(`/web`))"
+      - "traefik.http.routers.lodestone-api.rule=(Host(`lodestone.${DEPOT_DOMAIN_NAME}`) && PathPrefix(`/api`))"
+      - "traefik.http.routers.lodestone-web.rule=(Host(`lodestone.${DEPOT_DOMAIN_NAME}`) && PathPrefix(`/web`))"
     environment:
       - MINIO_ACCESS_KEY=minio
       - MINIO_SECRET_KEY=minio123
@@ -88,7 +88,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.services.lodestone-storage.loadbalancer.server.port=9000"
-      - "traefik.http.routers.lodestone-storage.rule=(Host(`lodestone.depot.lan`) && PathPrefix(`/storage`))"
+      - "traefik.http.routers.lodestone-storage.rule=(Host(`lodestone.${DEPOT_DOMAIN_NAME}`) && PathPrefix(`/storage`))"
       - "traefik.http.routers.lodestone-storage.middlewares=lodestonestorage01"
       - "traefik.http.middlewares.lodestonestorage01.stripprefix.prefixes=/storage"
     networks:
