@@ -51,9 +51,11 @@ services:
       - "traefik.enable=true"
       - "traefik.http.services.lodestone.loadbalancer.server.port=3000"
       - "traefik.http.routers.lodestone-api.rule=(Host(`lodestone.${DEPOT_DOMAIN_NAME}`) && PathPrefix(`/api`))"
+      - 'traefik.http.routers.lodestone-api.entrypoints=websecure'
+      - 'traefik.http.routers.lodestone-api.tls.certresolver=mydnschallenge'
       - "traefik.http.routers.lodestone-web.rule=(Host(`lodestone.${DEPOT_DOMAIN_NAME}`) && PathPrefix(`/web`))"
-      - 'traefik.http.routers.lodestone.entrypoints=websecure'
-      - 'traefik.http.routers.lodestone.tls.certresolver=mydnschallenge'
+      - 'traefik.http.routers.lodestone-web.entrypoints=websecure'
+      - 'traefik.http.routers.lodestone-web.tls.certresolver=mydnschallenge'
     environment:
       - MINIO_ACCESS_KEY=minio
       - MINIO_SECRET_KEY=minio123
@@ -92,9 +94,9 @@ services:
       - "traefik.http.services.lodestone-storage.loadbalancer.server.port=9000"
       - "traefik.http.routers.lodestone-storage.rule=(Host(`lodestone.${DEPOT_DOMAIN_NAME}`) && PathPrefix(`/storage`))"
       - "traefik.http.routers.lodestone-storage.middlewares=lodestonestorage01"
-      - "traefik.http.middlewares.lodestonestorage01.stripprefix.prefixes=/storage"
       - 'traefik.http.routers.lodestone-storage.entrypoints=websecure'
       - 'traefik.http.routers.lodestone-storage.tls.certresolver=mydnschallenge'
+      - "traefik.http.middlewares.lodestonestorage01.stripprefix.prefixes=/storage"
     networks:
       - lodenet
       - traefik
