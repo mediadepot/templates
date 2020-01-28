@@ -75,6 +75,8 @@ services:
       - "traefik.enable=true"
       - "traefik.http.services.mayan.loadbalancer.server.port=8000"
       - "traefik.http.routers.mayan.rule=Host(`mayan.${DEPOT_DOMAIN_NAME}`)"
+      - 'traefik.http.routers.mayan.entrypoints=websecure'
+      - 'traefik.http.routers.mayan.tls.certresolver=mydnschallenge'
     networks:
       - mayan
       - traefik

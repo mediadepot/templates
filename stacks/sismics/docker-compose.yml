@@ -17,6 +17,8 @@ services:
       - "traefik.enable=true"
       - "traefik.http.services.sismics.loadbalancer.server.port=8080"
       - "traefik.http.routers.sismics.rule=Host(`sismics.${DEPOT_DOMAIN_NAME}`)"
+      - 'traefik.http.routers.sismics.entrypoints=websecure'
+      - 'traefik.http.routers.sismics.tls.certresolver=mydnschallenge'
     networks:
       - sismics
       - traefik

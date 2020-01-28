@@ -30,6 +30,8 @@ services:
       - "traefik.enable=true"
       - "traefik.http.services.klaxon.loadbalancer.server.port=3000"
       - "traefik.http.routers.klaxon.rule=Host(`klaxon.${DEPOT_DOMAIN_NAME}`)"
+      - 'traefik.http.routers.klaxon.entrypoints=websecure'
+      - 'traefik.http.routers.klaxon.tls.certresolver=mydnschallenge'
     volumes:
       - /opt/mediadepot/apps/klaxon/app:/config
     networks:
