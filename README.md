@@ -16,7 +16,7 @@ if you want to enable SSO Authentication via Authelia, add the following labels 
 Note: HTTPS must be enabled for Authelia to correctly redirect to the container.
 
 ```
-- 'traefik.http.routers.droppy.middlewares=authme'
+- 'traefik.http.routers.CONTAINER_NAME.middlewares=authme'
 - 'traefik.http.middlewares.authme.forwardauth.address=http://authelia:9091/api/verify?rd=https://login.${DEPOT_DOMAIN_NAME}/'
 - 'traefik.http.middlewares.authme.forwardauth.trustforwardheader=true'
 ```
