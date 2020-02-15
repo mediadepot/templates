@@ -94,7 +94,6 @@ services:
       - LS_RABBITMQ_PORT=${LS_RABBITMQ_PORT:-5672}
       - RABBITMQ_USER=lodestone
       - RABBITMQ_PASS=lodestone
-      - MINIO_BROWSER=off
       - MINIO_ACCESS_KEY=minio
       - MINIO_SECRET_KEY=minio123
     #      - MINIO_WORM=on
