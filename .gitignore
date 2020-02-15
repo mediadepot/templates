@@ -1,1 +1,4 @@
 # Created by .ignore support plugin (hsz.mobi)
+
+docker-compose.override.yml
+stacks/lodestone/tags.json
