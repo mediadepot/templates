@@ -40,8 +40,8 @@ services:
       - 'traefik.http.routers.seafile.entrypoints=websecure'
       - 'traefik.http.routers.seafile.tls.certresolver=mydnschallenge'
     networks:
-      - traefik
       - seafile
+      - traefik
 networks:
   traefik:
     external: true
