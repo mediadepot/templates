@@ -8,12 +8,14 @@ services:
       - MYSQL_LOG_CONSOLE=true
     volumes:
       - /opt/mediadepot/apps/seafile/db:/var/lib/mysql  # Requested, specifies the path to MySQL data persistent store.
-
+    networks:
+      - seafile
   memcached:
     image: memcached:1.5.6
     container_name: seafile-memcached
     entrypoint: memcached -m 256
-
+    networks:
+      - seafile
   seafile:
     image: seafileltd/seafile-mc:latest
     container_name: seafile
@@ -39,9 +41,9 @@ services:
       - 'traefik.http.routers.seafile.entrypoints=websecure'
       - 'traefik.http.routers.seafile.tls.certresolver=mydnschallenge'
     networks:
-      - sismics
       - traefik
-      -
+      - seafile
 networks:
   traefik:
     external: true
+  seafile:
