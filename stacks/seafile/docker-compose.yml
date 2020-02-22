@@ -28,7 +28,7 @@ services:
       - SEAFILE_ADMIN_EMAIL=me@example.com # Specifies Seafile admin user, default is 'me@example.com'.
       - SEAFILE_ADMIN_PASSWORD=asecret     # Specifies Seafile admin password, default is 'asecret'.
       - SEAFILE_SERVER_LETSENCRYPT=false   # Whether to use https or not.
-      - SEAFILE_SERVER_HOSTNAME=docs.seafile.com # Specifies your host name if https is enabled.
+      - 'SEAFILE_SERVER_HOSTNAME=seafile.${DEPOT_DOMAIN_NAME}' # Specifies your host name if https is enabled.
     depends_on:
       - db
       - memcached
