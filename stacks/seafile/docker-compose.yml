@@ -18,9 +18,7 @@ services:
       - seafile
   seafile:
     image: seafileltd/seafile-mc:latest
-    container_name: seafile
-    ports:
-      - "80:80"
+    container_name: seafil
     volumes:
       - /media/storage:/shared   # Requested, specifies the path to Seafile data persistent store.
     environment:
