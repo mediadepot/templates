@@ -39,10 +39,13 @@ services:
       - "traefik.http.routers.seafile.rule=Host(`seafile.${DEPOT_DOMAIN_NAME}`)"
       - 'traefik.http.routers.seafile.entrypoints=websecure'
       - 'traefik.http.routers.seafile.tls.certresolver=mydnschallenge'
+    ports:
+      - "54333:80"
     networks:
       - seafile
       - traefik
 networks:
+  seafile:
   traefik:
     external: true
-  seafile:
+
