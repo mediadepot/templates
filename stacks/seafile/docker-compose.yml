@@ -43,7 +43,6 @@ services:
       - "54333:80"
     networks:
       - seafile
-      - traefik
 networks:
   seafile:
   traefik:
