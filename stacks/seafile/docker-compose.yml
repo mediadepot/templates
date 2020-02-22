@@ -20,7 +20,7 @@ services:
     image: seafileltd/seafile-mc:latest
     container_name: seafile
     volumes:
-      - /opt/mediadepot/apps/seafile/seafile:/shared/seafile
+      - /opt/mediadepot/apps/seafile/seafile:/shared/
       - /media/storage:/data/seafile-fuse:ro
     environment:
       - DB_HOST=db
