@@ -642,7 +642,7 @@
     "title": "Netboot.xyz",
     "description": "Netbootxyz is a way to PXE boot various operating system installers or utilities from one place within the BIOS without the need of having to go retrieve the media to run the tool",
     "logo": "https://mediadepot.github.io/templates/img/netbootxyz.jpg",
-    "image": "linuxserver/ombi:latest",
+    "image": "linuxserver/netbootxyz:latest",
     "categories": [
       "Downloaders:",
       "Network:Other",
