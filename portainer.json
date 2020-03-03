@@ -638,6 +638,58 @@
   },
   {
     "type": 1,
+    "name": "netbootxyz",
+    "title": "Netboot.xyz",
+    "description": "Netbootxyz is a way to PXE boot various operating system installers or utilities from one place within the BIOS without the need of having to go retrieve the media to run the tool",
+    "logo": "https://mediadepot.github.io/templates/img/netbootxyz.jpg",
+    "image": "linuxserver/ombi:latest",
+    "categories": [
+      "Downloaders:",
+      "Network:Other",
+      "Tools:"
+    ],
+    "ports": [
+      "3000/tcp",
+      "69/udp"
+    ],
+    "volumes": [
+      {
+        "container": "/config",
+        "bind": "/opt/mediadepot/apps/netbootxyz"
+      },
+      {
+        "container": "/assets",
+        "bind": "/media/storage/software/netbootxyz"
+      },
+      {
+        "container": "/etc/localtime",
+        "bind": "/etc/localtime",
+        "readonly": true
+      }
+    ],
+    "env": [
+      {
+        "name": "PGID",
+        "label": "PGID",
+        "default": "15000",
+        "preset": true
+      },
+      {
+        "name": "PUID",
+        "label": "PUID",
+        "default": "15000",
+        "preset": true
+      }
+    ],
+    "labels": [
+      { "name": "traefik.enable", "value": "true" },
+      { "name": "traefik.http.services.ombi.loadbalancer.server.port", "value": "3000" },
+      { "name": "traefik.http.routers.ombi.entrypoints", "value": "websecure" },
+      { "name": "traefik.http.routers.ombi.tls.certresolver", "value": "mydnschallenge" }
+    ]
+  },
+  {
+    "type": 1,
     "name": "ombi",
     "title": "Ombi",
     "description": "Ombi allows you to host your own Plex Request and user management system. If you are sharing your Plex server with other users, allow them to request new content using an easy to manage interface",
