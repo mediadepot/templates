@@ -683,9 +683,9 @@
     ],
     "labels": [
       { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.http.services.ombi.loadbalancer.server.port", "value": "3000" },
-      { "name": "traefik.http.routers.ombi.entrypoints", "value": "websecure" },
-      { "name": "traefik.http.routers.ombi.tls.certresolver", "value": "mydnschallenge" }
+      { "name": "traefik.http.services.netbootxyz.loadbalancer.server.port", "value": "3000" },
+      { "name": "traefik.http.routers.netbootxyz.entrypoints", "value": "websecure" },
+      { "name": "traefik.http.routers.netbootxyz.tls.certresolver", "value": "mydnschallenge" }
     ]
   },
   {
