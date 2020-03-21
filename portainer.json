@@ -393,7 +393,37 @@
       "stackfile": "stacks/filerun/docker-compose.yml"
     }
   },
-
+  {
+    "type": 1,
+    "name": "gaps",
+    "title": "Gaps",
+    "description": "Gaps searches through your Plex Server or local folders for all movies, then queries for known movies in the same collection.",
+    "logo": "https://mediadepot.github.io/templates/img/plex-icon.png",
+    "image": "housewrecker/gaps:latest",
+    "categories": [
+      "Tools:",
+      "Network:Web",
+      "Network:Other",
+      "Tools:"
+    ],
+    "ports": [
+      "8484/tcp"
+    ],
+    "volumes": [],
+    "env": [
+      {
+        "name": "TZ",
+        "label": "TZ",
+        "default": "America/Los_Angeles"
+      }
+    ],
+    "labels": [
+      { "name": "traefik.enable", "value": "true" },
+      { "name": "traefik.http.services.gaps.loadbalancer.server.port", "value": "8484" },
+      { "name": "traefik.http.routers.gaps.entrypoints", "value": "websecure" },
+      { "name": "traefik.http.routers.gaps.tls.certresolver", "value": "mydnschallenge" }
+    ]
+  },
   {
     "type": 1,
     "name": "healthchecks",
@@ -574,6 +604,11 @@
         "label": "PUID",
         "default": "15000",
         "preset": true
+      },
+      {
+        "name": "TZ",
+        "label": "TZ",
+        "default": "America/Los_Angeles"
       }
     ],
     "labels": [
