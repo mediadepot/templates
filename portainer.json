@@ -1319,6 +1319,64 @@
   },
   {
     "type": 1,
+    "name": "syncserver",
+    "title": "Mozilla Syncserver",
+    "description": "Run-Your-Own Firefox Sync Server",
+    "logo": "https://mediadepot.github.io/templates/img/firefox-logo.png",
+    "image": "mozilla/syncserver:latest",
+    "categories": [
+      "Tools:"
+    ],
+    "ports": [
+      "5000/tcp"
+    ],
+    "volumes": [
+      {
+        "container": "/data",
+        "bind": "/opt/mediadepot/apps/syncserver"
+      }
+    ],
+    "env": [
+      {
+        "name": "SYNCSERVER_PUBLIC_URL",
+        "label": "SYNCSERVER_PUBLIC_URL",
+        "default": "https://syncserver.depot.lan"
+      },
+      {
+        "name": "SYNCSERVER_SECRET_FILE",
+        "label": "SYNCSERVER_SECRET_FILE",
+        "default": "/data/secret_key"
+      },
+      {
+        "name": "SYNCSERVER_SQLURI",
+        "label": "SYNCSERVER_SQLURI",
+        "default": "sqlite:////data/syncserver.db"
+      },
+      {
+        "name": "SYNCSERVER_BATCH_UPLOAD_ENABLED",
+        "label": "SYNCSERVER_BATCH_UPLOAD_ENABLED",
+        "default": "true"
+      },
+      {
+        "name": "SYNCSERVER_FORCE_WSGI_ENVIRON",
+        "label": "SYNCSERVER_FORCE_WSGI_ENVIRON",
+        "default": "false"
+      },
+      {
+        "name": "PORT",
+        "label": "PORT",
+        "default": "5000"
+      }
+    ],
+    "labels": [
+      { "name": "traefik.enable", "value": "true" },
+      { "name": "traefik.http.services.syncservere.loadbalancer.server.port", "value": "5000" },
+      { "name": "traefik.http.routers.syncserver.entrypoints", "value": "websecure" },
+      { "name": "traefik.http.routers.syncserver.tls.certresolver", "value": "mydnschallenge" }
+    ]
+  },
+  {
+    "type": 1,
     "name": "tautulli",
     "title": "Tautulli",
     "description": "A Python based monitoring and tracking tool for Plex Media Server.",
