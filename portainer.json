@@ -657,6 +657,91 @@
     }
   },
   {
+    "type": 1,
+    "name": "logzio-logs-collector",
+    "title": "Logzio Logs Collector",
+    "description": "Docker container that uses Filebeat to collect logs from other Docker containers and forward those logs to your Logz.io account.",
+    "logo": "https://mediadepot.github.io/templates/img/logzio-icon.png",
+    "image": "logzio/docker-collector-logs",
+    "categories": [
+      "Tools:"
+    ],
+    "ports": [],
+    "privileged": true,
+    "volumes": [
+      {
+        "container": "/var/run/docker.sock",
+        "bind": "/var/run/docker.sock",
+        "readonly": true
+      },
+      {
+        "container": "/var/lib/docker/containers",
+        "bind": "/var/lib/docker/containers"
+      }
+    ],
+    "env": [
+      {
+        "name": "LOGZIO_TOKEN",
+        "label": "LOGZIO_TOKEN",
+        "default": "REPLACE-LOGZIO-TOKEN-HERE"
+      },
+      {
+        "name": "LOGZIO_URL",
+        "label": "LOGZIO_URL",
+        "default": "listener.logz.io:5015"
+      }
+    ],
+    "labels": []
+  },
+  {
+    "type": 1,
+    "name": "logzio-metrics-collector",
+    "title": "Logzio Metrics Collector",
+    "description": "Docker Metrics Collector is a container that runs Metricbeat with the modules you enable at runtime.",
+    "logo": "https://mediadepot.github.io/templates/img/logzio-icon.png",
+    "image": "logzio/docker-collector-metrics",
+    "categories": [
+      "Tools:"
+    ],
+    "ports": [],
+    "privileged": true,
+    "volumes": [
+      {
+        "container": "/var/run/docker.sock",
+        "bind": "/var/run/docker.sock",
+        "readonly": true
+      },
+      {
+        "container": "/hostfs/sys/fs/cgroup",
+        "bind": "/sys/fs/cgroup",
+        "readonly": true
+      },
+      {
+        "container": "/hostfs/proc",
+        "bind": "/proc",
+        "readonly": true
+      },
+      {
+        "container": "/hostfs",
+        "bind": "/",
+        "readonly": true
+      }
+    ],
+    "env": [
+      {
+        "name": "LOGZIO_TOKEN",
+        "label": "LOGZIO_TOKEN",
+        "default": "REPLACE-LOGZIO-TOKEN-HERE"
+      },
+      {
+        "name": "LOGZIO_MODULES",
+        "label": "LOGZIO_MODULES",
+        "default": "system,docker"
+      }
+    ],
+    "labels": []
+  },
+  {
     "type": 3,
     "name": "mayan",
     "title": "Mayan EDMS",
