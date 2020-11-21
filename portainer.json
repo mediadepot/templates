@@ -1286,6 +1286,41 @@
       { "name": "traefik.http.routers.rutorrent.tls.certresolver", "value": "mydnschallenge" }
     ]
   },
+
+  {
+    "type": 1,
+    "name": "scrutiny",
+    "title": "Scrutiny",
+    "description": "WebUI for smartd S.M.A.R.T monitoring",
+    "logo": "https://mediadepot.github.io/templates/img/scrutiny.png",
+    "image": "analogj/scrutiny:latest",
+    "categories": [
+      "Monitoring:"
+    ],
+    "ports": [
+      "8080/tcp"
+    ],
+    "volumes": [
+      {
+        "container": "/scrutiny/config/",
+        "bind": "/opt/mediadepot/apps/scrutiny"
+      },
+      {
+        "container": "/run/udev",
+        "bind": "/run/udev",
+        "readonly": true
+      }
+    ],
+    "env": [],
+    "labels": [
+      { "name": "traefik.enable", "value": "true" },
+      { "name": "traefik.http.services.scrutiny.loadbalancer.server.port", "value": "8080" },
+      { "name": "traefik.http.routers.scrutiny.entrypoints", "value": "websecure" },
+      { "name": "traefik.http.routers.scrutiny.tls.certresolver", "value": "mydnschallenge" }
+    ]
+  },
+
+
   {
     "type": 1,
     "name": "sickrage",
