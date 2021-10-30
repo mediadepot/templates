@@ -72,7 +72,6 @@ services:
 #      - ./media:/usr/src/paperless/media
 #      - ./export:/usr/src/paperless/export
 #      - ./consume:/usr/src/paperless/consume
-    env_file: docker-compose.env
     environment:
       PAPERLESS_OCR_LANGUAGE: eng
       PAPERLESS_TIME_ZONE: America/Los_Angeles
