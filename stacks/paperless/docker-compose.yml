@@ -65,8 +65,8 @@ services:
       retries: 5
     volumes:
       - /opt/mediadepot/apps/paperless/data:/usr/src/paperless/data
-      - /media/storage/documents/paperless/media:/usr/src/paperless/media
-      - /opt/mediadepot/apps/paperless/backup:/usr/src/paperless/export
+      - /opt/mediadepot/apps/paperless/media:/usr/src/paperless/media
+      - /media/storage/documents/paperless-export:/usr/src/paperless/export
       - /media/temp/blackhole/documents:/usr/src/paperless/consume
 #      - ./data:/usr/src/paperless/data
 #      - ./media:/usr/src/paperless/media
