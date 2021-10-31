@@ -41,8 +41,8 @@ services:
     image: postgres:13
     restart: unless-stopped
     volumes:
-      - /opt/mediadepot/apps/paperless/pgdata:/var/lib/postgresql/data
-#      - ./pgdata:/var/lib/postgresql/data
+#      - /opt/mediadepot/apps/paperless/pgdata:/var/lib/postgresql/data
+      - ./pgdata:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: paperless
       POSTGRES_USER: paperless
@@ -51,7 +51,7 @@ services:
       - paperlessnet
 
   webserver:
-    image: jonaswinkler/paperless-ng:1.4.5
+    image: jonaswinkler/paperless-ng:1.5.0
     restart: unless-stopped
     depends_on:
       - db
@@ -64,14 +64,14 @@ services:
       timeout: 10s
       retries: 5
     volumes:
-      - /media/storage/documents/paperless/data:/usr/src/paperless/data
-      - /media/storage/documents/paperless/media:/usr/src/paperless/media
-      - /opt/mediadepot/apps/paperless/backup:/usr/src/paperless/export
-      - /media/temp/blackhole/documents:/usr/src/paperless/consume
-#      - ./data:/usr/src/paperless/data
-#      - ./media:/usr/src/paperless/media
-#      - ./export:/usr/src/paperless/export
-#      - ./consume:/usr/src/paperless/consume
+#      - /media/storage/documents/paperless/data:/usr/src/paperless/data
+#      - /media/storage/documents/paperless/media:/usr/src/paperless/media
+#      - /opt/mediadepot/apps/paperless/backup:/usr/src/paperless/export
+#      - /media/temp/blackhole/documents:/usr/src/paperless/consume
+      - ./data:/usr/src/paperless/data
+      - ./media:/usr/src/paperless/media
+      - ./export:/usr/src/paperless/export
+      - ./consume:/usr/src/paperless/consume
     environment:
       PAPERLESS_OCR_LANGUAGE: eng
       PAPERLESS_TIME_ZONE: America/Los_Angeles
@@ -99,7 +99,7 @@ services:
       - traefik
 
   gotenberg:
-    image: thecodingmachine/gotenberg
+    image: thecodingmachine/gotenberg:6
     restart: unless-stopped
     environment:
       DISABLE_GOOGLE_CHROME: 1
