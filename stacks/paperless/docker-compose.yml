@@ -51,7 +51,7 @@ services:
       - paperlessnet
 
   webserver:
-    image: jonaswinkler/paperless-ng:latest
+    image: jonaswinkler/paperless-ng:1.4.5
     restart: unless-stopped
     depends_on:
       - db
