@@ -64,7 +64,7 @@ services:
       timeout: 10s
       retries: 5
     volumes:
-      - /media/storage/documents/paperless/data:/usr/src/paperless/data
+      - /opt/mediadepot/apps/paperless/data:/usr/src/paperless/data
       - /media/storage/documents/paperless/media:/usr/src/paperless/media
       - /opt/mediadepot/apps/paperless/backup:/usr/src/paperless/export
       - /media/temp/blackhole/documents:/usr/src/paperless/consume
