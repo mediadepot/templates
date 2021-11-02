@@ -1004,7 +1004,7 @@
     "title": "Prowlarr",
     "description": "Prowlarr is a indexer manager/proxy built on the popular arr .net/reactjs base stack to integrate with your various PVR apps. Prowlarr supports both Torrent Trackers and Usenet Indexers. ",
     "logo": "https://mediadepot.github.io/templates/img/prowlarr-banner.png",
-    "image": "ghcr.io/linuxserver/prowlarr:latest",
+    "image": "ghcr.io/linuxserver/prowlarr:develop",
     "categories": [
       "Downloaders:",
       "Tools:"
