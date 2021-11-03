@@ -1224,6 +1224,72 @@
       { "name": "traefik.http.routers.radarr.tls.certresolver", "value": "mydnschallenge" }
     ]
   },
+
+  {
+    "type": 1,
+    "name": "readarr",
+    "title": "Readarr",
+    "description": "Readarr - Book Manager and Automation (Sonarr for Ebooks)",
+    "logo": "https://mediadepot.github.io/templates/img/readarr-logo.png",
+    "image": "ghcr.io/linuxserver/readarr:nightly",
+    "categories": [
+      "Downloaders:",
+      "MediaApp:Books"
+    ],
+    "ports": [
+      "8787/tcp"
+    ],
+    "volumes": [
+      {
+        "container": "/config",
+        "bind": "/opt/mediadepot/apps/readarr"
+      },
+      {
+        "container": "/downloads",
+        "bind": "/media/storage/downloads/ebooks"
+      },
+      {
+        "container": "/books",
+        "bind": "/media/storage/ebooks"
+      },
+      {
+        "container": "/blackhole",
+        "bind": "/media/temp/blackhole/ebooks"
+      },
+      {
+        "container": "/etc/localtime",
+        "bind": "/etc/localtime",
+        "readonly": true
+      }
+    ],
+    "env": [
+      {
+        "name": "PGID",
+        "label": "PGID",
+        "default": "15000",
+        "preset": true
+      },
+      {
+        "name": "PUID",
+        "label": "PUID",
+        "default": "15000",
+        "preset": true
+      },
+      {
+        "name": "TZ",
+        "label": "TZ",
+        "default": "America/Los_Angeles"
+      }
+    ],
+    "labels": [
+      { "name": "traefik.enable", "value": "true" },
+      { "name": "traefik.http.services.readarr.loadbalancer.server.port", "value": "8787" },
+      { "name": "traefik.http.routers.readarr.entrypoints", "value": "websecure" },
+      { "name": "traefik.http.routers.readarr.tls.certresolver", "value": "mydnschallenge" }
+    ]
+  },
+
+
   {
     "type": 1,
     "name": "rclone",
