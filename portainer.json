@@ -1,1742 +1,2041 @@
-[
-  {
-    "type": 1,
-    "name": "cardigann",
-    "title": "Cardigann",
-    "description": "Cardigann, a server for adding extra indexers to Sonarr, SickRage and CouchPotato via Torznab and TorrentPotato proxies. Behind the scenes Cardigann logs in and runs searches and then transforms the results into a compatible format.",
-    "logo": "https://mediadepot.github.io/templates/img/cardigann.png",
-    "image": "linuxserver/cardigann:latest",
-    "categories": [
-      "Downloaders:"
-    ],
-    "ports": [
-      "5060/tcp"
-    ],
-    "volumes": [
-      {
-        "container": "/config",
-        "bind": "/opt/mediadepot/apps/cardigann"
+{
+  "version": "2",
+  "templates": [
+    {
+      "type": 1,
+      "name": "cardigann",
+      "title": "Cardigann",
+      "description": "Cardigann, a server for adding extra indexers to Sonarr, SickRage and CouchPotato via Torznab and TorrentPotato proxies. Behind the scenes Cardigann logs in and runs searches and then transforms the results into a compatible format.",
+      "logo": "https://mediadepot.github.io/templates/img/cardigann.png",
+      "image": "linuxserver/cardigann:latest",
+      "categories": [
+        "Downloaders:"
+      ],
+      "ports": [
+        "5060/tcp"
+      ],
+      "volumes": [
+        {
+          "container": "/config",
+          "bind": "/opt/mediadepot/apps/cardigann"
+        }
+      ],
+      "env": [
+        {
+          "name": "PGID",
+          "label": "PGID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "PUID",
+          "label": "PUID",
+          "default": "15000",
+          "preset": true
+        }
+      ],
+      "labels": [
+        {
+          "name": "traefik.enable",
+          "value": "true"
+        },
+        {
+          "name": "traefik.http.services.cardigann.loadbalancer.server.port",
+          "value": "5060"
+        },
+        {
+          "name": "traefik.http.routers.cardigann.entrypoints",
+          "value": "websecure"
+        },
+        {
+          "name": "traefik.http.routers.cardigann.tls.certresolver",
+          "value": "mydnschallenge"
+        }
+      ]
+    },
+    {
+      "type": 1,
+      "name": "changedetection",
+      "title": "ChangeDetection",
+      "description": "changedetection.io - The best and simplest self-hosted open source website change detection monitoring and notification service. An alternative to Visualping, Watchtower",
+      "logo": "https://mediadepot.github.io/templates/img/changedetection.jpg",
+      "image": "ghcr.io/dgtlmoon/changedetection.io:latest",
+      "categories": [
+        "Documents:",
+        "Network:Other",
+        "Tools:"
+      ],
+      "ports": [
+        "5000/tcp"
+      ],
+      "volumes": [
+        {
+          "container": "/datastore",
+          "bind": "/opt/mediadepot/apps/changedetection"
+        }
+      ],
+      "env": [],
+      "labels": [
+        {
+          "name": "traefik.enable",
+          "value": "true"
+        },
+        {
+          "name": "traefik.http.services.changedetection.loadbalancer.server.port",
+          "value": "5000"
+        },
+        {
+          "name": "traefik.http.routers.changedetection.entrypoints",
+          "value": "websecure"
+        },
+        {
+          "name": "traefik.http.routers.changedetection.tls.certresolver",
+          "value": "mydnschallenge"
+        }
+      ]
+    },
+    {
+      "type": 1,
+      "name": "couchpotato",
+      "title": "Couchpotato",
+      "description": "CouchPotato (CP) is an automatic NZB and torrent downloader. You can keep a \"movies I want\"-list and it will search for NZBs/torrents of these movies every X hours. Once a movie is found, it will send it to SABnzbd or download the torrent to a specified directory.",
+      "logo": "https://mediadepot.github.io/templates/img/couchpotato-icon.png",
+      "image": "linuxserver/couchpotato:latest",
+      "categories": [
+        "Downloaders:",
+        "MediaApp:Video"
+      ],
+      "ports": [
+        "5050/tcp"
+      ],
+      "volumes": [
+        {
+          "container": "/config",
+          "bind": "/opt/mediadepot/apps/couchpotato"
+        },
+        {
+          "container": "/downloads",
+          "bind": "/media/storage/downloads/movies"
+        },
+        {
+          "container": "/movies",
+          "bind": "/media/storage/movies"
+        },
+        {
+          "container": "/blackhole",
+          "bind": "/media/temp/blackhole/movies"
+        }
+      ],
+      "env": [
+        {
+          "name": "PGID",
+          "label": "PGID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "PUID",
+          "label": "PUID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "TZ",
+          "label": "TZ",
+          "default": "America/Los_Angeles"
+        }
+      ],
+      "labels": [
+        {
+          "name": "traefik.enable",
+          "value": "true"
+        },
+        {
+          "name": "traefik.http.services.couchpotato.loadbalancer.server.port",
+          "value": "5050"
+        },
+        {
+          "name": "traefik.http.routers.couchpotato.entrypoints",
+          "value": "websecure"
+        },
+        {
+          "name": "traefik.http.routers.couchpotato.tls.certresolver",
+          "value": "mydnschallenge"
+        }
+      ]
+    },
+    {
+      "type": 1,
+      "name": "duckdns",
+      "title": "DuckDNS",
+      "description": "Duckdns is a free service which will point a DNS (sub domains of duckdns.org) to an IP of your choice.",
+      "logo": "https://mediadepot.github.io/templates/img/duckdns.png",
+      "image": "linuxserver/duckdns:latest",
+      "categories": [
+        "Network:DNS",
+        "Tools:"
+      ],
+      "volumes": [],
+      "env": [
+        {
+          "name": "SUBDOMAINS",
+          "label": "SUBDOMAINS"
+        },
+        {
+          "name": "TOKEN",
+          "label": "TOKEN"
+        },
+        {
+          "name": "TZ",
+          "label": "TZ",
+          "default": "America/Los_Angeles"
+        }
+      ]
+    },
+    {
+      "type": 1,
+      "name": "duplicati",
+      "title": "Duplicati",
+      "description": "Duplicati works with standard protocols like FTP, SSH, WebDAV as well as popular services like Microsoft OneDrive, Amazon Cloud Drive & S3, Google Drive, box.com, Mega, hubiC and many others.",
+      "logo": "https://mediadepot.github.io/templates/img/duplicati-icon.png",
+      "image": "linuxserver/duplicati:latest",
+      "categories": [
+        "Utility:Backup"
+      ],
+      "ports": [
+        "8200/tcp"
+      ],
+      "volumes": [
+        {
+          "container": "/config",
+          "bind": "/opt/mediadepot/apps/duplicati"
+        },
+        {
+          "container": "/source",
+          "bind": "/opt/mediadepot/apps/"
+        }
+      ],
+      "env": [
+        {
+          "name": "TZ",
+          "label": "TZ",
+          "default": "America/Los_Angeles"
+        }
+      ],
+      "labels": [
+        {
+          "name": "traefik.enable",
+          "value": "true"
+        },
+        {
+          "name": "traefik.http.services.duplicati.loadbalancer.server.port",
+          "value": "8200"
+        },
+        {
+          "name": "traefik.http.routers.duplicati.entrypoints",
+          "value": "websecure"
+        },
+        {
+          "name": "traefik.http.routers.duplicati.tls.certresolver",
+          "value": "mydnschallenge"
+        }
+      ]
+    },
+    {
+      "type": 1,
+      "name": "duplicacy",
+      "title": "Duplicacy",
+      "description": "Duplicacy backs up your files to many cloud storages with client-side encryption and the highest level of deduplication",
+      "logo": "https://mediadepot.github.io/templates/img/duplicacy-icon.png",
+      "image": "mediadepot/duplicacy:latest",
+      "categories": [
+        "Utility:Backup"
+      ],
+      "ports": [
+        "3875/tcp"
+      ],
+      "volumes": [
+        {
+          "container": "/config",
+          "bind": "/opt/mediadepot/apps/duplicacy/config"
+        },
+        {
+          "container": "/logs",
+          "bind": "/opt/mediadepot/apps/duplicacy/logs"
+        },
+        {
+          "container": "/cache",
+          "bind": "/opt/mediadepot/apps/duplicacy/cache"
+        },
+        {
+          "container": "/source/apps",
+          "bind": "/opt/mediadepot/apps/"
+        },
+        {
+          "container": "/source/storage",
+          "bind": "/media/storage/"
+        }
+      ],
+      "env": [
+        {
+          "name": "TZ",
+          "label": "TZ",
+          "default": "America/Los_Angeles"
+        }
+      ],
+      "labels": [
+        {
+          "name": "traefik.enable",
+          "value": "true"
+        },
+        {
+          "name": "traefik.http.services.duplicacy.loadbalancer.server.port",
+          "value": "3875"
+        },
+        {
+          "name": "traefik.http.routers.duplicacy.entrypoints",
+          "value": "websecure"
+        },
+        {
+          "name": "traefik.http.routers.duplicacy.tls.certresolver",
+          "value": "mydnschallenge"
+        }
+      ]
+    },
+    {
+      "type": 1,
+      "name": "droppy",
+      "title": "Droppy",
+      "description": "Droppy is a self-hosted file storage server",
+      "logo": "https://mediadepot.github.io/templates/img/filebrowser-icon.png",
+      "image": "silverwind/droppy:latest",
+      "categories": [
+        "Tools:",
+        "Network:Web",
+        "Network:Other",
+        "Tools:"
+      ],
+      "ports": [
+        "8989/tcp"
+      ],
+      "volumes": [
+        {
+          "container": "/files/tvshows",
+          "bind": "/media/storage/tvshows"
+        },
+        {
+          "container": "/files/movies",
+          "bind": "/media/storage/movies"
+        },
+        {
+          "container": "/files/music",
+          "bind": "/media/storage/music"
+        },
+        {
+          "container": "/files/photos",
+          "bind": "/media/storage/photos"
+        },
+        {
+          "container": "/files/ebooks",
+          "bind": "/media/storage/ebooks"
+        },
+        {
+          "container": "/files/documents",
+          "bind": "/media/storage/documents"
+        },
+        {
+          "container": "/files/software",
+          "bind": "/media/storage/software"
+        },
+        {
+          "container": "/files/downloads",
+          "bind": "/media/storage/downloads"
+        },
+        {
+          "container": "/files/blackhole",
+          "bind": "/media/temp/blackhole"
+        },
+        {
+          "container": "/files/processing",
+          "bind": "/media/temp/processing"
+        },
+        {
+          "container": "/config",
+          "bind": "/opt/mediadepot/apps/droppy"
+        }
+      ],
+      "env": [
+        {
+          "name": "GID",
+          "label": "GID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "UID",
+          "label": "UID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "TZ",
+          "label": "TZ",
+          "default": "America/Los_Angeles"
+        }
+      ],
+      "labels": [
+        {
+          "name": "traefik.enable",
+          "value": "true"
+        },
+        {
+          "name": "traefik.http.services.droppy.loadbalancer.server.port",
+          "value": "8989"
+        },
+        {
+          "name": "traefik.http.routers.droppy.entrypoints",
+          "value": "websecure"
+        },
+        {
+          "name": "traefik.http.routers.droppy.tls.certresolver",
+          "value": "mydnschallenge"
+        }
+      ]
+    },
+    {
+      "type": 1,
+      "name": "filebrowser",
+      "title": "Filebrowser",
+      "description": "filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files.",
+      "logo": "https://mediadepot.github.io/templates/img/filebrowser-icon.png",
+      "image": "mediadepot/filebrowser:latest",
+      "categories": [
+        "Tools:",
+        "Network:Web",
+        "Network:Other",
+        "Tools:"
+      ],
+      "ports": [
+        "8080/tcp"
+      ],
+      "command": "-d /config/filebrowser.db -p 8080",
+      "volumes": [
+        {
+          "container": "/srv/tvshows",
+          "bind": "/media/storage/tvshows"
+        },
+        {
+          "container": "/srv/movies",
+          "bind": "/media/storage/movies"
+        },
+        {
+          "container": "/srv/music",
+          "bind": "/media/storage/music"
+        },
+        {
+          "container": "/srv/photos",
+          "bind": "/media/storage/photos"
+        },
+        {
+          "container": "/srv/ebooks",
+          "bind": "/media/storage/ebooks"
+        },
+        {
+          "container": "/srv/documents",
+          "bind": "/media/storage/documents"
+        },
+        {
+          "container": "/srv/software",
+          "bind": "/media/storage/software"
+        },
+        {
+          "container": "/srv/downloads",
+          "bind": "/media/storage/downloads"
+        },
+        {
+          "container": "/srv/blackhole",
+          "bind": "/media/temp/blackhole"
+        },
+        {
+          "container": "/srv/processing",
+          "bind": "/media/temp/processing"
+        },
+        {
+          "container": "/config",
+          "bind": "/opt/mediadepot/apps/filebrowser"
+        }
+      ],
+      "env": [
+        {
+          "name": "TZ",
+          "label": "TZ",
+          "default": "America/Los_Angeles"
+        }
+      ],
+      "labels": [
+        {
+          "name": "traefik.enable",
+          "value": "true"
+        },
+        {
+          "name": "traefik.http.services.filebrowser.loadbalancer.server.port",
+          "value": "8080"
+        },
+        {
+          "name": "traefik.http.routers.filebrowser.entrypoints",
+          "value": "websecure"
+        },
+        {
+          "name": "traefik.http.routers.filebrowser.tls.certresolver",
+          "value": "mydnschallenge"
+        }
+      ]
+    },
+    {
+      "type": 3,
+      "name": "filerun",
+      "title": "Filerun",
+      "description": "access your files anywhere through self-hosted secure cloud storage, file backup and sharing for your photos, videos, files and more.",
+      "logo": "https://mediadepot.github.io/templates/img/filerun-logo.png",
+      "categories": [
+        "Documents:",
+        "Network:Other",
+        "Tools:"
+      ],
+      "env": [],
+      "repository": {
+        "url": "https://github.com/mediadepot/templates",
+        "stackfile": "stacks/filerun/docker-compose.yml"
       }
-    ],
-    "env": [
-      {
-        "name": "PGID",
-        "label": "PGID",
-        "default": "15000",
-        "preset": true
-      },
-      {
-        "name": "PUID",
-        "label": "PUID",
-        "default": "15000",
-        "preset": true
+    },
+    {
+      "type": 1,
+      "name": "gaps",
+      "title": "Gaps",
+      "description": "Gaps searches through your Plex Server or local folders for all movies, then queries for known movies in the same collection.",
+      "logo": "https://mediadepot.github.io/templates/img/plex-icon.png",
+      "image": "housewrecker/gaps:latest",
+      "categories": [
+        "Tools:",
+        "Network:Web",
+        "Network:Other",
+        "Tools:"
+      ],
+      "ports": [
+        "8484/tcp"
+      ],
+      "volumes": [],
+      "env": [
+        {
+          "name": "TZ",
+          "label": "TZ",
+          "default": "America/Los_Angeles"
+        }
+      ],
+      "labels": [
+        {
+          "name": "traefik.enable",
+          "value": "true"
+        },
+        {
+          "name": "traefik.http.services.gaps.loadbalancer.server.port",
+          "value": "8484"
+        },
+        {
+          "name": "traefik.http.routers.gaps.entrypoints",
+          "value": "websecure"
+        },
+        {
+          "name": "traefik.http.routers.gaps.tls.certresolver",
+          "value": "mydnschallenge"
+        }
+      ]
+    },
+    {
+      "type": 1,
+      "name": "healthchecks",
+      "title": "Healthchecks",
+      "description": "Healthchecks is a watchdog for your cron jobs. It's a web server that listens for pings from your cron jobs, plus a web interface.",
+      "logo": "https://mediadepot.github.io/templates/img/healthchecks-logo.png",
+      "image": "linuxserver/healthchecks",
+      "categories": [
+        "Tools:",
+        "Network:Web",
+        "Network:Other",
+        "Status:Stable"
+      ],
+      "ports": [
+        "8000/tcp"
+      ],
+      "volumes": [
+        {
+          "container": "/config",
+          "bind": "/opt/mediadepot/apps/healthchecks"
+        }
+      ],
+      "env": [
+        {
+          "name": "PGID",
+          "label": "PGID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "PUID",
+          "label": "PUID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "TZ",
+          "label": "TZ",
+          "default": "America/Los_Angeles"
+        },
+        {
+          "name": "SITE_ROOT",
+          "label": "SITE_ROOT",
+          "default": "healthchecks.depot.lan"
+        },
+        {
+          "name": "SITE_NAME",
+          "label": "SITE_NAME",
+          "default": "healthchecks"
+        },
+        {
+          "name": "DEFAULT_FROM_EMAIL",
+          "label": "DEFAULT_FROM_EMAIL",
+          "default": "healthchecks@depot.lan"
+        },
+        {
+          "name": "EMAIL_HOST",
+          "label": "EMAIL_HOST",
+          "default": ""
+        },
+        {
+          "name": "EMAIL_PORT",
+          "label": "EMAIL_PORT",
+          "default": ""
+        },
+        {
+          "name": "EMAIL_HOST_USER",
+          "label": "EMAIL_HOST_USER",
+          "default": ""
+        },
+        {
+          "name": "EMAIL_HOST_PASSWORD",
+          "label": "EMAIL_HOST_PASSWORD",
+          "default": ""
+        },
+        {
+          "name": "EMAIL_USE_TLS",
+          "label": "EMAIL_USE_TLS",
+          "default": ""
+        }
+      ],
+      "labels": [
+        {
+          "name": "traefik.enable",
+          "value": "true"
+        },
+        {
+          "name": "traefik.http.services.healthchecks.loadbalancer.server.port",
+          "value": "8000"
+        },
+        {
+          "name": "traefik.http.routers.healthchecks.entrypoints",
+          "value": "websecure"
+        },
+        {
+          "name": "traefik.http.routers.healthchecks.tls.certresolver",
+          "value": "mydnschallenge"
+        }
+      ]
+    },
+    {
+      "type": 1,
+      "name": "heimdall",
+      "title": "Heimdall",
+      "description": "Heimdall is a way to organise all those links to your most used web sites and web applications in a simple way.",
+      "logo": "https://mediadepot.github.io/templates/img/heimdall-icon.png",
+      "image": "linuxserver/heimdall:latest",
+      "categories": [
+        "Tools:",
+        "Network:Web",
+        "Network:Other",
+        "Status:Stable"
+      ],
+      "ports": [
+        "80/tcp",
+        "443/tcp"
+      ],
+      "volumes": [
+        {
+          "container": "/config",
+          "bind": "/opt/mediadepot/apps/heimdall"
+        }
+      ],
+      "env": [
+        {
+          "name": "PGID",
+          "label": "PGID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "PUID",
+          "label": "PUID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "TZ",
+          "label": "TZ",
+          "default": "America/Los_Angeles"
+        }
+      ],
+      "labels": [
+        {
+          "name": "traefik.enable",
+          "value": "true"
+        },
+        {
+          "name": "traefik.http.services.heimdall.loadbalancer.server.port",
+          "value": "80"
+        },
+        {
+          "name": "traefik.http.routers.heimdall.entrypoints",
+          "value": "websecure"
+        },
+        {
+          "name": "traefik.http.routers.heimdall.tls.certresolver",
+          "value": "mydnschallenge"
+        }
+      ]
+    },
+    {
+      "type": 1,
+      "name": "jackett",
+      "title": "Jackett",
+      "description": "Jackett works as a proxy server it translates queries from apps like Sonarr etc into tracker-site-specific http queries and parses the html response sending results back to the requesting software.",
+      "logo": "https://mediadepot.github.io/templates/img/jacket-icon.png",
+      "image": "linuxserver/jackett:latest",
+      "categories": [
+        "Downloaders:",
+        "Tools:"
+      ],
+      "ports": [
+        "9117/tcp"
+      ],
+      "volumes": [
+        {
+          "container": "/config",
+          "bind": "/opt/mediadepot/apps/jackett"
+        },
+        {
+          "container": "/downloads",
+          "bind": "/media/storage/downloads"
+        },
+        {
+          "container": "/etc/localtime",
+          "bind": "/etc/localtime",
+          "readonly": true
+        }
+      ],
+      "env": [
+        {
+          "name": "PGID",
+          "label": "PGID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "PUID",
+          "label": "PUID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "TZ",
+          "label": "TZ",
+          "default": "America/Los_Angeles"
+        }
+      ],
+      "labels": [
+        {
+          "name": "traefik.enable",
+          "value": "true"
+        },
+        {
+          "name": "traefik.http.services.jackett.loadbalancer.server.port",
+          "value": "9117"
+        },
+        {
+          "name": "traefik.http.routers.jackett.entrypoints",
+          "value": "websecure"
+        },
+        {
+          "name": "traefik.http.routers.jackett.tls.certresolver",
+          "value": "mydnschallenge"
+        }
+      ]
+    },
+    {
+      "type": 3,
+      "name": "klaxon",
+      "title": "Klaxon",
+      "description": "Klaxon is a free, quick to set up and easy to use robot that checks websites regularly so you don't have to.",
+      "logo": "https://mediadepot.github.io/templates/img/klaxon-logo.png",
+      "categories": [
+        "Documents:",
+        "Network:Other",
+        "Tools:"
+      ],
+      "env": [
+        {
+          "name": "SMTP_PROVIDER",
+          "label": "SMTP_PROVIDER",
+          "default": "SENDGRID"
+        },
+        {
+          "name": "SENDGRID_USERNAME",
+          "label": "SENDGRID_USERNAME",
+          "default": ""
+        },
+        {
+          "name": "SENDGRID_PASSWORD",
+          "label": "SENDGRID_PASSWORD",
+          "default": ""
+        },
+        {
+          "name": "ADMIN_EMAILS",
+          "label": "ADMIN_EMAILS",
+          "default": ""
+        }
+      ],
+      "repository": {
+        "url": "https://github.com/mediadepot/templates",
+        "stackfile": "stacks/klaxon/docker-compose.yml"
       }
-    ],
-    "labels": [
-      { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.http.services.cardigann.loadbalancer.server.port", "value": "5060" },
-      { "name": "traefik.http.routers.cardigann.entrypoints", "value": "websecure" },
-      { "name": "traefik.http.routers.cardigann.tls.certresolver", "value": "mydnschallenge" }
-    ]
-  },
-  {
-    "type": 1,
-    "name": "changedetection",
-    "title": "ChangeDetection",
-    "description": "changedetection.io - The best and simplest self-hosted open source website change detection monitoring and notification service. An alternative to Visualping, Watchtower",
-    "logo": "https://mediadepot.github.io/templates/img/changedetection.jpg",
-    "image": "ghcr.io/dgtlmoon/changedetection.io:latest",
-    "categories": [
-      "Documents:",
-      "Network:Other",
-      "Tools:"
-    ],
-    "ports": [
-      "5000/tcp"
-    ],
-    "volumes": [
-      {
-        "container": "/datastore",
-        "bind": "/opt/mediadepot/apps/changedetection"
+    },
+    {
+      "type": 1,
+      "name": "logzio-logs-collector",
+      "title": "Logzio Logs Collector",
+      "description": "Docker container that uses Filebeat to collect logs from other Docker containers and forward those logs to your Logz.io account.",
+      "logo": "https://mediadepot.github.io/templates/img/logzio-icon.png",
+      "image": "logzio/docker-collector-logs",
+      "categories": [
+        "Tools:"
+      ],
+      "ports": [],
+      "privileged": true,
+      "volumes": [
+        {
+          "container": "/var/run/docker.sock",
+          "bind": "/var/run/docker.sock",
+          "readonly": true
+        },
+        {
+          "container": "/var/lib/docker/containers",
+          "bind": "/var/lib/docker/containers"
+        }
+      ],
+      "env": [
+        {
+          "name": "LOGZIO_TOKEN",
+          "label": "LOGZIO_TOKEN",
+          "default": "REPLACE-LOGZIO-TOKEN-HERE"
+        },
+        {
+          "name": "LOGZIO_URL",
+          "label": "LOGZIO_URL",
+          "default": "listener.logz.io:5015"
+        }
+      ],
+      "labels": []
+    },
+    {
+      "type": 1,
+      "name": "logzio-metrics-collector",
+      "title": "Logzio Metrics Collector",
+      "description": "Docker Metrics Collector is a container that runs Metricbeat with the modules you enable at runtime.",
+      "logo": "https://mediadepot.github.io/templates/img/logzio-icon.png",
+      "image": "logzio/docker-collector-metrics",
+      "categories": [
+        "Tools:"
+      ],
+      "ports": [],
+      "privileged": true,
+      "volumes": [
+        {
+          "container": "/var/run/docker.sock",
+          "bind": "/var/run/docker.sock",
+          "readonly": true
+        },
+        {
+          "container": "/hostfs/sys/fs/cgroup",
+          "bind": "/sys/fs/cgroup",
+          "readonly": true
+        },
+        {
+          "container": "/hostfs/proc",
+          "bind": "/proc",
+          "readonly": true
+        },
+        {
+          "container": "/hostfs",
+          "bind": "/",
+          "readonly": true
+        }
+      ],
+      "env": [
+        {
+          "name": "LOGZIO_TOKEN",
+          "label": "LOGZIO_TOKEN",
+          "default": "REPLACE-LOGZIO-TOKEN-HERE"
+        },
+        {
+          "name": "LOGZIO_MODULES",
+          "label": "LOGZIO_MODULES",
+          "default": "system,docker"
+        }
+      ],
+      "labels": []
+    },
+    {
+      "type": 3,
+      "name": "mayan",
+      "title": "Mayan EDMS",
+      "description": "Mayan EDMS is an electronic vault for your documents.",
+      "logo": "https://mediadepot.github.io/templates/img/mayan-logo.png",
+      "categories": [
+        "Documents:",
+        "Tools:"
+      ],
+      "repository": {
+        "url": "https://github.com/mediadepot/templates",
+        "stackfile": "stacks/mayan/docker-compose.yml"
       }
-    ],
-    "env": [],
-    "labels": [
-      { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.http.services.changedetection.loadbalancer.server.port", "value": "5000" },
-      { "name": "traefik.http.routers.changedetection.entrypoints", "value": "websecure" },
-      { "name": "traefik.http.routers.changedetection.tls.certresolver", "value": "mydnschallenge" }
-    ]
-  },
-  {
-    "type": 1,
-    "name": "couchpotato",
-    "title": "Couchpotato",
-    "description": "CouchPotato (CP) is an automatic NZB and torrent downloader. You can keep a \"movies I want\"-list and it will search for NZBs/torrents of these movies every X hours. Once a movie is found, it will send it to SABnzbd or download the torrent to a specified directory.",
-    "logo": "https://mediadepot.github.io/templates/img/couchpotato-icon.png",
-    "image": "linuxserver/couchpotato:latest",
-    "categories": [
-      "Downloaders:",
-      "MediaApp:Video"
-    ],
-    "ports": [
-      "5050/tcp"
-    ],
-    "volumes": [
-      {
-        "container": "/config",
-        "bind": "/opt/mediadepot/apps/couchpotato"
-      },
-      {
-        "container": "/downloads",
-        "bind": "/media/storage/downloads/movies"
-      },
-      {
-        "container": "/movies",
-        "bind": "/media/storage/movies"
-      },
-      {
-        "container": "/blackhole",
-        "bind": "/media/temp/blackhole/movies"
-      }
-    ],
-    "env": [
-      {
-        "name": "PGID",
-        "label": "PGID",
-        "default": "15000",
-        "preset": true
-      },
-      {
-        "name": "PUID",
-        "label": "PUID",
-        "default": "15000",
-        "preset": true
-      },
-      {
-        "name": "TZ",
-        "label": "TZ",
-        "default": "America/Los_Angeles"
-      }
-    ],
-    "labels": [
-      { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.http.services.couchpotato.loadbalancer.server.port", "value": "5050" },
-      { "name": "traefik.http.routers.couchpotato.entrypoints", "value": "websecure" },
-      { "name": "traefik.http.routers.couchpotato.tls.certresolver", "value": "mydnschallenge" }
-    ]
-  },
-  {
-    "type": 1,
-    "name": "duckdns",
-    "title": "DuckDNS",
-    "description": "Duckdns is a free service which will point a DNS (sub domains of duckdns.org) to an IP of your choice.",
-    "logo": "https://mediadepot.github.io/templates/img/duckdns.png",
-    "image": "linuxserver/duckdns:latest",
-    "categories": [
-      "Network:DNS",
-      "Tools:"
-    ],
-    "volumes": [],
-    "env": [
-      {
-        "name": "SUBDOMAINS",
-        "label": "SUBDOMAINS"
-      },
-      {
-        "name": "TOKEN",
-        "label": "TOKEN"
-      },
-      {
-        "name": "TZ",
-        "label": "TZ",
-        "default": "America/Los_Angeles"
-      }
-    ]
-  },
-  {
-    "type": 1,
-    "name": "duplicati",
-    "title": "Duplicati",
-    "description": "Duplicati works with standard protocols like FTP, SSH, WebDAV as well as popular services like Microsoft OneDrive, Amazon Cloud Drive & S3, Google Drive, box.com, Mega, hubiC and many others.",
-    "logo": "https://mediadepot.github.io/templates/img/duplicati-icon.png",
-    "image": "linuxserver/duplicati:latest",
-    "categories": [
-      "Utility:Backup"
-    ],
-    "ports": [
-      "8200/tcp"
-    ],
-    "volumes": [
-      {
-        "container": "/config",
-        "bind": "/opt/mediadepot/apps/duplicati"
-      },
-      {
-        "container": "/source",
-        "bind": "/opt/mediadepot/apps/"
-      }
-    ],
-    "env": [
-      {
-        "name": "TZ",
-        "label": "TZ",
-        "default": "America/Los_Angeles"
-      }
-    ],
-    "labels": [
-      { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.http.services.duplicati.loadbalancer.server.port", "value": "8200" },
-      { "name": "traefik.http.routers.duplicati.entrypoints", "value": "websecure" },
-      { "name": "traefik.http.routers.duplicati.tls.certresolver", "value": "mydnschallenge" }
-    ]
-  },
-  {
-    "type": 1,
-    "name": "duplicacy",
-    "title": "Duplicacy",
-    "description": "Duplicacy backs up your files to many cloud storages with client-side encryption and the highest level of deduplication",
-    "logo": "https://mediadepot.github.io/templates/img/duplicacy-icon.png",
-    "image": "mediadepot/duplicacy:latest",
-    "categories": [
-      "Utility:Backup"
-    ],
-    "ports": [
-      "3875/tcp"
-    ],
-    "volumes": [
-      {
-        "container": "/config",
-        "bind": "/opt/mediadepot/apps/duplicacy/config"
-      },
-      {
-        "container": "/logs",
-        "bind": "/opt/mediadepot/apps/duplicacy/logs"
-      },
-      {
-        "container": "/cache",
-        "bind": "/opt/mediadepot/apps/duplicacy/cache"
-      },
-      {
-        "container": "/source/apps",
-        "bind": "/opt/mediadepot/apps/"
-      },
-      {
-        "container": "/source/storage",
-        "bind": "/media/storage/"
-      }
-    ],
-    "env": [
-      {
-        "name": "TZ",
-        "label": "TZ",
-        "default": "America/Los_Angeles"
-      }
-    ],
-    "labels": [
-      { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.http.services.duplicacy.loadbalancer.server.port", "value": "3875" },
-      { "name": "traefik.http.routers.duplicacy.entrypoints", "value": "websecure" },
-      { "name": "traefik.http.routers.duplicacy.tls.certresolver", "value": "mydnschallenge" }
-    ]
-  },
-  {
-    "type": 1,
-    "name": "droppy",
-    "title": "Droppy",
-    "description": "Droppy is a self-hosted file storage server",
-    "logo": "https://mediadepot.github.io/templates/img/filebrowser-icon.png",
-    "image": "silverwind/droppy:latest",
-    "categories": [
-      "Tools:",
-      "Network:Web",
-      "Network:Other",
-      "Tools:"
-    ],
-    "ports": [
-      "8989/tcp"
-    ],
-    "volumes": [
-      {
-        "container": "/files/tvshows",
-        "bind": "/media/storage/tvshows"
-      },
-      {
-        "container": "/files/movies",
-        "bind": "/media/storage/movies"
-      },
-      {
-        "container": "/files/music",
-        "bind": "/media/storage/music"
-      },
-      {
-        "container": "/files/photos",
-        "bind": "/media/storage/photos"
-      },
-      {
-        "container": "/files/ebooks",
-        "bind": "/media/storage/ebooks"
-      },
-      {
-        "container": "/files/documents",
-        "bind": "/media/storage/documents"
-      },
-      {
-        "container": "/files/software",
-        "bind": "/media/storage/software"
-      },
-      {
-        "container": "/files/downloads",
-        "bind": "/media/storage/downloads"
-      },
-      {
-        "container": "/files/blackhole",
-        "bind": "/media/temp/blackhole"
-      },
-      {
-        "container": "/files/processing",
-        "bind": "/media/temp/processing"
-      },
-      {
-        "container": "/config",
-        "bind": "/opt/mediadepot/apps/droppy"
-      }
-    ],
-    "env": [
-      {
-        "name": "GID",
-        "label": "GID",
-        "default": "15000",
-        "preset": true
-      },
-      {
-        "name": "UID",
-        "label": "UID",
-        "default": "15000",
-        "preset": true
-      },
-      {
-        "name": "TZ",
-        "label": "TZ",
-        "default": "America/Los_Angeles"
-      }
-    ],
-    "labels": [
-      { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.http.services.droppy.loadbalancer.server.port", "value": "8989" },
-      { "name": "traefik.http.routers.droppy.entrypoints", "value": "websecure" },
-      { "name": "traefik.http.routers.droppy.tls.certresolver", "value": "mydnschallenge" }
-    ]
-  },
-  {
-    "type": 1,
-    "name": "filebrowser",
-    "title": "Filebrowser",
-    "description": "filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files.",
-    "logo": "https://mediadepot.github.io/templates/img/filebrowser-icon.png",
-    "image": "mediadepot/filebrowser:latest",
-    "categories": [
-      "Tools:",
-      "Network:Web",
-      "Network:Other",
-      "Tools:"
-    ],
-    "ports": [
-      "8080/tcp"
-    ],
-    "command": "-d /config/filebrowser.db -p 8080",
-    "volumes": [
-      {
-        "container": "/srv/tvshows",
-        "bind": "/media/storage/tvshows"
-      },
-      {
-        "container": "/srv/movies",
-        "bind": "/media/storage/movies"
-      },
-      {
-        "container": "/srv/music",
-        "bind": "/media/storage/music"
-      },
-      {
-        "container": "/srv/photos",
-        "bind": "/media/storage/photos"
-      },
-      {
-        "container": "/srv/ebooks",
-        "bind": "/media/storage/ebooks"
-      },
-      {
-        "container": "/srv/documents",
-        "bind": "/media/storage/documents"
-      },
-      {
-        "container": "/srv/software",
-        "bind": "/media/storage/software"
-      },
-      {
-        "container": "/srv/downloads",
-        "bind": "/media/storage/downloads"
-      },
-      {
-        "container": "/srv/blackhole",
-        "bind": "/media/temp/blackhole"
-      },
-      {
-        "container": "/srv/processing",
-        "bind": "/media/temp/processing"
-      },
-      {
-        "container": "/config",
-        "bind": "/opt/mediadepot/apps/filebrowser"
-      }
-    ],
-    "env": [
-      {
-        "name": "TZ",
-        "label": "TZ",
-        "default": "America/Los_Angeles"
-      }
-    ],
-    "labels": [
-      { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.http.services.filebrowser.loadbalancer.server.port", "value": "8080" },
-      { "name": "traefik.http.routers.filebrowser.entrypoints", "value": "websecure" },
-      { "name": "traefik.http.routers.filebrowser.tls.certresolver", "value": "mydnschallenge" }
-    ]
-  },
-  {
-    "type": 3,
-    "name": "filerun",
-    "title": "Filerun",
-    "description": "access your files anywhere through self-hosted secure cloud storage, file backup and sharing for your photos, videos, files and more.",
-    "logo": "https://mediadepot.github.io/templates/img/filerun-logo.png",
-    "categories": [
-      "Documents:",
-      "Network:Other",
-      "Tools:"
-    ],
-    "env": [],
-    "repository": {
-      "url": "https://github.com/mediadepot/templates",
-      "stackfile": "stacks/filerun/docker-compose.yml"
+    },
+    {
+      "type": 1,
+      "name": "netbootxyz",
+      "title": "Netboot.xyz",
+      "description": "Netbootxyz is a way to PXE boot various operating system installers or utilities from one place within the BIOS without the need of having to go retrieve the media to run the tool",
+      "logo": "https://mediadepot.github.io/templates/img/netbootxyz.jpg",
+      "image": "linuxserver/netbootxyz:latest",
+      "categories": [
+        "Downloaders:",
+        "Network:Other",
+        "Tools:"
+      ],
+      "ports": [
+        "3000/tcp",
+        "69/udp"
+      ],
+      "volumes": [
+        {
+          "container": "/config",
+          "bind": "/opt/mediadepot/apps/netbootxyz"
+        },
+        {
+          "container": "/assets",
+          "bind": "/media/storage/software/netbootxyz"
+        },
+        {
+          "container": "/etc/localtime",
+          "bind": "/etc/localtime",
+          "readonly": true
+        }
+      ],
+      "env": [
+        {
+          "name": "PGID",
+          "label": "PGID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "PUID",
+          "label": "PUID",
+          "default": "15000",
+          "preset": true
+        }
+      ],
+      "labels": [
+        {
+          "name": "traefik.enable",
+          "value": "true"
+        },
+        {
+          "name": "traefik.http.services.netbootxyz.loadbalancer.server.port",
+          "value": "3000"
+        },
+        {
+          "name": "traefik.http.routers.netbootxyz.entrypoints",
+          "value": "websecure"
+        },
+        {
+          "name": "traefik.http.routers.netbootxyz.tls.certresolver",
+          "value": "mydnschallenge"
+        }
+      ]
+    },
+    {
+      "type": 1,
+      "name": "ombi",
+      "title": "Ombi",
+      "description": "Ombi allows you to host your own Plex Request and user management system. If you are sharing your Plex server with other users, allow them to request new content using an easy to manage interface",
+      "logo": "https://mediadepot.github.io/templates/img/ombi.png",
+      "image": "linuxserver/ombi:latest",
+      "categories": [
+        "Downloaders:",
+        "Network:Other",
+        "MediaApp:Video",
+        "Tools:"
+      ],
+      "ports": [
+        "3579/tcp"
+      ],
+      "volumes": [
+        {
+          "container": "/config",
+          "bind": "/opt/mediadepot/apps/ombi"
+        },
+        {
+          "container": "/etc/localtime",
+          "bind": "/etc/localtime",
+          "readonly": true
+        }
+      ],
+      "env": [
+        {
+          "name": "PGID",
+          "label": "PGID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "PUID",
+          "label": "PUID",
+          "default": "15000",
+          "preset": true
+        }
+      ],
+      "labels": [
+        {
+          "name": "traefik.enable",
+          "value": "true"
+        },
+        {
+          "name": "traefik.http.services.ombi.loadbalancer.server.port",
+          "value": "3579"
+        },
+        {
+          "name": "traefik.http.routers.ombi.entrypoints",
+          "value": "websecure"
+        },
+        {
+          "name": "traefik.http.routers.ombi.tls.certresolver",
+          "value": "mydnschallenge"
+        }
+      ]
+    },
+    {
+      "type": 1,
+      "name": "plex",
+      "title": "Plex Media Server",
+      "description": "Plex organizes your video, music, and photo collections and streams them to all of your screens.",
+      "logo": "https://mediadepot.github.io/templates/img/plex-icon.png",
+      "image": "linuxserver/plex:latest",
+      "network": "host",
+      "categories": [
+        "MediaServer:Video",
+        "MediaServer:Music",
+        "MediaServer:Photos"
+      ],
+      "privileged": true,
+      "ports": [],
+      "volumes": [
+        {
+          "container": "/config",
+          "bind": "/opt/mediadepot/apps/plex"
+        },
+        {
+          "container": "/data/tvshows",
+          "bind": "/media/storage/tvshows"
+        },
+        {
+          "container": "/data/movies",
+          "bind": "/media/storage/movies"
+        },
+        {
+          "container": "/data/music",
+          "bind": "/media/storage/music"
+        },
+        {
+          "container": "/transcode"
+        }
+      ],
+      "env": [
+        {
+          "name": "PGID",
+          "label": "PGID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "PUID",
+          "label": "PUID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "TZ",
+          "label": "TZ",
+          "default": "America/Los_Angeles"
+        },
+        {
+          "name": "VERSION",
+          "label": "VERSION",
+          "default": "latest"
+        }
+      ],
+      "labels": [
+        {
+          "name": "traefik.enable",
+          "value": "true"
+        },
+        {
+          "name": "traefik.http.services.plex.loadbalancer.server.port",
+          "value": "32400"
+        }
+      ]
+    },
+    {
+      "type": 1,
+      "name": "plexrequests",
+      "title": "Plex Requests",
+      "description": "Simple automated way for users to request new content for Plex.",
+      "logo": "https://mediadepot.github.io/templates/img/plex-requests-logo.jpeg",
+      "image": "linuxserver/plexrequests:latest",
+      "categories": [
+        "Downloaders:",
+        "Network:Other",
+        "MediaApp:Video",
+        "Tools:"
+      ],
+      "ports": [
+        "3000/tcp"
+      ],
+      "volumes": [
+        {
+          "container": "/config",
+          "bind": "/opt/mediadepot/apps/plexrequests"
+        },
+        {
+          "container": "/etc/localtime",
+          "bind": "/etc/localtime",
+          "readonly": true
+        }
+      ],
+      "env": [
+        {
+          "name": "PGID",
+          "label": "PGID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "PUID",
+          "label": "PUID",
+          "default": "15000",
+          "preset": true
+        }
+      ],
+      "labels": [
+        {
+          "name": "traefik.enable",
+          "value": "true"
+        },
+        {
+          "name": "traefik.http.services.cardigann.plexrequests.server.port",
+          "value": "3000"
+        },
+        {
+          "name": "traefik.http.routers.cardigann.entrypoints",
+          "value": "websecure"
+        },
+        {
+          "name": "traefik.http.routers.cardigann.tls.certresolver",
+          "value": "mydnschallenge"
+        }
+      ]
+    },
+    {
+      "type": 1,
+      "name": "prowlarr",
+      "title": "Prowlarr",
+      "description": "Prowlarr is a indexer manager/proxy built on the popular arr .net/reactjs base stack to integrate with your various PVR apps. Prowlarr supports both Torrent Trackers and Usenet Indexers. ",
+      "logo": "https://mediadepot.github.io/templates/img/prowlarr-banner.png",
+      "image": "ghcr.io/linuxserver/prowlarr:develop",
+      "categories": [
+        "Downloaders:",
+        "Tools:"
+      ],
+      "ports": [
+        "9696/tcp"
+      ],
+      "volumes": [
+        {
+          "container": "/config",
+          "bind": "/opt/mediadepot/apps/prowlarr"
+        },
+        {
+          "container": "/etc/localtime",
+          "bind": "/etc/localtime",
+          "readonly": true
+        }
+      ],
+      "env": [
+        {
+          "name": "PGID",
+          "label": "PGID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "PUID",
+          "label": "PUID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "TZ",
+          "label": "TZ",
+          "default": "America/Los_Angeles",
+          "preset": true
+        }
+      ],
+      "labels": [
+        {
+          "name": "traefik.enable",
+          "value": "true"
+        },
+        {
+          "name": "traefik.http.services.prowlarr.loadbalancer.server.port",
+          "value": "9696"
+        },
+        {
+          "name": "traefik.http.routers.prowlarr.entrypoints",
+          "value": "websecure"
+        },
+        {
+          "name": "traefik.http.routers.prowlarr.tls.certresolver",
+          "value": "mydnschallenge"
+        }
+      ]
+    },
+    {
+      "type": 1,
+      "name": "pureftp",
+      "title": "Pure-FTP Server",
+      "description": "Pure-FTPd is a free (BSD), secure, production-quality and standard-conformant FTP server. ",
+      "logo": "https://mediadepot.github.io/templates/img/pureftpd-icon.jpg",
+      "image": "stilliard/pure-ftpd:hardened",
+      "network": "host",
+      "categories": [
+        "Network:Other",
+        "Utilities:"
+      ],
+      "ports": [
+        "21/tcp",
+        "30000/tcp",
+        "30001/tcp",
+        "30002/tcp",
+        "30003/tcp",
+        "30004/tcp",
+        "30005/tcp",
+        "30006/tcp",
+        "30007/tcp",
+        "30008/tcp",
+        "30009/tcp"
+      ],
+      "volumes": [
+        {
+          "container": "/etc/pure-ftpd/passwd",
+          "bind": "/opt/mediadepot/apps/pureftp"
+        },
+        {
+          "container": "/data/tvshows",
+          "bind": "/media/storage/tvshows"
+        },
+        {
+          "container": "/data/movies",
+          "bind": "/media/storage/movies"
+        },
+        {
+          "container": "/data/music",
+          "bind": "/media/storage/music"
+        },
+        {
+          "container": "/data/ebooks",
+          "bind": "/media/storage/ebooks"
+        },
+        {
+          "container": "/data/photos",
+          "bind": "/media/storage/photos"
+        },
+        {
+          "container": "/data/documents",
+          "bind": "/media/storage/documents"
+        },
+        {
+          "container": "/data/downloads",
+          "bind": "/media/storage/downloads"
+        },
+        {
+          "container": "/data/software",
+          "bind": "/media/storage/software"
+        },
+        {
+          "container": "/data/blackhole",
+          "bind": "/media/temp/blackhole"
+        },
+        {
+          "container": "/data/processing",
+          "bind": "/media/temp/processing"
+        }
+      ],
+      "env": [
+        {
+          "name": "FTP_USER_NAME",
+          "label": "FTP_USER_NAME",
+          "default": "depot",
+          "preset": true
+        },
+        {
+          "name": "FTP_USER_PASS",
+          "label": "FTP_USER_PASS",
+          "default": "badpass"
+        },
+        {
+          "name": "FTP_USER_HOME",
+          "label": "FTP_USER_HOME",
+          "default": "/data",
+          "preset": true
+        },
+        {
+          "name": "FTP_USER_GID",
+          "label": "FTP_USER_GID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "FTP_USER_UID",
+          "label": "FTP_USER_UID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "TZ",
+          "label": "TZ",
+          "default": "America/Los_Angeles"
+        },
+        {
+          "name": "PUBLICHOST",
+          "label": "PUBLICHOST",
+          "default": "localhost"
+        }
+      ],
+      "labels": []
+    },
+    {
+      "type": 1,
+      "name": "radarr",
+      "title": "Radarr",
+      "description": "Radarr - A fork of Sonarr to work with movies la Couchpotato.",
+      "logo": "https://mediadepot.github.io/templates/img/radarr.png",
+      "image": "linuxserver/radarr:latest",
+      "categories": [
+        "Downloaders:",
+        "MediaApp:Video"
+      ],
+      "ports": [
+        "7878/tcp"
+      ],
+      "volumes": [
+        {
+          "container": "/config",
+          "bind": "/opt/mediadepot/apps/radarr"
+        },
+        {
+          "container": "/downloads",
+          "bind": "/media/storage/downloads/movies"
+        },
+        {
+          "container": "/movies",
+          "bind": "/media/storage/movies"
+        },
+        {
+          "container": "/blackhole",
+          "bind": "/media/temp/blackhole/movies"
+        },
+        {
+          "container": "/etc/localtime",
+          "bind": "/etc/localtime",
+          "readonly": true
+        }
+      ],
+      "env": [
+        {
+          "name": "PGID",
+          "label": "PGID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "PUID",
+          "label": "PUID",
+          "default": "15000",
+          "preset": true
+        }
+      ],
+      "labels": [
+        {
+          "name": "traefik.enable",
+          "value": "true"
+        },
+        {
+          "name": "traefik.http.services.radarr.loadbalancer.server.port",
+          "value": "7878"
+        },
+        {
+          "name": "traefik.http.routers.radarr.entrypoints",
+          "value": "websecure"
+        },
+        {
+          "name": "traefik.http.routers.radarr.tls.certresolver",
+          "value": "mydnschallenge"
+        }
+      ]
+    },
+    {
+      "type": 1,
+      "name": "readarr",
+      "title": "Readarr",
+      "description": "Readarr - Book Manager and Automation (Sonarr for Ebooks)",
+      "logo": "https://mediadepot.github.io/templates/img/readarr-logo.png",
+      "image": "ghcr.io/linuxserver/readarr:nightly",
+      "categories": [
+        "Downloaders:",
+        "MediaApp:Books"
+      ],
+      "ports": [
+        "8787/tcp"
+      ],
+      "volumes": [
+        {
+          "container": "/config",
+          "bind": "/opt/mediadepot/apps/readarr"
+        },
+        {
+          "container": "/downloads",
+          "bind": "/media/storage/downloads/ebooks"
+        },
+        {
+          "container": "/books",
+          "bind": "/media/storage/ebooks"
+        },
+        {
+          "container": "/blackhole",
+          "bind": "/media/temp/blackhole/ebooks"
+        },
+        {
+          "container": "/etc/localtime",
+          "bind": "/etc/localtime",
+          "readonly": true
+        }
+      ],
+      "env": [
+        {
+          "name": "PGID",
+          "label": "PGID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "PUID",
+          "label": "PUID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "TZ",
+          "label": "TZ",
+          "default": "America/Los_Angeles"
+        }
+      ],
+      "labels": [
+        {
+          "name": "traefik.enable",
+          "value": "true"
+        },
+        {
+          "name": "traefik.http.services.readarr.loadbalancer.server.port",
+          "value": "8787"
+        },
+        {
+          "name": "traefik.http.routers.readarr.entrypoints",
+          "value": "websecure"
+        },
+        {
+          "name": "traefik.http.routers.readarr.tls.certresolver",
+          "value": "mydnschallenge"
+        }
+      ]
+    },
+    {
+      "type": 1,
+      "name": "rclone",
+      "title": "Rclone Config Backup",
+      "description": "Rclone is a command line program to sync files and directories to and from cloud providers (Dropbox, GDrive, Box, etc)",
+      "logo": "https://mediadepot.github.io/templates/img/rclone.png",
+      "image": "mediadepot/rclone:latest",
+      "categories": [
+        "Backup:",
+        "Cloud:",
+        "Network:Other",
+        "Tools:"
+      ],
+      "ports": [],
+      "volumes": [
+        {
+          "container": "/srv/rclone/config",
+          "bind": "/opt/mediadepot/apps/rclone"
+        },
+        {
+          "container": "/mnt/data",
+          "bind": "/opt/mediadepot/apps"
+        }
+      ]
+    },
+    {
+      "type": 1,
+      "name": "resilio",
+      "title": "Resilio Sync",
+      "description": "Resilio Sync (formerly BitTorrent Sync) uses the BitTorrent protocol to sync files and folders between all of your devices. There are both free and paid versions, this container supports both.",
+      "logo": "https://mediadepot.github.io/templates/img/resilio.png",
+      "image": "linuxserver/resilio-sync:latest",
+      "categories": [
+        "Backup:",
+        "Cloud:",
+        "Network:Other",
+        "Tools:"
+      ],
+      "ports": [
+        "8888/tcp",
+        "55555/tcp"
+      ],
+      "volumes": [
+        {
+          "container": "/config",
+          "bind": "/opt/mediadepot/apps/resilio"
+        },
+        {
+          "container": "/sync",
+          "bind": "/media/storage"
+        },
+        {
+          "container": "/downloads",
+          "bind": "/media/storage/downloads"
+        }
+      ],
+      "env": [
+        {
+          "name": "PGID",
+          "label": "PGID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "PUID",
+          "label": "PUID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "TZ",
+          "label": "TZ",
+          "default": "America/Los_Angeles"
+        }
+      ],
+      "labels": [
+        {
+          "name": "traefik.enable",
+          "value": "true"
+        },
+        {
+          "name": "traefik.http.services.resilio.loadbalancer.server.port",
+          "value": "8888"
+        },
+        {
+          "name": "traefik.http.routers.resilio.entrypoints",
+          "value": "websecure"
+        },
+        {
+          "name": "traefik.http.routers.resilio.tls.certresolver",
+          "value": "mydnschallenge"
+        }
+      ]
+    },
+    {
+      "type": 1,
+      "name": "rutorrent",
+      "title": "ruTorrent",
+      "description": "ruTorrent is a quick and efficient BitTorrent client",
+      "logo": "https://mediadepot.github.io/templates/img/rtorrent-icon.png",
+      "image": "mediadepot/rutorrent",
+      "categories": [
+        "Downloaders:",
+        "Network:Other",
+        "Tools:"
+      ],
+      "ports": [
+        "80/tcp",
+        "51413/tcp",
+        "6881/tcp"
+      ],
+      "volumes": [
+        {
+          "container": "/config",
+          "bind": "/opt/mediadepot/apps/rutorrent"
+        },
+        {
+          "container": "/processing",
+          "bind": "/media/temp/processing"
+        },
+        {
+          "container": "/blackhole",
+          "bind": "/media/temp/blackhole"
+        },
+        {
+          "container": "/downloads",
+          "bind": "/media/storage/downloads"
+        }
+      ],
+      "env": [
+        {
+          "name": "PGID",
+          "label": "PGID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "PUID",
+          "label": "PUID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "TZ",
+          "label": "TZ",
+          "default": "America/Los_Angeles"
+        }
+      ],
+      "labels": [
+        {
+          "name": "traefik.enable",
+          "value": "true"
+        },
+        {
+          "name": "traefik.http.services.rutorrent.loadbalancer.server.port",
+          "value": "80"
+        },
+        {
+          "name": "traefik.http.routers.rutorrent.entrypoints",
+          "value": "websecure"
+        },
+        {
+          "name": "traefik.http.routers.rutorrent.tls.certresolver",
+          "value": "mydnschallenge"
+        }
+      ]
+    },
+    {
+      "type": 1,
+      "name": "scrutiny",
+      "title": "Scrutiny",
+      "description": "WebUI for smartd S.M.A.R.T monitoring",
+      "logo": "https://mediadepot.github.io/templates/img/scrutiny.png",
+      "image": "analogj/scrutiny:latest",
+      "categories": [
+        "Monitoring:"
+      ],
+      "ports": [
+        "8080/tcp"
+      ],
+      "volumes": [
+        {
+          "container": "/scrutiny/config/",
+          "bind": "/opt/mediadepot/apps/scrutiny"
+        },
+        {
+          "container": "/run/udev",
+          "bind": "/run/udev",
+          "readonly": true
+        }
+      ],
+      "env": [],
+      "labels": [
+        {
+          "name": "traefik.enable",
+          "value": "true"
+        },
+        {
+          "name": "traefik.http.services.scrutiny.loadbalancer.server.port",
+          "value": "8080"
+        },
+        {
+          "name": "traefik.http.routers.scrutiny.entrypoints",
+          "value": "websecure"
+        },
+        {
+          "name": "traefik.http.routers.scrutiny.tls.certresolver",
+          "value": "mydnschallenge"
+        }
+      ]
+    },
+    {
+      "type": 1,
+      "name": "sickrage",
+      "title": "SickRage",
+      "description": "Automatic Video Library Manager for TV Shows. It watches for new episodes of your favorite shows, and when they are posted it does its magic.",
+      "logo": "https://mediadepot.github.io/templates/img/sickrage-icon.png",
+      "image": "linuxserver/sickrage:latest",
+      "categories": [
+        "Downloaders:",
+        "MediaApp:Video"
+      ],
+      "ports": [
+        "8081/tcp"
+      ],
+      "volumes": [
+        {
+          "container": "/config",
+          "bind": "/opt/mediadepot/apps/sickrage"
+        },
+        {
+          "container": "/downloads",
+          "bind": "/media/storage/downloads/tvshows"
+        },
+        {
+          "container": "/tv",
+          "bind": "/media/storage/tvshows"
+        },
+        {
+          "container": "/blackhole",
+          "bind": "/media/temp/blackhole/tvshows"
+        }
+      ],
+      "env": [
+        {
+          "name": "PGID",
+          "label": "PGID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "PUID",
+          "label": "PUID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "TZ",
+          "label": "TZ",
+          "default": "America/Los_Angeles"
+        }
+      ],
+      "labels": [
+        {
+          "name": "traefik.enable",
+          "value": "true"
+        },
+        {
+          "name": "traefik.http.services.sickrage.loadbalancer.server.port",
+          "value": "8081"
+        },
+        {
+          "name": "traefik.http.routers.sickrage.entrypoints",
+          "value": "websecure"
+        },
+        {
+          "name": "traefik.http.routers.sickrage.tls.certresolver",
+          "value": "mydnschallenge"
+        }
+      ]
+    },
+    {
+      "type": 1,
+      "name": "sonarr",
+      "title": "Sonarr",
+      "description": "Sonarr (formerly NZBdrone) is a PVR for usenet and bittorrent users. It can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them. It can also be configured to automatically upgrade the quality of files already downloaded when a better quality format becomes available.",
+      "logo": "https://mediadepot.github.io/templates/img/sonarr-icon.png",
+      "image": "linuxserver/sonarr:latest",
+      "categories": [
+        "Downloaders:",
+        "MediaApp:Video"
+      ],
+      "ports": [
+        "8989/tcp"
+      ],
+      "volumes": [
+        {
+          "container": "/config",
+          "bind": "/opt/mediadepot/apps/sonarr"
+        },
+        {
+          "container": "/downloads",
+          "bind": "/media/storage/downloads/tvshows"
+        },
+        {
+          "container": "/tv",
+          "bind": "/media/storage/tvshows"
+        },
+        {
+          "container": "/blackhole",
+          "bind": "/media/temp/blackhole/tvshows"
+        },
+        {
+          "container": "/etc/localtime",
+          "bind": "/etc/localtime",
+          "readonly": true
+        }
+      ],
+      "env": [
+        {
+          "name": "PGID",
+          "label": "PGID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "PUID",
+          "label": "PUID",
+          "default": "15000",
+          "preset": true
+        }
+      ],
+      "labels": [
+        {
+          "name": "traefik.enable",
+          "value": "true"
+        },
+        {
+          "name": "traefik.http.services.sonarr.loadbalancer.server.port",
+          "value": "8989"
+        },
+        {
+          "name": "traefik.http.routers.sonarr.entrypoints",
+          "value": "websecure"
+        },
+        {
+          "name": "traefik.http.routers.sonarr.tls.certresolver",
+          "value": "mydnschallenge"
+        }
+      ]
+    },
+    {
+      "type": 1,
+      "name": "syncserver",
+      "title": "Mozilla Syncserver",
+      "description": "Run-Your-Own Firefox Sync Server",
+      "logo": "https://mediadepot.github.io/templates/img/firefox-logo.png",
+      "image": "mozilla/syncserver:latest",
+      "categories": [
+        "Tools:"
+      ],
+      "ports": [
+        "5000/tcp"
+      ],
+      "volumes": [
+        {
+          "container": "/data",
+          "bind": "/opt/mediadepot/apps/syncserver"
+        }
+      ],
+      "env": [
+        {
+          "name": "SYNCSERVER_PUBLIC_URL",
+          "label": "SYNCSERVER_PUBLIC_URL",
+          "default": "https://syncserver.depot.lan"
+        },
+        {
+          "name": "SYNCSERVER_SECRET_FILE",
+          "label": "SYNCSERVER_SECRET_FILE",
+          "default": "/data/secret_key"
+        },
+        {
+          "name": "SYNCSERVER_SQLURI",
+          "label": "SYNCSERVER_SQLURI",
+          "default": "sqlite:////data/syncserver.db"
+        },
+        {
+          "name": "SYNCSERVER_BATCH_UPLOAD_ENABLED",
+          "label": "SYNCSERVER_BATCH_UPLOAD_ENABLED",
+          "default": "true"
+        },
+        {
+          "name": "SYNCSERVER_FORCE_WSGI_ENVIRON",
+          "label": "SYNCSERVER_FORCE_WSGI_ENVIRON",
+          "default": "false"
+        },
+        {
+          "name": "PORT",
+          "label": "PORT",
+          "default": "5000"
+        }
+      ],
+      "labels": [
+        {
+          "name": "traefik.enable",
+          "value": "true"
+        },
+        {
+          "name": "traefik.http.services.syncservere.loadbalancer.server.port",
+          "value": "5000"
+        },
+        {
+          "name": "traefik.http.routers.syncserver.entrypoints",
+          "value": "websecure"
+        },
+        {
+          "name": "traefik.http.routers.syncserver.tls.certresolver",
+          "value": "mydnschallenge"
+        }
+      ]
+    },
+    {
+      "type": 1,
+      "name": "tautulli",
+      "title": "Tautulli",
+      "description": "A Python based monitoring and tracking tool for Plex Media Server.",
+      "logo": "https://mediadepot.github.io/templates/img/tautulli-icon.png",
+      "image": "linuxserver/tautulli:latest",
+      "categories": [
+        "MediaServer:Other",
+        "Tools:"
+      ],
+      "ports": [
+        "8181/tcp"
+      ],
+      "volumes": [
+        {
+          "container": "/config",
+          "bind": "/opt/mediadepot/apps/tautulli"
+        }
+      ],
+      "env": [
+        {
+          "name": "PGID",
+          "label": "PGID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "PUID",
+          "label": "PUID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "TZ",
+          "label": "TZ",
+          "default": "America/Los_Angeles"
+        }
+      ],
+      "labels": [
+        {
+          "name": "traefik.enable",
+          "value": "true"
+        },
+        {
+          "name": "traefik.http.services.tautulli.loadbalancer.server.port",
+          "value": "8181"
+        },
+        {
+          "name": "traefik.http.routers.tautulli.entrypoints",
+          "value": "websecure"
+        },
+        {
+          "name": "traefik.http.routers.tautulli.tls.certresolver",
+          "value": "mydnschallenge"
+        }
+      ]
+    },
+    {
+      "type": 1,
+      "name": "urlwatch",
+      "title": "UrlWatch",
+      "description": "A tool for monitoring webpages for updates",
+      "logo": "https://mediadepot.github.io/templates/img/urlwatch.png",
+      "image": "mediadepot/urlwatch:master",
+      "categories": [
+        "Tools:"
+      ],
+      "ports": [
+        "8081/tcp"
+      ],
+      "volumes": [
+        {
+          "container": "/srv/urlwatch/config",
+          "bind": "/opt/mediadepot/apps/urlwatch"
+        },
+        {
+          "container": "/etc/localtime",
+          "bind": "/etc/localtime",
+          "readonly": true
+        }
+      ],
+      "env": [],
+      "labels": [
+        {
+          "name": "traefik.enable",
+          "value": "true"
+        },
+        {
+          "name": "traefik.http.services.urlwatch.loadbalancer.server.port",
+          "value": "8081"
+        },
+        {
+          "name": "traefik.http.routers.urlwatch.entrypoints",
+          "value": "websecure"
+        },
+        {
+          "name": "traefik.http.routers.urlwatch.tls.certresolver",
+          "value": "mydnschallenge"
+        }
+      ]
+    },
+    {
+      "type": 1,
+      "name": "watchtower",
+      "title": "Watchtower",
+      "description": "Automatically update running Docker containers",
+      "logo": "https://mediadepot.github.io/templates/img/watchtower-logo.png",
+      "image": "containrrr/watchtower:latest",
+      "command": "--cleanup --label-enable",
+      "categories": [
+        "Tools:"
+      ],
+      "volumes": [
+        {
+          "container": "/var/run/docker.sock",
+          "bind": "/var/run/docker.sock"
+        }
+      ],
+      "env": []
     }
-  },
-  {
-    "type": 1,
-    "name": "gaps",
-    "title": "Gaps",
-    "description": "Gaps searches through your Plex Server or local folders for all movies, then queries for known movies in the same collection.",
-    "logo": "https://mediadepot.github.io/templates/img/plex-icon.png",
-    "image": "housewrecker/gaps:latest",
-    "categories": [
-      "Tools:",
-      "Network:Web",
-      "Network:Other",
-      "Tools:"
-    ],
-    "ports": [
-      "8484/tcp"
-    ],
-    "volumes": [],
-    "env": [
-      {
-        "name": "TZ",
-        "label": "TZ",
-        "default": "America/Los_Angeles"
-      }
-    ],
-    "labels": [
-      { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.http.services.gaps.loadbalancer.server.port", "value": "8484" },
-      { "name": "traefik.http.routers.gaps.entrypoints", "value": "websecure" },
-      { "name": "traefik.http.routers.gaps.tls.certresolver", "value": "mydnschallenge" }
-    ]
-  },
-  {
-    "type": 1,
-    "name": "healthchecks",
-    "title": "Healthchecks",
-    "description": "Healthchecks is a watchdog for your cron jobs. It's a web server that listens for pings from your cron jobs, plus a web interface.",
-    "logo": "https://mediadepot.github.io/templates/img/healthchecks-logo.png",
-    "image": "linuxserver/healthchecks",
-    "categories": [
-      "Tools:",
-      "Network:Web",
-      "Network:Other",
-      "Status:Stable"
-    ],
-    "ports": [
-      "8000/tcp"
-    ],
-    "volumes": [
-      {
-        "container": "/config",
-        "bind": "/opt/mediadepot/apps/healthchecks"
-      }
-    ],
-    "env": [
-      {
-        "name": "PGID",
-        "label": "PGID",
-        "default": "15000",
-        "preset": true
-      },
-      {
-        "name": "PUID",
-        "label": "PUID",
-        "default": "15000",
-        "preset": true
-      },
-      {
-        "name": "TZ",
-        "label": "TZ",
-        "default": "America/Los_Angeles"
-      },
-      {
-        "name": "SITE_ROOT",
-        "label": "SITE_ROOT",
-        "default": "healthchecks.depot.lan"
-      },
-      {
-        "name": "SITE_NAME",
-        "label": "SITE_NAME",
-        "default": "healthchecks"
-      },
-      {
-        "name": "DEFAULT_FROM_EMAIL",
-        "label": "DEFAULT_FROM_EMAIL",
-        "default": "healthchecks@depot.lan"
-      },
-      {
-        "name": "EMAIL_HOST",
-        "label": "EMAIL_HOST",
-        "default": ""
-      },
-      {
-        "name": "EMAIL_PORT",
-        "label": "EMAIL_PORT",
-        "default": ""
-      },
-      {
-        "name": "EMAIL_HOST_USER",
-        "label": "EMAIL_HOST_USER",
-        "default": ""
-      },
-      {
-        "name": "EMAIL_HOST_PASSWORD",
-        "label": "EMAIL_HOST_PASSWORD",
-        "default": ""
-      },
-      {
-        "name": "EMAIL_USE_TLS",
-        "label": "EMAIL_USE_TLS",
-        "default": ""
-      }
-    ],
-    "labels": [
-      { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.http.services.healthchecks.loadbalancer.server.port", "value": "8000" },
-      { "name": "traefik.http.routers.healthchecks.entrypoints", "value": "websecure" },
-      { "name": "traefik.http.routers.healthchecks.tls.certresolver", "value": "mydnschallenge" }
-    ]
-  },
-
-
-  {
-    "type": 1,
-    "name": "heimdall",
-    "title": "Heimdall",
-    "description": "Heimdall is a way to organise all those links to your most used web sites and web applications in a simple way.",
-    "logo": "https://mediadepot.github.io/templates/img/heimdall-icon.png",
-    "image": "linuxserver/heimdall:latest",
-    "categories": [
-      "Tools:",
-      "Network:Web",
-      "Network:Other",
-      "Status:Stable"
-    ],
-    "ports": [
-      "80/tcp",
-      "443/tcp"
-    ],
-    "volumes": [
-      {
-        "container": "/config",
-        "bind": "/opt/mediadepot/apps/heimdall"
-      }
-    ],
-    "env": [
-      {
-        "name": "PGID",
-        "label": "PGID",
-        "default": "15000",
-        "preset": true
-      },
-      {
-        "name": "PUID",
-        "label": "PUID",
-        "default": "15000",
-        "preset": true
-      },
-      {
-        "name": "TZ",
-        "label": "TZ",
-        "default": "America/Los_Angeles"
-      }
-    ],
-    "labels": [
-      { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.http.services.heimdall.loadbalancer.server.port", "value": "80" },
-      { "name": "traefik.http.routers.heimdall.entrypoints", "value": "websecure" },
-      { "name": "traefik.http.routers.heimdall.tls.certresolver", "value": "mydnschallenge" }
-    ]
-  },
-  {
-    "type": 1,
-    "name": "jackett",
-    "title": "Jackett",
-    "description": "Jackett works as a proxy server it translates queries from apps like Sonarr etc into tracker-site-specific http queries and parses the html response sending results back to the requesting software.",
-    "logo": "https://mediadepot.github.io/templates/img/jacket-icon.png",
-    "image": "linuxserver/jackett:latest",
-    "categories": [
-      "Downloaders:",
-      "Tools:"
-    ],
-    "ports": [
-      "9117/tcp"
-    ],
-    "volumes": [
-      {
-        "container": "/config",
-        "bind": "/opt/mediadepot/apps/jackett"
-      },
-      {
-        "container": "/downloads",
-        "bind": "/media/storage/downloads"
-      },
-      {
-        "container": "/etc/localtime",
-        "bind": "/etc/localtime",
-        "readonly": true
-      }
-    ],
-    "env": [
-      {
-        "name": "PGID",
-        "label": "PGID",
-        "default": "15000",
-        "preset": true
-      },
-      {
-        "name": "PUID",
-        "label": "PUID",
-        "default": "15000",
-        "preset": true
-      },
-      {
-        "name": "TZ",
-        "label": "TZ",
-        "default": "America/Los_Angeles"
-      }
-    ],
-    "labels": [
-      { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.http.services.jackett.loadbalancer.server.port", "value": "9117" },
-      { "name": "traefik.http.routers.jackett.entrypoints", "value": "websecure" },
-      { "name": "traefik.http.routers.jackett.tls.certresolver", "value": "mydnschallenge" }
-    ]
-  },
-  {
-    "type": 3,
-    "name": "klaxon",
-    "title": "Klaxon",
-    "description": "Klaxon is a free, quick to set up and easy to use robot that checks websites regularly so you don't have to.",
-    "logo": "https://mediadepot.github.io/templates/img/klaxon-logo.png",
-    "categories": [
-      "Documents:",
-      "Network:Other",
-      "Tools:"
-    ],
-    "env": [
-      {
-        "name": "SMTP_PROVIDER",
-        "label": "SMTP_PROVIDER",
-        "default": "SENDGRID"
-      },
-      {
-        "name": "SENDGRID_USERNAME",
-        "label": "SENDGRID_USERNAME",
-        "default": ""
-      },
-      {
-        "name": "SENDGRID_PASSWORD",
-        "label": "SENDGRID_PASSWORD",
-        "default": ""
-      },
-      {
-        "name": "ADMIN_EMAILS",
-        "label": "ADMIN_EMAILS",
-        "default": ""
-      }
-    ],
-    "repository": {
-      "url": "https://github.com/mediadepot/templates",
-      "stackfile": "stacks/klaxon/docker-compose.yml"
-    }
-  },
-  {
-    "type": 1,
-    "name": "logzio-logs-collector",
-    "title": "Logzio Logs Collector",
-    "description": "Docker container that uses Filebeat to collect logs from other Docker containers and forward those logs to your Logz.io account.",
-    "logo": "https://mediadepot.github.io/templates/img/logzio-icon.png",
-    "image": "logzio/docker-collector-logs",
-    "categories": [
-      "Tools:"
-    ],
-    "ports": [],
-    "privileged": true,
-    "volumes": [
-      {
-        "container": "/var/run/docker.sock",
-        "bind": "/var/run/docker.sock",
-        "readonly": true
-      },
-      {
-        "container": "/var/lib/docker/containers",
-        "bind": "/var/lib/docker/containers"
-      }
-    ],
-    "env": [
-      {
-        "name": "LOGZIO_TOKEN",
-        "label": "LOGZIO_TOKEN",
-        "default": "REPLACE-LOGZIO-TOKEN-HERE"
-      },
-      {
-        "name": "LOGZIO_URL",
-        "label": "LOGZIO_URL",
-        "default": "listener.logz.io:5015"
-      }
-    ],
-    "labels": []
-  },
-  {
-    "type": 1,
-    "name": "logzio-metrics-collector",
-    "title": "Logzio Metrics Collector",
-    "description": "Docker Metrics Collector is a container that runs Metricbeat with the modules you enable at runtime.",
-    "logo": "https://mediadepot.github.io/templates/img/logzio-icon.png",
-    "image": "logzio/docker-collector-metrics",
-    "categories": [
-      "Tools:"
-    ],
-    "ports": [],
-    "privileged": true,
-    "volumes": [
-      {
-        "container": "/var/run/docker.sock",
-        "bind": "/var/run/docker.sock",
-        "readonly": true
-      },
-      {
-        "container": "/hostfs/sys/fs/cgroup",
-        "bind": "/sys/fs/cgroup",
-        "readonly": true
-      },
-      {
-        "container": "/hostfs/proc",
-        "bind": "/proc",
-        "readonly": true
-      },
-      {
-        "container": "/hostfs",
-        "bind": "/",
-        "readonly": true
-      }
-    ],
-    "env": [
-      {
-        "name": "LOGZIO_TOKEN",
-        "label": "LOGZIO_TOKEN",
-        "default": "REPLACE-LOGZIO-TOKEN-HERE"
-      },
-      {
-        "name": "LOGZIO_MODULES",
-        "label": "LOGZIO_MODULES",
-        "default": "system,docker"
-      }
-    ],
-    "labels": []
-  },
-  {
-    "type": 3,
-    "name": "mayan",
-    "title": "Mayan EDMS",
-    "description": "Mayan EDMS is an electronic vault for your documents.",
-    "logo": "https://mediadepot.github.io/templates/img/mayan-logo.png",
-    "categories": [
-      "Documents:",
-      "Tools:"
-    ],
-    "repository": {
-      "url": "https://github.com/mediadepot/templates",
-      "stackfile": "stacks/mayan/docker-compose.yml"
-    }
-  },
-  {
-    "type": 1,
-    "name": "netbootxyz",
-    "title": "Netboot.xyz",
-    "description": "Netbootxyz is a way to PXE boot various operating system installers or utilities from one place within the BIOS without the need of having to go retrieve the media to run the tool",
-    "logo": "https://mediadepot.github.io/templates/img/netbootxyz.jpg",
-    "image": "linuxserver/netbootxyz:latest",
-    "categories": [
-      "Downloaders:",
-      "Network:Other",
-      "Tools:"
-    ],
-    "ports": [
-      "3000/tcp",
-      "69/udp"
-    ],
-    "volumes": [
-      {
-        "container": "/config",
-        "bind": "/opt/mediadepot/apps/netbootxyz"
-      },
-      {
-        "container": "/assets",
-        "bind": "/media/storage/software/netbootxyz"
-      },
-      {
-        "container": "/etc/localtime",
-        "bind": "/etc/localtime",
-        "readonly": true
-      }
-    ],
-    "env": [
-      {
-        "name": "PGID",
-        "label": "PGID",
-        "default": "15000",
-        "preset": true
-      },
-      {
-        "name": "PUID",
-        "label": "PUID",
-        "default": "15000",
-        "preset": true
-      }
-    ],
-    "labels": [
-      { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.http.services.netbootxyz.loadbalancer.server.port", "value": "3000" },
-      { "name": "traefik.http.routers.netbootxyz.entrypoints", "value": "websecure" },
-      { "name": "traefik.http.routers.netbootxyz.tls.certresolver", "value": "mydnschallenge" }
-    ]
-  },
-  {
-    "type": 1,
-    "name": "ombi",
-    "title": "Ombi",
-    "description": "Ombi allows you to host your own Plex Request and user management system. If you are sharing your Plex server with other users, allow them to request new content using an easy to manage interface",
-    "logo": "https://mediadepot.github.io/templates/img/ombi.png",
-    "image": "linuxserver/ombi:latest",
-    "categories": [
-      "Downloaders:",
-      "Network:Other",
-      "MediaApp:Video",
-      "Tools:"
-    ],
-    "ports": [
-      "3579/tcp"
-    ],
-    "volumes": [
-      {
-        "container": "/config",
-        "bind": "/opt/mediadepot/apps/ombi"
-      },
-      {
-        "container": "/etc/localtime",
-        "bind": "/etc/localtime",
-        "readonly": true
-      }
-    ],
-    "env": [
-      {
-        "name": "PGID",
-        "label": "PGID",
-        "default": "15000",
-        "preset": true
-      },
-      {
-        "name": "PUID",
-        "label": "PUID",
-        "default": "15000",
-        "preset": true
-      }
-    ],
-    "labels": [
-      { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.http.services.ombi.loadbalancer.server.port", "value": "3579" },
-      { "name": "traefik.http.routers.ombi.entrypoints", "value": "websecure" },
-      { "name": "traefik.http.routers.ombi.tls.certresolver", "value": "mydnschallenge" }
-    ]
-  },
-  {
-    "type": 1,
-    "name": "plex",
-    "title": "Plex Media Server",
-    "description": "Plex organizes your video, music, and photo collections and streams them to all of your screens.",
-    "logo": "https://mediadepot.github.io/templates/img/plex-icon.png",
-    "image": "linuxserver/plex:latest",
-    "network": "host",
-    "categories": [
-      "MediaServer:Video",
-      "MediaServer:Music",
-      "MediaServer:Photos"
-    ],
-    "privileged": true,
-    "ports": [],
-    "volumes": [
-      {
-        "container": "/config",
-        "bind": "/opt/mediadepot/apps/plex"
-      },
-      {
-        "container": "/data/tvshows",
-        "bind": "/media/storage/tvshows"
-      },
-      {
-        "container": "/data/movies",
-        "bind": "/media/storage/movies"
-      },
-      {
-        "container": "/data/music",
-        "bind": "/media/storage/music"
-      },
-      {
-        "container": "/transcode"
-      }
-    ],
-    "env": [
-      {
-        "name": "PGID",
-        "label": "PGID",
-        "default": "15000",
-        "preset": true
-      },
-      {
-        "name": "PUID",
-        "label": "PUID",
-        "default": "15000",
-        "preset": true
-      },
-      {
-        "name": "TZ",
-        "label": "TZ",
-        "default": "America/Los_Angeles"
-      },
-      {
-        "name": "VERSION",
-        "label": "VERSION",
-        "default": "latest"
-      }
-    ],
-    "labels": [
-      { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.http.services.plex.loadbalancer.server.port", "value": "32400" }
-    ]
-  },
-  {
-    "type": 1,
-    "name": "plexrequests",
-    "title": "Plex Requests",
-    "description": "Simple automated way for users to request new content for Plex.",
-    "logo": "https://mediadepot.github.io/templates/img/plex-requests-logo.jpeg",
-    "image": "linuxserver/plexrequests:latest",
-    "categories": [
-      "Downloaders:",
-      "Network:Other",
-      "MediaApp:Video",
-      "Tools:"
-    ],
-    "ports": [
-      "3000/tcp"
-    ],
-    "volumes": [
-      {
-        "container": "/config",
-        "bind": "/opt/mediadepot/apps/plexrequests"
-      },
-      {
-        "container": "/etc/localtime",
-        "bind": "/etc/localtime",
-        "readonly": true
-      }
-    ],
-    "env": [
-      {
-        "name": "PGID",
-        "label": "PGID",
-        "default": "15000",
-        "preset": true
-      },
-      {
-        "name": "PUID",
-        "label": "PUID",
-        "default": "15000",
-        "preset": true
-      }
-    ],
-    "labels": [
-      { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.http.services.cardigann.plexrequests.server.port", "value": "3000" },
-      { "name": "traefik.http.routers.cardigann.entrypoints", "value": "websecure" },
-      { "name": "traefik.http.routers.cardigann.tls.certresolver", "value": "mydnschallenge" }
-    ]
-  },
-  {
-    "type": 1,
-    "name": "prowlarr",
-    "title": "Prowlarr",
-    "description": "Prowlarr is a indexer manager/proxy built on the popular arr .net/reactjs base stack to integrate with your various PVR apps. Prowlarr supports both Torrent Trackers and Usenet Indexers. ",
-    "logo": "https://mediadepot.github.io/templates/img/prowlarr-banner.png",
-    "image": "ghcr.io/linuxserver/prowlarr:develop",
-    "categories": [
-      "Downloaders:",
-      "Tools:"
-    ],
-    "ports": [
-      "9696/tcp"
-    ],
-    "volumes": [
-      {
-        "container": "/config",
-        "bind": "/opt/mediadepot/apps/prowlarr"
-      },
-      {
-        "container": "/etc/localtime",
-        "bind": "/etc/localtime",
-        "readonly": true
-      }
-    ],
-    "env": [
-      {
-        "name": "PGID",
-        "label": "PGID",
-        "default": "15000",
-        "preset": true
-      },
-      {
-        "name": "PUID",
-        "label": "PUID",
-        "default": "15000",
-        "preset": true
-      },
-      {
-        "name": "TZ",
-        "label": "TZ",
-        "default": "America/Los_Angeles",
-        "preset": true
-      }
-    ],
-    "labels": [
-      { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.http.services.prowlarr.loadbalancer.server.port", "value": "9696" },
-      { "name": "traefik.http.routers.prowlarr.entrypoints", "value": "websecure" },
-      { "name": "traefik.http.routers.prowlarr.tls.certresolver", "value": "mydnschallenge" }
-    ]
-  },
-  {
-    "type": 1,
-    "name": "pureftp",
-    "title": "Pure-FTP Server",
-    "description": "Pure-FTPd is a free (BSD), secure, production-quality and standard-conformant FTP server. ",
-    "logo": "https://mediadepot.github.io/templates/img/pureftpd-icon.jpg",
-    "image": "stilliard/pure-ftpd:hardened",
-    "network": "host",
-    "categories": [
-      "Network:Other",
-      "Utilities:"
-    ],
-    "ports": [
-      "21/tcp",
-      "30000/tcp",
-      "30001/tcp",
-      "30002/tcp",
-      "30003/tcp",
-      "30004/tcp",
-      "30005/tcp",
-      "30006/tcp",
-      "30007/tcp",
-      "30008/tcp",
-      "30009/tcp"
-    ],
-    "volumes": [
-      {
-        "container": "/etc/pure-ftpd/passwd",
-        "bind": "/opt/mediadepot/apps/pureftp"
-      },
-      {
-        "container": "/data/tvshows",
-        "bind": "/media/storage/tvshows"
-      },
-      {
-        "container": "/data/movies",
-        "bind": "/media/storage/movies"
-      },
-      {
-        "container": "/data/music",
-        "bind": "/media/storage/music"
-      },
-      {
-        "container": "/data/ebooks",
-        "bind": "/media/storage/ebooks"
-      },
-      {
-        "container": "/data/photos",
-        "bind": "/media/storage/photos"
-      },
-      {
-        "container": "/data/documents",
-        "bind": "/media/storage/documents"
-      },
-      {
-        "container": "/data/downloads",
-        "bind": "/media/storage/downloads"
-      },
-      {
-        "container": "/data/software",
-        "bind": "/media/storage/software"
-      },
-      {
-        "container": "/data/blackhole",
-        "bind": "/media/temp/blackhole"
-      },
-      {
-        "container": "/data/processing",
-        "bind": "/media/temp/processing"
-      }
-    ],
-    "env": [
-      {
-        "name": "FTP_USER_NAME",
-        "label": "FTP_USER_NAME",
-        "default": "depot",
-        "preset": true
-      },
-
-      {
-        "name": "FTP_USER_PASS",
-        "label": "FTP_USER_PASS",
-        "default": "badpass"
-      },
-      {
-        "name": "FTP_USER_HOME",
-        "label": "FTP_USER_HOME",
-        "default": "/data",
-        "preset": true
-      },
-
-      {
-        "name": "FTP_USER_GID",
-        "label": "FTP_USER_GID",
-        "default": "15000",
-        "preset": true
-      },
-      {
-        "name": "FTP_USER_UID",
-        "label": "FTP_USER_UID",
-        "default": "15000",
-        "preset": true
-      },
-      {
-        "name": "TZ",
-        "label": "TZ",
-        "default": "America/Los_Angeles"
-      },
-      {
-        "name": "PUBLICHOST",
-        "label": "PUBLICHOST",
-        "default": "localhost"
-      }
-    ],
-    "labels": []
-  },
-  {
-    "type": 1,
-    "name": "radarr",
-    "title": "Radarr",
-    "description": "Radarr - A fork of Sonarr to work with movies la Couchpotato.",
-    "logo": "https://mediadepot.github.io/templates/img/radarr.png",
-    "image": "linuxserver/radarr:latest",
-    "categories": [
-      "Downloaders:",
-      "MediaApp:Video"
-    ],
-    "ports": [
-      "7878/tcp"
-    ],
-    "volumes": [
-      {
-        "container": "/config",
-        "bind": "/opt/mediadepot/apps/radarr"
-      },
-      {
-        "container": "/downloads",
-        "bind": "/media/storage/downloads/movies"
-      },
-      {
-        "container": "/movies",
-        "bind": "/media/storage/movies"
-      },
-      {
-        "container": "/blackhole",
-        "bind": "/media/temp/blackhole/movies"
-      },
-      {
-        "container": "/etc/localtime",
-        "bind": "/etc/localtime",
-        "readonly": true
-      }
-    ],
-    "env": [
-      {
-        "name": "PGID",
-        "label": "PGID",
-        "default": "15000",
-        "preset": true
-      },
-      {
-        "name": "PUID",
-        "label": "PUID",
-        "default": "15000",
-        "preset": true
-      }
-    ],
-    "labels": [
-      { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.http.services.radarr.loadbalancer.server.port", "value": "7878" },
-      { "name": "traefik.http.routers.radarr.entrypoints", "value": "websecure" },
-      { "name": "traefik.http.routers.radarr.tls.certresolver", "value": "mydnschallenge" }
-    ]
-  },
-
-  {
-    "type": 1,
-    "name": "readarr",
-    "title": "Readarr",
-    "description": "Readarr - Book Manager and Automation (Sonarr for Ebooks)",
-    "logo": "https://mediadepot.github.io/templates/img/readarr-logo.png",
-    "image": "ghcr.io/linuxserver/readarr:nightly",
-    "categories": [
-      "Downloaders:",
-      "MediaApp:Books"
-    ],
-    "ports": [
-      "8787/tcp"
-    ],
-    "volumes": [
-      {
-        "container": "/config",
-        "bind": "/opt/mediadepot/apps/readarr"
-      },
-      {
-        "container": "/downloads",
-        "bind": "/media/storage/downloads/ebooks"
-      },
-      {
-        "container": "/books",
-        "bind": "/media/storage/ebooks"
-      },
-      {
-        "container": "/blackhole",
-        "bind": "/media/temp/blackhole/ebooks"
-      },
-      {
-        "container": "/etc/localtime",
-        "bind": "/etc/localtime",
-        "readonly": true
-      }
-    ],
-    "env": [
-      {
-        "name": "PGID",
-        "label": "PGID",
-        "default": "15000",
-        "preset": true
-      },
-      {
-        "name": "PUID",
-        "label": "PUID",
-        "default": "15000",
-        "preset": true
-      },
-      {
-        "name": "TZ",
-        "label": "TZ",
-        "default": "America/Los_Angeles"
-      }
-    ],
-    "labels": [
-      { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.http.services.readarr.loadbalancer.server.port", "value": "8787" },
-      { "name": "traefik.http.routers.readarr.entrypoints", "value": "websecure" },
-      { "name": "traefik.http.routers.readarr.tls.certresolver", "value": "mydnschallenge" }
-    ]
-  },
-
-
-  {
-    "type": 1,
-    "name": "rclone",
-    "title": "Rclone Config Backup",
-    "description": "Rclone is a command line program to sync files and directories to and from cloud providers (Dropbox, GDrive, Box, etc)",
-    "logo": "https://mediadepot.github.io/templates/img/rclone.png",
-    "image": "mediadepot/rclone:latest",
-    "categories": [
-      "Backup:",
-      "Cloud:",
-      "Network:Other",
-      "Tools:"
-    ],
-    "ports": [],
-    "volumes": [
-      {
-        "container": "/srv/rclone/config",
-        "bind": "/opt/mediadepot/apps/rclone"
-      },
-      {
-        "container": "/mnt/data",
-        "bind": "/opt/mediadepot/apps"
-      }
-    ]
-  },
-  {
-    "type": 1,
-    "name": "resilio",
-    "title": "Resilio Sync",
-    "description": "Resilio Sync (formerly BitTorrent Sync) uses the BitTorrent protocol to sync files and folders between all of your devices. There are both free and paid versions, this container supports both.",
-    "logo": "https://mediadepot.github.io/templates/img/resilio.png",
-    "image": "linuxserver/resilio-sync:latest",
-    "categories": [
-      "Backup:",
-      "Cloud:",
-      "Network:Other",
-      "Tools:"
-    ],
-    "ports": [
-      "8888/tcp",
-      "55555/tcp"
-    ],
-    "volumes": [
-      {
-        "container": "/config",
-        "bind": "/opt/mediadepot/apps/resilio"
-      },
-      {
-        "container": "/sync",
-        "bind": "/media/storage"
-      },
-      {
-        "container": "/downloads",
-        "bind": "/media/storage/downloads"
-      }
-    ],
-    "env": [
-      {
-        "name": "PGID",
-        "label": "PGID",
-        "default": "15000",
-        "preset": true
-      },
-      {
-        "name": "PUID",
-        "label": "PUID",
-        "default": "15000",
-        "preset": true
-      },
-      {
-        "name": "TZ",
-        "label": "TZ",
-        "default": "America/Los_Angeles"
-      }
-    ],
-    "labels": [
-      { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.http.services.resilio.loadbalancer.server.port", "value": "8888" },
-      { "name": "traefik.http.routers.resilio.entrypoints", "value": "websecure" },
-      { "name": "traefik.http.routers.resilio.tls.certresolver", "value": "mydnschallenge" }
-    ]
-  },
-  {
-    "type": 1,
-    "name": "rutorrent",
-    "title": "ruTorrent",
-    "description": "ruTorrent is a quick and efficient BitTorrent client",
-    "logo": "https://mediadepot.github.io/templates/img/rtorrent-icon.png",
-    "image": "mediadepot/rutorrent",
-    "categories": [
-      "Downloaders:",
-      "Network:Other",
-      "Tools:"
-    ],
-    "ports": [
-      "80/tcp",
-      "51413/tcp",
-      "6881/tcp"
-    ],
-    "volumes": [
-      {
-        "container": "/config",
-        "bind": "/opt/mediadepot/apps/rutorrent"
-      },
-      {
-        "container": "/processing",
-        "bind": "/media/temp/processing"
-      },
-      {
-        "container": "/blackhole",
-        "bind": "/media/temp/blackhole"
-      },
-      {
-        "container": "/downloads",
-        "bind": "/media/storage/downloads"
-      }
-    ],
-    "env": [
-      {
-        "name": "PGID",
-        "label": "PGID",
-        "default": "15000",
-        "preset": true
-      },
-      {
-        "name": "PUID",
-        "label": "PUID",
-        "default": "15000",
-        "preset": true
-      },
-      {
-        "name": "TZ",
-        "label": "TZ",
-        "default": "America/Los_Angeles"
-      }
-    ],
-    "labels": [
-      { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.http.services.rutorrent.loadbalancer.server.port", "value": "80" },
-      { "name": "traefik.http.routers.rutorrent.entrypoints", "value": "websecure" },
-      { "name": "traefik.http.routers.rutorrent.tls.certresolver", "value": "mydnschallenge" }
-    ]
-  },
-
-  {
-    "type": 1,
-    "name": "scrutiny",
-    "title": "Scrutiny",
-    "description": "WebUI for smartd S.M.A.R.T monitoring",
-    "logo": "https://mediadepot.github.io/templates/img/scrutiny.png",
-    "image": "analogj/scrutiny:latest",
-    "categories": [
-      "Monitoring:"
-    ],
-    "ports": [
-      "8080/tcp"
-    ],
-    "volumes": [
-      {
-        "container": "/scrutiny/config/",
-        "bind": "/opt/mediadepot/apps/scrutiny"
-      },
-      {
-        "container": "/run/udev",
-        "bind": "/run/udev",
-        "readonly": true
-      }
-    ],
-    "env": [],
-    "labels": [
-      { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.http.services.scrutiny.loadbalancer.server.port", "value": "8080" },
-      { "name": "traefik.http.routers.scrutiny.entrypoints", "value": "websecure" },
-      { "name": "traefik.http.routers.scrutiny.tls.certresolver", "value": "mydnschallenge" }
-    ]
-  },
-
-
-  {
-    "type": 1,
-    "name": "sickrage",
-    "title": "SickRage",
-    "description": "Automatic Video Library Manager for TV Shows. It watches for new episodes of your favorite shows, and when they are posted it does its magic.",
-    "logo": "https://mediadepot.github.io/templates/img/sickrage-icon.png",
-    "image": "linuxserver/sickrage:latest",
-    "categories": [
-      "Downloaders:",
-      "MediaApp:Video"
-    ],
-    "ports": [
-      "8081/tcp"
-    ],
-    "volumes": [
-      {
-        "container": "/config",
-        "bind": "/opt/mediadepot/apps/sickrage"
-      },
-      {
-        "container": "/downloads",
-        "bind": "/media/storage/downloads/tvshows"
-      },
-      {
-        "container": "/tv",
-        "bind": "/media/storage/tvshows"
-      },
-      {
-        "container": "/blackhole",
-        "bind": "/media/temp/blackhole/tvshows"
-      }
-    ],
-    "env": [
-      {
-        "name": "PGID",
-        "label": "PGID",
-        "default": "15000",
-        "preset": true
-      },
-      {
-        "name": "PUID",
-        "label": "PUID",
-        "default": "15000",
-        "preset": true
-      },
-      {
-        "name": "TZ",
-        "label": "TZ",
-        "default": "America/Los_Angeles"
-      }
-    ],
-    "labels": [
-      { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.http.services.sickrage.loadbalancer.server.port", "value": "8081" },
-      { "name": "traefik.http.routers.sickrage.entrypoints", "value": "websecure" },
-      { "name": "traefik.http.routers.sickrage.tls.certresolver", "value": "mydnschallenge" }
-    ]
-  },
-  {
-    "type": 1,
-    "name": "sonarr",
-    "title": "Sonarr",
-    "description": "Sonarr (formerly NZBdrone) is a PVR for usenet and bittorrent users. It can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them. It can also be configured to automatically upgrade the quality of files already downloaded when a better quality format becomes available.",
-    "logo": "https://mediadepot.github.io/templates/img/sonarr-icon.png",
-    "image": "linuxserver/sonarr:latest",
-    "categories": [
-      "Downloaders:",
-      "MediaApp:Video"
-    ],
-    "ports": [
-      "8989/tcp"
-    ],
-    "volumes": [
-      {
-        "container": "/config",
-        "bind": "/opt/mediadepot/apps/sonarr"
-      },
-      {
-        "container": "/downloads",
-        "bind": "/media/storage/downloads/tvshows"
-      },
-      {
-        "container": "/tv",
-        "bind": "/media/storage/tvshows"
-      },
-      {
-        "container": "/blackhole",
-        "bind": "/media/temp/blackhole/tvshows"
-      },
-      {
-        "container": "/etc/localtime",
-        "bind": "/etc/localtime",
-        "readonly": true
-      }
-    ],
-    "env": [
-      {
-        "name": "PGID",
-        "label": "PGID",
-        "default": "15000",
-        "preset": true
-      },
-      {
-        "name": "PUID",
-        "label": "PUID",
-        "default": "15000",
-        "preset": true
-      }
-    ],
-    "labels": [
-      { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.http.services.sonarr.loadbalancer.server.port", "value": "8989" },
-      { "name": "traefik.http.routers.sonarr.entrypoints", "value": "websecure" },
-      { "name": "traefik.http.routers.sonarr.tls.certresolver", "value": "mydnschallenge" }
-    ]
-  },
-  {
-    "type": 1,
-    "name": "syncserver",
-    "title": "Mozilla Syncserver",
-    "description": "Run-Your-Own Firefox Sync Server",
-    "logo": "https://mediadepot.github.io/templates/img/firefox-logo.png",
-    "image": "mozilla/syncserver:latest",
-    "categories": [
-      "Tools:"
-    ],
-    "ports": [
-      "5000/tcp"
-    ],
-    "volumes": [
-      {
-        "container": "/data",
-        "bind": "/opt/mediadepot/apps/syncserver"
-      }
-    ],
-    "env": [
-      {
-        "name": "SYNCSERVER_PUBLIC_URL",
-        "label": "SYNCSERVER_PUBLIC_URL",
-        "default": "https://syncserver.depot.lan"
-      },
-      {
-        "name": "SYNCSERVER_SECRET_FILE",
-        "label": "SYNCSERVER_SECRET_FILE",
-        "default": "/data/secret_key"
-      },
-      {
-        "name": "SYNCSERVER_SQLURI",
-        "label": "SYNCSERVER_SQLURI",
-        "default": "sqlite:////data/syncserver.db"
-      },
-      {
-        "name": "SYNCSERVER_BATCH_UPLOAD_ENABLED",
-        "label": "SYNCSERVER_BATCH_UPLOAD_ENABLED",
-        "default": "true"
-      },
-      {
-        "name": "SYNCSERVER_FORCE_WSGI_ENVIRON",
-        "label": "SYNCSERVER_FORCE_WSGI_ENVIRON",
-        "default": "false"
-      },
-      {
-        "name": "PORT",
-        "label": "PORT",
-        "default": "5000"
-      }
-    ],
-    "labels": [
-      { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.http.services.syncservere.loadbalancer.server.port", "value": "5000" },
-      { "name": "traefik.http.routers.syncserver.entrypoints", "value": "websecure" },
-      { "name": "traefik.http.routers.syncserver.tls.certresolver", "value": "mydnschallenge" }
-    ]
-  },
-  {
-    "type": 1,
-    "name": "tautulli",
-    "title": "Tautulli",
-    "description": "A Python based monitoring and tracking tool for Plex Media Server.",
-    "logo": "https://mediadepot.github.io/templates/img/tautulli-icon.png",
-    "image": "linuxserver/tautulli:latest",
-    "categories": [
-      "MediaServer:Other",
-      "Tools:"
-    ],
-    "ports": [
-      "8181/tcp"
-    ],
-    "volumes": [
-      {
-        "container": "/config",
-        "bind": "/opt/mediadepot/apps/tautulli"
-      }
-    ],
-    "env": [
-      {
-        "name": "PGID",
-        "label": "PGID",
-        "default": "15000",
-        "preset": true
-      },
-      {
-        "name": "PUID",
-        "label": "PUID",
-        "default": "15000",
-        "preset": true
-      },
-      {
-        "name": "TZ",
-        "label": "TZ",
-        "default": "America/Los_Angeles"
-      }
-    ],
-    "labels": [
-      { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.http.services.tautulli.loadbalancer.server.port", "value": "8181" },
-      { "name": "traefik.http.routers.tautulli.entrypoints", "value": "websecure" },
-      { "name": "traefik.http.routers.tautulli.tls.certresolver", "value": "mydnschallenge" }
-    ]
-  },
-  {
-    "type": 1,
-    "name": "urlwatch",
-    "title": "UrlWatch",
-    "description": "A tool for monitoring webpages for updates",
-    "logo": "https://mediadepot.github.io/templates/img/urlwatch.png",
-    "image": "mediadepot/urlwatch:master",
-    "categories": [
-      "Tools:"
-    ],
-    "ports": [
-      "8081/tcp"
-    ],
-    "volumes": [
-      {
-        "container": "/srv/urlwatch/config",
-        "bind": "/opt/mediadepot/apps/urlwatch"
-      },
-      {
-        "container": "/etc/localtime",
-        "bind": "/etc/localtime",
-        "readonly": true
-      }
-    ],
-    "env": [],
-    "labels": [
-      { "name": "traefik.enable", "value": "true" },
-      { "name": "traefik.http.services.urlwatch.loadbalancer.server.port", "value": "8081" },
-      { "name": "traefik.http.routers.urlwatch.entrypoints", "value": "websecure" },
-      { "name": "traefik.http.routers.urlwatch.tls.certresolver", "value": "mydnschallenge" }
-    ]
-  },
-  {
-    "type": 1,
-    "name": "watchtower",
-    "title": "Watchtower",
-    "description": "Automatically update running Docker containers",
-    "logo": "https://mediadepot.github.io/templates/img/watchtower-logo.png",
-    "image": "containrrr/watchtower:latest",
-    "command": "--cleanup --label-enable",
-    "categories": [
-      "Tools:"
-    ],
-    "volumes": [
-      {
-        "container": "/var/run/docker.sock",
-        "bind": "/var/run/docker.sock"
-      }
-    ],
-    "env": []
-  }
-]
+  ]
+}
