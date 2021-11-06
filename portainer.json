@@ -302,6 +302,50 @@
         }
       ]
     },
+
+    {
+      "type": 1,
+      "name": "dozzle",
+      "title": "Dozzle",
+      "description": " Realtime log viewer for docker containers. ",
+      "logo": "https://mediadepot.github.io/templates/img/dozzle.png",
+      "image": "amir20/dozzle:latest",
+      "categories": [
+        "Tools:"
+      ],
+      "ports": [
+        "8080/tcp"
+      ],
+      "privileged": true,
+      "volumes": [
+        {
+          "container": "/var/run/docker.sock",
+          "bind": "/var/run/docker.sock",
+          "readonly": true
+        }
+      ],
+      "command": "--no-analytics",
+      "env": [],
+      "labels": [
+        {
+          "name": "traefik.enable",
+          "value": "true"
+        },
+        {
+          "name": "traefik.http.services.dozzle.loadbalancer.server.port",
+          "value": "8080"
+        },
+        {
+          "name": "traefik.http.routers.dozzle.entrypoints",
+          "value": "websecure"
+        },
+        {
+          "name": "traefik.http.routers.dozzle.tls.certresolver",
+          "value": "mydnschallenge"
+        }
+      ]
+    },
+
     {
       "type": 1,
       "name": "droppy",
