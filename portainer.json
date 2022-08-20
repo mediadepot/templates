@@ -53,6 +53,85 @@
         }
       ]
     },
+
+    {
+      "type": 1,
+      "title": "Calibre Web",
+      "name": "calibreweb",
+      "note": "Portainer App Templates by <a href='https://www.technorabilia.com' target='_blank'>Technorabilia</a> based on data provided by <a href='https://www.linuxserver.io' target='_blank'>LinuxServer.io</a>.</p><p>Don't forget to create the volume directories on the host file system.</p><p>mkdir -p /volume1/docker/calibre-web/config<br>mkdir -p /volume1/docker/calibre-web/books</p>",
+      "description": "[Calibre-web](https://github.com/janeczku/calibre-web) is a web app providing a clean interface for browsing, reading and downloading eBooks using an existing Calibre database. It is also possible to integrate google drive and edit metadata and your calibre library through the app itself. This software is a fork of library and licensed under the GPL v3 License.",
+      "categories": [
+        "Books"
+      ],
+      "platform": "linux",
+      "logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/calibre-web-icon.png",
+      "image": "linuxserver/calibre-web:latest",
+      "env": [
+        {
+          "name": "PUID",
+          "label": "PUID",
+          "default": "1024",
+          "description": "for UserID"
+        },
+        {
+          "name": "PGID",
+          "label": "PGID",
+          "default": "100",
+          "description": "for GroupID"
+        },
+        {
+          "name": "TZ",
+          "label": "TZ",
+          "default": "Europe/Amsterdam",
+          "description": "Specify a timezone to use for example Europe/Amsterdam"
+        },
+        {
+          "name": "DOCKER_MODS",
+          "label": "DOCKER_MODS",
+          "default": "linuxserver/mods:universal-calibre",
+          "description": "#optional & **x86-64 only** Adds the ability to perform ebook conversion"
+        },
+        {
+          "name": "OAUTHLIB_RELAX_TOKEN_SCOPE",
+          "label": "OAUTHLIB_RELAX_TOKEN_SCOPE",
+          "default": "1",
+          "description": "Optionally set this to allow Google OAUTH to work"
+        }
+      ],
+      "ports": [
+        "8083/tcp"
+      ],
+      "volumes": [
+        {
+          "container": "/config",
+          "bind": "/opt/mediadepot/apps/calibre-web/config"
+        },
+        {
+          "container": "/books",
+          "bind": "/media/storage/ebooks"
+        }
+      ],
+      "restart_policy": "unless-stopped",
+      "labels": [
+        {
+          "name": "traefik.enable",
+          "value": "true"
+        },
+        {
+          "name": "traefik.http.services.calibreweb.loadbalancer.server.port",
+          "value": "8083"
+        },
+        {
+          "name": "traefik.http.routers.calibreweb.entrypoints",
+          "value": "websecure"
+        },
+        {
+          "name": "traefik.http.routers.calibreweb.tls.certresolver",
+          "value": "mydnschallenge"
+        }
+      ]
+    },
+
     {
       "type": 1,
       "name": "changedetection",
@@ -94,6 +173,69 @@
         }
       ]
     },
+
+    {
+      "type": 1,
+      "name": "cloudcmd",
+      "title": "Cloud Commander",
+      "description": "Cloud Commander a file manager for the web with console and editor.",
+      "logo": "https://mediadepot.github.io/templates/img/cloudcmd-logo.png",
+      "image": "coderaiser/cloudcmd",
+      "categories": [
+        "Documents:",
+        "Network:Other",
+        "Tools:"
+      ],
+      "ports": [
+        "8000/tcp"
+      ],
+      "volumes": [
+        {
+          "container": "/media/host/opt/mediadepot",
+          "bind": "/opt/mediadepot/apps"
+        },
+        {
+          "container": "/media/host/media/storage",
+          "bind": "/media/storage"
+        },
+        {
+          "container": "/media/host/media/temp",
+          "bind": "/media/temp"
+        }
+      ],
+      "env": [],
+      "labels": [
+        {
+          "name": "traefik.enable",
+          "value": "true"
+        },
+        {
+          "name": "traefik.http.services.cloudcmd.loadbalancer.server.port",
+          "value": "8000"
+        },
+        {
+          "name": "traefik.http.routers.cloudcmd.entrypoints",
+          "value": "websecure"
+        },
+        {
+          "name": "traefik.http.routers.cloudcmd.tls.certresolver",
+          "value": "mydnschallenge"
+        },
+        {
+          "name": "traefik.http.routers.cloudcmd.middlewares",
+          "value": "authme"
+        },
+        {
+          "name": "traefik.http.middlewares.authme.forwardauth.address",
+          "value": "http://authelia:9091/api/verify?rd=https://login.${DEPOT_DOMAIN_NAME}/"
+        },
+        {
+          "name": "traefik.http.middlewares.authme.forwardauth.trustforwardheader",
+          "value": "true"
+        }
+      ]
+    },
+
     {
       "type": 1,
       "name": "couchpotato",
@@ -302,7 +444,6 @@
         }
       ]
     },
-
     {
       "type": 1,
       "name": "dozzle",
@@ -345,7 +486,6 @@
         }
       ]
     },
-
     {
       "type": 1,
       "name": "droppy",
@@ -860,6 +1000,112 @@
         "url": "https://github.com/mediadepot/templates",
         "stackfile": "stacks/klaxon/docker-compose.yml"
       }
+    },
+    {
+      "type": 1,
+      "title": "Librespeed",
+      "name": "librespeed",
+      "note": "Portainer App Templates by <a href='https://www.technorabilia.com' target='_blank'>Technorabilia</a> based on data provided by <a href='https://www.linuxserver.io' target='_blank'>LinuxServer.io</a>.</p><p>Don't forget to create the volume directories on the host file system.</p><p>mkdir -p /volume1/docker/librespeed/config</p>",
+      "description": "[Librespeed](https://github.com/librespeed/speedtest) is a very lightweight Speedtest implemented in Javascript, using XMLHttpRequest and Web Workers. No Flash, No Java, No Websocket, No Bullshit.",
+      "platform": "linux",
+      "logo": "https://raw.githubusercontent.com/librespeed/speedtest/master/.logo/logo3.png",
+      "image": "linuxserver/librespeed:latest",
+      "env": [
+        {
+          "name": "PUID",
+          "label": "PUID",
+          "default": "1024",
+          "description": "for UserID"
+        },
+        {
+          "name": "PGID",
+          "label": "PGID",
+          "default": "100",
+          "description": "for GroupID"
+        },
+        {
+          "name": "TZ",
+          "label": "TZ",
+          "default": "Europe/Amsterdam",
+          "description": "Specify a timezone to use for example Europe/Amsterdam"
+        },
+        {
+          "name": "PASSWORD",
+          "label": "PASSWORD",
+          "default": "PASSWORD",
+          "description": "Set the password for the results database."
+        },
+        {
+          "name": "CUSTOM_RESULTS",
+          "label": "CUSTOM_RESULTS",
+          "default": "false",
+          "description": "(optional) set to `true` to enable custom results page in `/config/www/results/index.php`."
+        },
+        {
+          "name": "DB_TYPE",
+          "label": "DB_TYPE",
+          "default": "sqlite",
+          "description": "Defaults to `sqlite`, can also be set to `mysql` or `postgresql`."
+        },
+        {
+          "name": "DB_NAME",
+          "label": "DB_NAME",
+          "default": "DB_NAME",
+          "description": "Database name. Required for mysql and pgsql."
+        },
+        {
+          "name": "DB_HOSTNAME",
+          "label": "DB_HOSTNAME",
+          "default": "DB_HOSTNAME",
+          "description": "Database address. Required for mysql and pgsql."
+        },
+        {
+          "name": "DB_USERNAME",
+          "label": "DB_USERNAME",
+          "default": "DB_USERNAME",
+          "description": "Database username. Required for mysql and pgsql."
+        },
+        {
+          "name": "DB_PASSWORD",
+          "label": "DB_PASSWORD",
+          "default": "DB_PASSWORD",
+          "description": "Database password. Required for mysql and pgsql."
+        },
+        {
+          "name": "DB_PORT",
+          "label": "DB_PORT",
+          "default": "DB_PORT",
+          "description": "Database port. Required for mysql."
+        }
+      ],
+      "ports": [
+        "80/tcp"
+      ],
+      "volumes": [
+        {
+          "container": "/config",
+          "bind": "/opt/mediadepot/apps/librespeed/config"
+        }
+      ],
+      "labels": [
+        {
+          "name": "traefik.enable",
+          "value": "true"
+        },
+        {
+          "name": "traefik.http.services.librespeed.loadbalancer.server.port",
+          "value": "80"
+        },
+        {
+          "name": "traefik.http.routers.librespeed.entrypoints",
+          "value": "websecure"
+        },
+        {
+          "name": "traefik.http.routers.librespeed.tls.certresolver",
+          "value": "mydnschallenge"
+        }
+      ]
+      "restart_policy": "unless-stopped"
     },
     {
       "type": 1,
