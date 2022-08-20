@@ -1104,7 +1104,7 @@
           "name": "traefik.http.routers.librespeed.tls.certresolver",
           "value": "mydnschallenge"
         }
-      ]
+      ],
       "restart_policy": "unless-stopped"
     },
     {
