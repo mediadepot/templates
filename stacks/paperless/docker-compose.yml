@@ -1,4 +1,4 @@
-# docker-compose file for running paperless from the Docker Hub.
+# docker-compose file for running paperless from the docker container registry.
 # This file contains everything paperless needs to run.
 # Paperless supports amd64, arm and arm64 hardware.
 #
@@ -33,7 +33,7 @@
 version: "3.4"
 services:
   broker:
-    image: redis:6.0
+    image: redis:7
     restart: unless-stopped
     networks:
       - paperlessnet
@@ -51,15 +51,17 @@ services:
       - paperlessnet
 
   webserver:
-    image: jonaswinkler/paperless-ng:1.5.0
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
     restart: unless-stopped
     depends_on:
       - db
       - broker
       - gotenberg
       - tika
+    ports:
+      - 8000
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000"]
+      test: ["CMD", "curl", "-fs", "-S", "--max-time", "2", "http://localhost:8000"]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -99,15 +101,17 @@ services:
       - traefik
 
   gotenberg:
-    image: thecodingmachine/gotenberg:6
+    image: gotenberg/gotenberg:7.8
     restart: unless-stopped
-    environment:
-      DISABLE_GOOGLE_CHROME: 1
+    command:
+      - "gotenberg"
+      - "--chromium-disable-routes=true"
+      - "--chromium-allow-list=file:///tmp/.*"
     networks:
       - paperlessnet
 
   tika:
-    image: apache/tika
+    image: ghcr.io/paperless-ngx/tika:latest
     restart: unless-stopped
     networks:
       - paperlessnet
