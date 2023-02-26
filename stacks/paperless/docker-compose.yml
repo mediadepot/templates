@@ -85,6 +85,7 @@ services:
       PAPERLESS_CONSUMER_POLLING: 30
       PAPERLESS_FILENAME_FORMAT: '{document_type}/{created_year}/{correspondent}/{title}'
       PAPERLESS_CONSUMER_RECURSIVE: 1
+      PAPERLESS_URL: "https://paperless.${DEPOT_DOMAIN_NAME}"
       USERMAP_UID: 15000
       USERMAP_GID: 15000
       PAPERLESS_ADMIN_USER: myuser
