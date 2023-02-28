@@ -949,7 +949,7 @@
         },
         {
           "name": "traefik.http.services.homepage.loadbalancer.server.port",
-          "value": "5055"
+          "value": "3000"
         },
         {
           "name": "traefik.http.routers.homepage.entrypoints",
