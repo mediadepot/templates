@@ -898,6 +898,72 @@
     },
     {
       "type": 1,
+      "name": "homepage",
+      "title": "Homepage",
+      "description": "A modern (fully static, fast), secure (fully proxied), highly customizable application dashboard with integrations for more than 25 services and translations for over 15 languages. Easily configured via YAML files (or discovery via docker labels).",
+      "logo": "https://mediadepot.github.io/templates/img/overseerr.png",
+      "image": "ghcr.io/benphelps/homepage:latest",
+      "categories": [
+        "Tools:",
+        "Network:Web",
+        "Network:Other",
+        "Status:Stable"
+      ],
+      "ports": [
+        "3000/tcp"
+      ],
+      "volumes": [
+        {
+          "container": "/app/config",
+          "bind": "/opt/mediadepot/apps/homepage"
+        },
+        {
+          "container": "/etc/localtime",
+          "bind": "/etc/localtime",
+          "readonly": true
+        }
+      ],
+      "env": [
+        {
+          "name": "PGID",
+          "label": "PGID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "PUID",
+          "label": "PUID",
+          "default": "15000",
+          "preset": true
+        },
+        {
+          "name": "TZ",
+          "label": "TZ",
+          "default": "America/Los_Angeles"
+        }
+      ],
+      "labels": [
+        {
+          "name": "traefik.enable",
+          "value": "true"
+        },
+        {
+          "name": "traefik.http.services.homepage.loadbalancer.server.port",
+          "value": "5055"
+        },
+        {
+          "name": "traefik.http.routers.homepage.entrypoints",
+          "value": "websecure"
+        },
+        {
+          "name": "traefik.http.routers.homepage.tls.certresolver",
+          "value": "mydnschallenge"
+        }
+      ]
+    },
+
+    {
+      "type": 1,
       "name": "jackett",
       "title": "Jackett",
       "description": "Jackett works as a proxy server it translates queries from apps like Sonarr etc into tracker-site-specific http queries and parses the html response sending results back to the requesting software.",
