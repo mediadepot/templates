@@ -2540,6 +2540,50 @@
         }
       ],
       "env": []
+    },
+    {
+      "type": 1,
+      "name": "wizarr",
+      "title": "Wizarr",
+      "description": " Wizarr is an advanced user invitation and management system for Jellyfin, Plex, Emby etc. ",
+      "logo": "https://mediadepot.github.io/templates/img/wizarr-logo.png",
+      "image": "ghcr.io/wizarrrr/wizarr",
+      "categories": [
+        "Tools:"
+      ],
+      "ports": [
+        "5690/tcp"
+      ],
+      "volumes": [
+        {
+          "container": "/data/database",
+          "bind": "/opt/mediadepot/apps/wizarr"
+        },
+        {
+          "container": "/etc/localtime",
+          "bind": "/etc/localtime",
+          "readonly": true
+        }
+      ],
+      "env": [],
+      "labels": [
+        {
+          "name": "traefik.enable",
+          "value": "true"
+        },
+        {
+          "name": "traefik.http.services.wizarr.loadbalancer.server.port",
+          "value": "5690"
+        },
+        {
+          "name": "traefik.http.routers.wizarr.entrypoints",
+          "value": "websecure"
+        },
+        {
+          "name": "traefik.http.routers.wizarr.tls.certresolver",
+          "value": "mydnschallenge"
+        }
+      ]
     }
   ]
 }
