@@ -2565,7 +2565,12 @@
           "readonly": true
         }
       ],
-      "env": [],
+      "env": [{
+        "name": "APP_URL",
+        "label": "APP_URL",
+        "default": "https://wizarr.domain.com"
+      }
+      ],
       "labels": [
         {
           "name": "traefik.enable",
