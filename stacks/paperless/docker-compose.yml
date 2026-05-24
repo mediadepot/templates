@@ -48,6 +48,7 @@ services:
       POSTGRES_USER: paperless
       POSTGRES_PASSWORD: paperless
       POSTGRES_HOST_AUTH_METHOD: md5
+      POSTGRES_INITDB_ARGS: --auth-host=md5
     networks:
       - paperlessnet
 
